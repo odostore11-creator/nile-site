@@ -70,9 +70,16 @@ const smooth = pts => { // Catmull-Rom -> cubic Bézier
   }
   return d;
 };
-const EGYPT = [[31.58, 25.15], [31.35, 27.0], [31.05, 28.5], [31.2, 29.9], [31.45, 30.4], [31.55, 31.0], [31.45, 31.8], [31.27, 32.3], [31.1, 33.0], [31.25, 34.22],
-  [29.5, 34.9], [28.6, 34.6], [27.75, 34.28], [28.6, 33.4], [29.4, 32.75], [29.95, 32.55], [29.2, 32.65], [28.2, 33.15], [27.2, 33.85], [26.1, 34.3],
-  [25.0, 34.95], [24.0, 35.6], [23.2, 35.65], [22.0, 36.85], [22.0, 24.98]];
+// Coastline (lat, lng), simplified from real coordinates: Mediterranean coast with the Delta bulge,
+// Sinai with both gulfs, the Red Sea coast down to Halaib, then the straight borders.
+const COAST_MED = [[31.58, 25.15], [31.5, 25.9], [31.35, 27.0], [31.05, 27.9], [30.95, 28.5], [31.1, 29.4], [31.2, 29.9], [31.33, 30.2], [31.45, 30.4], [31.53, 30.75],
+  [31.56, 31.05], [31.52, 31.45], [31.45, 31.8], [31.32, 32.05], [31.27, 32.3], [31.13, 32.65], [31.08, 33.1], [31.16, 33.7], [31.25, 34.22]];
+const SINAI = [[30.6, 34.55], [29.5, 34.9], [29.0, 34.75], [28.6, 34.6], [28.1, 34.45], [27.75, 34.28], [27.95, 33.9], [28.6, 33.4], [29.05, 33.05], [29.4, 32.75], [29.95, 32.55]];
+const COAST_RED = [[29.6, 32.4], [29.2, 32.65], [28.7, 32.9], [28.2, 33.15], [27.7, 33.55], [27.2, 33.85], [26.6, 34.05], [26.1, 34.3], [25.5, 34.6], [25.0, 34.95],
+  [24.5, 35.25], [24.0, 35.6], [23.6, 35.55], [23.2, 35.65], [22.6, 36.3], [22.0, 36.85]];
+const EGYPT = [...COAST_MED, ...SINAI, ...COAST_RED, [22.0, 33.2], [22.0, 31.3], [22.0, 24.98]];
+const DELTA = [[30.05, 31.24], [30.55, 30.55], [31.1, 29.95], [31.33, 30.2], [31.45, 30.4], [31.53, 30.75], [31.56, 31.05], [31.52, 31.45], [31.45, 31.8], [31.3, 32.1], [30.85, 31.95], [30.4, 31.55]];
+const NASSER = [[22.0, 31.3], [22.6, 31.55], [23.1, 32.25], [23.55, 32.75], [23.95, 32.85], [23.7, 32.95], [23.2, 32.6], [22.7, 31.95], [22.2, 31.75], [22.0, 31.65]];
 const NILE = [[22.35, 31.6], [23.4, 32.6], [24.09, 32.9], [24.98, 32.87], [25.69, 32.64], [26.16, 32.72], [26.05, 32.25], [26.56, 31.69], [27.18, 31.18], [28.1, 30.75], [29.07, 31.1], [30.05, 31.24]];
 const ROSETTA = [[30.05, 31.24], [30.6, 30.9], [31.4, 30.42]], DAMIETTA = [[30.05, 31.24], [30.8, 31.35], [31.45, 31.82]];
 function egyptArt(lang) {
@@ -83,10 +90,21 @@ function egyptArt(lang) {
   const homes = [[31.15, 29.95], [31.0, 31.45], [30.55, 32.25], [29.3, 30.6], [28.05, 30.95], [26.6, 31.9]].map((ll, i) => { const [x, y] = PROJ(ll); return { x, y, i }; });
   const [lx, ly] = PROJ([26.4, 27.6]);
   const sea = (ll, t) => { const [x, y] = PROJ(ll); return `<text class="eg-sea" x="${x}" y="${y}" text-anchor="middle">${t}</text>`; };
+  const poly = pts => 'M' + pts.map(PROJ).map(p => p.join(' ')).join(' L') + ' Z';
+  // Seas drawn under the land: the Mediterranean above the coast, the Red Sea with both gulfs.
+  const med = poly([...COAST_MED, [31.6, 37.4], [33.2, 37.4], [33.2, 24.3], [31.58, 24.3]]);
+  const red = poly([[29.95, 32.55], ...COAST_RED.slice(1), [21.0, 37.4], [26.9, 37.4], [28.3, 35.05], [29.55, 34.98], [29.5, 34.9], ...SINAI.slice(2, -1)]);
   return `<svg class="egypt" viewBox="-10 -46 520 470" role="img" aria-label="${ar ? 'خريطة مصر ونهر النيل: نصل إليك في بيتك' : 'Map of Egypt and the Nile: we come to your home'}">
-  ${sea([32.5, 29.0], ar ? 'البحر المتوسط' : 'Mediterranean Sea')}${sea([24.9, 36.0], ar ? 'البحر الأحمر' : 'Red Sea')}
-  <path class="eg-land" d="${outline}"/>
-  <path class="eg-nile" d="${smooth(NILE)}"/><path class="eg-nile" d="${smooth(ROSETTA)}"/><path class="eg-nile" d="${smooth(DAMIETTA)}"/>
+  <defs>
+    <linearGradient id="egSand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6efe0"/><stop offset=".6" stop-color="#f1e6cf"/><stop offset="1" stop-color="#ead9b8"/></linearGradient>
+    <linearGradient id="egSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe9f0"/><stop offset="1" stop-color="#e6f4f6"/></linearGradient>
+    <pattern id="egDots" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".9" fill="#d9c79f"/></pattern>
+  </defs>
+  <rect class="eg-bg" x="-10" y="-46" width="520" height="470"/><path class="eg-water" d="${med}"/><path class="eg-water" d="${red}"/>
+  ${sea([32.35, 28.6], ar ? 'البحر المتوسط' : 'Mediterranean Sea')}${sea([23.1, 36.45], ar ? 'البحر الأحمر' : 'Red Sea')}
+  <path class="eg-land" d="${outline}"/><path class="eg-dots" d="${outline}"/>
+  <path class="eg-valley" d="${smooth(NILE)}"/><path class="eg-delta" d="${poly(DELTA)}"/><path class="eg-lake" d="${poly(NASSER)}"/>
+  <path class="eg-nile" d="${smooth(NILE)}"/><path class="eg-nile thin" d="${smooth(ROSETTA)}"/><path class="eg-nile thin" d="${smooth(DAMIETTA)}"/>
   ${homes.map(h => `<path class="eg-route" d="M${cx} ${cy} Q${(cx + h.x) / 2 + (h.y > cy ? 34 : 0)} ${Math.min(cy, h.y) - 26} ${h.x} ${h.y}" style="animation-delay:${h.i * .35}s"/>
     <g class="eg-home" transform="translate(${h.x - 11} ${h.y - 11})" style="animation-delay:${.4 + h.i * .35}s"><circle cx="11" cy="11" r="14"/><path d="M4.5 11.5 11 6l6.5 5.5M6.5 11v6h9v-6"/></g>`).join('')}
   <circle class="eg-pulse" cx="${cx}" cy="${cy}" r="16"/>
@@ -94,7 +112,8 @@ function egyptArt(lang) {
   <g class="eg-tag" transform="translate(${lx} ${ly})"><rect x="-100" y="-24" width="200" height="48" rx="24"/><text x="0" y="7" text-anchor="middle">${ar ? 'العلاج يوصل لحد بيتك' : 'Care that comes home'}</text></g>
 </svg>`;
 }
-const squiggle = '<svg class="squiggle" viewBox="0 0 200 14" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 C 30 2, 55 13, 85 7 S 140 3, 198 8"/></svg>';
+// Hand-drawn underline: a main brush stroke plus a lighter second pass, each drawn in like a pen.
+const squiggle = '<svg class="squiggle" viewBox="0 0 220 22" preserveAspectRatio="none" aria-hidden="true"><path class="s1" pathLength="1" d="M4 13 C 32 6, 58 16, 92 10 S 150 5, 214 11"/><path class="s2" pathLength="1" d="M14 18 C 48 13, 90 19, 130 15 S 180 13, 206 16"/></svg>';
 const waveTop = cls => `<svg class="wave-top ${cls}" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 240 0 420 60 720 34 S 1200 10 1440 36 V60 H0 Z"/></svg>`;
 
 // ---------- layout ----------

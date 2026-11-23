@@ -270,3 +270,25 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--bo
 .eg-tag text { font: 700 18px var(--font); fill: var(--deep); }
 @media (min-width: 901px) { .hero-art { margin-inline-end: -24px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .squiggle path { stroke-dashoffset: 0; } .eg-route, .eg-home { opacity: .95; } }
+
+/* Map, more real: sand desert, green Nile valley and Delta, blue seas, Lake Nasser. */
+.eg-water { fill: url(#egSea); }
+.eg-land { fill: url(#egSand); stroke: #dcc9a2; stroke-width: 1.6; }
+.eg-dots { fill: url(#egDots); opacity: .55; }
+.eg-valley { fill: none; stroke: #cfe6c2; stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
+.eg-delta { fill: #cfe6c2; stroke: #b9d9a9; stroke-width: 1; stroke-linejoin: round; }
+.eg-lake { fill: #9fd3e0; stroke: #82c1d1; stroke-width: 1; }
+.eg-nile { stroke: #1f8fb3; stroke-width: 4.5; } .eg-nile.thin { stroke-width: 3; }
+.eg-sea { fill: #5d9fb0; font-style: italic; }
+
+/* Underline under "لحد بيتك": a pen stroke that draws in, then a lighter second pass. */
+.squiggle { height: .42em; bottom: -.2em; overflow: visible; }
+.squiggle path { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.squiggle .s1 { stroke: var(--book); stroke-width: 5.5; animation: pen 1.05s cubic-bezier(.65, 0, .35, 1) .45s forwards; }
+.squiggle .s2 { stroke: var(--book); stroke-width: 2.5; opacity: .45; animation: pen .8s cubic-bezier(.65, 0, .35, 1) 1.35s forwards; }
+@keyframes pen { to { stroke-dashoffset: 0; } }
+.hero:hover .squiggle .s1 { animation: pen 1.05s cubic-bezier(.65, 0, .35, 1) .45s forwards, wiggle 2.4s ease-in-out 1.6s infinite; }
+@keyframes wiggle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
+@media (prefers-reduced-motion: reduce) { .squiggle path { stroke-dashoffset: 0 !important; } }
+.egypt { border-radius: 28px; overflow: hidden; box-shadow: 0 1px 2px rgba(11, 79, 92, .08), 0 18px 40px rgba(11, 79, 92, .12); border: 1px solid #e4dcc8; }
+.eg-bg { fill: #efe9dc; }
