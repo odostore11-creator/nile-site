@@ -463,7 +463,9 @@ for (const pg of P) {
 const nf = page({ path: '/404', lang: 'ar', title: 'الصفحة غير موجودة | Nile Therapy', description: 'الصفحة التي تبحث عنها غير موجودة. ارجع إلى الصفحة الرئيسية لـ Nile Therapy للعلاج الطبيعي في المنزل.',
   body: `<section class="page-head"><div class="wrap narrow center"><h1>الصفحة غير موجودة</h1><p class="lead">Page not found</p><div class="cta-row center"><a class="btn" href="${BASE}">الرئيسية</a><a class="btn ghost" href="${BASE}en">English</a></div></div></section>` })
   .replace(/(href|src)="(?:\.\/)?assets\//g, `$1="${BASE}assets/`).replace(/href="(\.\/|[a-z][a-z0-9\-/]*)"/g, (m, u) => `href="${BASE}${u === './' ? '' : u}"`)
-  .replace('<link rel="canonical"', '<meta name="robots" content="noindex"><link rel="canonical"');
+  .replace('<link rel="canonical"', '<meta name="robots" content="noindex"><link rel="canonical"')
+  // /page/ (trailing slash) or /page.html -> the real address /page, before showing 'not found'.
+  .replace('<head>', '<head>\n<script>(function(){var p=location.pathname,q=p.replace(/\\.html$/,"").replace(/\\/+$/,"");if(q&&q!==p)location.replace(q+location.search+location.hash);})();</script>');
 fs.writeFileSync(path.join(DIST, '404.html'), nf);
 // robots + sitemap
 fs.writeFileSync(path.join(DIST, 'robots.txt'), STAGING ? 'User-agent: *\nDisallow: /\n' : `User-agent: *\nDisallow:\n\nSitemap: ${SITE}/sitemap.xml\n`);
