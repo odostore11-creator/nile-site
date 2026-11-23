@@ -306,3 +306,7 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--bo
 .price h3 a, .post-body h3 a { display: inline-block; padding: 4px 0; }
 .consent input { width: 26px; height: 26px; }
 .foot .links a, .foot .contact a { display: inline-block; padding: 4px 0; }
+
+/* Cairo hub on the hero map: a solid badge with the lotus, so it reads at a glance. */
+.eg-hub circle { fill: var(--deep); stroke: #fff; stroke-width: 3; filter: drop-shadow(0 3px 6px rgba(11, 79, 92, .35)); }
+.eg-hub path { fill: #fff; } .eg-hub path + path { fill: var(--mint); }
