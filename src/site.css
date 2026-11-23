@@ -70,8 +70,6 @@ p { margin: 0 0 1em; }
 .hero-in { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding: 56px 0 64px; }
 .hero h1 { margin-bottom: 14px; }
 .mark { position: relative; white-space: nowrap; color: var(--teal); }
-.squiggle { position: absolute; inset-inline: -4px; bottom: -.12em; width: calc(100% + 8px); height: .32em; }
-.squiggle path { fill: none; stroke: var(--book); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 260; stroke-dashoffset: 260; animation: draw 1.1s .35s ease-out forwards; }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 40em; }
 .quick { margin: 24px 0 14px; padding: 18px; border: 1px solid var(--line); background: #fff; border-radius: var(--r); box-shadow: var(--shadow); }
@@ -125,21 +123,20 @@ p { margin: 0 0 1em; }
 [dir="rtl"] .spec-list a:hover .go { transform: scaleX(-1) translateX(4px); }
 @media (max-width: 760px) { .spec-list { grid-template-columns: 1fr; } .spec-list li:nth-last-child(2) { border-bottom: 0; } }
 
-/* Timeline: the four steps sit along a river line. */
-.river { position: relative; }
-.river-line { position: absolute; top: 4px; inset-inline: 4%; width: 92%; height: 60px; }
-.river-line path { fill: none; stroke: var(--mint); stroke-width: 4; stroke-dasharray: 2 12; stroke-linecap: round; }
-.steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; position: relative; }
-.steps .n { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: #fff; color: var(--teal); border: 3px solid var(--teal); font-weight: 800; font-size: 22px; margin-bottom: 14px; box-shadow: 0 0 0 8px var(--tint); }
-.steps li:last-child .n { background: var(--teal); color: #fff; }
-.steps h3 { margin-bottom: 4px; } .steps p { margin: 0; color: var(--muted); font-size: 16px; }
+/* How it works: one plain strip, no numbered circles. */
+.how { background: var(--tint); border-radius: var(--r); padding: 30px 34px; }
+.how-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 18px; }
+.how-head h2 { margin: 0; font-size: 26px; }
+.how-wa { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--teal); text-decoration: none; }
+.how-wa .ic { width: 20px; height: 20px; } .how-wa:hover { text-decoration: underline; }
+.how-flow { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
+.how-flow li { display: grid; gap: 4px; align-content: start; padding: 4px 20px; border-inline-start: 2px solid var(--mint); }
+.how-flow li:first-child { padding-inline-start: 0; border-inline-start: 0; }
+.how-flow b { color: var(--deep); font-size: 17px; } .how-flow span { color: var(--muted); font-size: 15px; }
 @media (max-width: 860px) {
-  .river-line { display: none; }
-  .steps { grid-template-columns: 1fr; gap: 0; }
-  .steps li { display: grid; grid-template-columns: 56px 1fr; column-gap: 16px; padding-bottom: 22px; position: relative; }
-  .steps li::before { content: ""; position: absolute; inset-inline-start: 27px; top: 58px; bottom: 0; border-inline-start: 3px dotted var(--mint); }
-  .steps li:last-child::before { display: none; }
-  .steps .n { grid-row: span 2; margin: 0; }
+  .how { padding: 24px 20px; }
+  .how-flow { grid-template-columns: 1fr; gap: 14px; }
+  .how-flow li, .how-flow li:first-child { padding: 0 0 0; padding-inline-start: 14px; border-inline-start: 2px solid var(--mint); }
 }
 
 /* Prices */
@@ -154,15 +151,13 @@ p { margin: 0 0 1em; }
 .pay-note { display: flex; gap: 8px; align-items: center; justify-content: center; color: var(--muted); margin: 20px 0 0; } .pay-note .ic { color: var(--teal); }
 @media (max-width: 900px) { .prices { grid-template-columns: 1fr; } }
 
-/* Founders: lotus monograms (real photos can replace them later). */
-.founders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-.founder { text-align: center; padding: 8px; }
-.mono { position: relative; width: 132px; height: 132px; margin: 0 auto 16px; }
-.mono svg { width: 100%; height: 100%; } .mono-ring { fill: var(--snow); stroke: var(--mint); stroke-width: 2; stroke-dasharray: 4 5; }
-.mono-lotus path { fill: var(--mint); opacity: .55; }
-.mono span { position: absolute; inset: 0; display: grid; place-items: center; padding-top: 22px; font-size: 44px; font-weight: 800; color: var(--deep); }
-.founder h3 { margin-bottom: 2px; } .founder .role { color: var(--book); font-weight: 600; font-size: 15px; margin: 0 0 6px; } .founder .spec { color: var(--muted); font-size: 15px; margin: 0; }
-@media (max-width: 760px) { .founders { grid-template-columns: 1fr; gap: 18px; } }
+/* Founders: name-first rows with a small initial (real photos can replace the initial later). */
+.founders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; border-top: 1px solid var(--line); }
+.founder { display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start; padding: 24px 0; }
+.f-init { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 14px; background: var(--mint-soft); color: var(--deep); font-size: 24px; font-weight: 800; }
+.founder h3 { margin: 0 0 6px; font-size: 19px; } .founder .role { color: var(--teal); font-weight: 700; font-size: 14px; margin: 0 0 2px; }
+.founder .spec { color: var(--muted); font-size: 15px; margin: 0; line-height: 1.55; }
+@media (max-width: 860px) { .founders { grid-template-columns: 1fr; } .founder { border-bottom: 1px solid var(--line); } }
 
 /* Quote */
 .quote { margin: 0; position: relative; padding-top: 30px; }
@@ -269,7 +264,7 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--bo
 .eg-tag rect { fill: #fff; stroke: var(--line); stroke-width: 1.5; filter: drop-shadow(0 6px 14px rgba(11, 79, 92, .12)); }
 .eg-tag text { font: 700 18px var(--font); fill: var(--deep); }
 @media (min-width: 901px) { .hero-art { margin-inline-end: -24px; } }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .squiggle path { stroke-dashoffset: 0; } .eg-route, .eg-home { opacity: .95; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .eg-route, .eg-home { opacity: .95; } }
 
 /* Hero map card (real Natural Earth outline). */
 .egypt { border-radius: 28px; overflow: hidden; border: 1px solid #e3dccb; box-shadow: 0 1px 2px rgba(11, 79, 92, .06), 0 22px 48px rgba(11, 79, 92, .12); background: #d8edf2; }
@@ -293,13 +288,7 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--bo
 @keyframes pindrop { from { opacity: 0; translate: 0 -18px; } to { opacity: 1; translate: 0 0; } }
 .eg-north circle { fill: rgba(255, 255, 255, .8); stroke: #cbdde1; } .eg-north path { fill: var(--deep); } .eg-north text { font: 700 11px var(--font); fill: var(--deep); }
 
-/* Underline: one tapered brush stroke that sweeps in. */
-.squiggle { height: .38em; bottom: -.18em; inset-inline: -2%; width: 104%; }
-.squiggle .brush { fill: var(--book); stroke: none; animation: none; stroke-dasharray: none; }
-.squiggle { clip-path: inset(0 100% 0 0); animation: sweep-l .9s cubic-bezier(.7, 0, .25, 1) .5s forwards; }
-[dir="rtl"] .squiggle { clip-path: inset(0 0 0 100%); animation-name: sweep-r; }
-@keyframes sweep-l { to { clip-path: inset(0 0 0 0); } } @keyframes sweep-r { to { clip-path: inset(0 0 0 0); } }
-@media (prefers-reduced-motion: reduce) { .squiggle { clip-path: none !important; } .eg-pin { opacity: 1 !important; } }
+@media (prefers-reduced-motion: reduce) { .eg-pin { opacity: 1 !important; } }
 .egypt { direction: ltr; }
 .egypt text { unicode-bidi: plaintext; }
 .quick-fields { grid-template-columns: 1fr 1fr; }

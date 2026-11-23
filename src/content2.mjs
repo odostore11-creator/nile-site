@@ -3,10 +3,10 @@
 
 // The three founders (no phone numbers on the public site, by decision).
 export const FOUNDERS = [
-  { initial: 'ع', initialEn: 'A', ar: { name: 'د. عبدالرحمن سامح', role: 'مؤسس شريك', spec: 'العلاج الطبيعي للقلب والصدر، الرعاية المركزة، وما قبل وبعد العمليات' },
-    en: { name: 'Dr. Abdelrahman Sameh', role: 'Co-founder', spec: 'Cardiopulmonary, Critical Care & Perioperative Physiotherapy' } },
-  { initial: 'م', initialEn: 'M', ar: { name: 'د. مصطفى إسماعيل', role: 'مؤسس شريك', spec: 'العلاج الطبيعي العصبي العضلي' },
-    en: { name: 'Dr. Mostafa Ismail', role: 'Co-founder', spec: 'Neuromuscular Physiotherapy' } },
+  { initial: 'م', initialEn: 'M', ar: { name: 'د. مصطفى إسماعيل', role: 'مؤسس شريك والمدير التنفيذي (CEO)', spec: 'العلاج الطبيعي العصبي العضلي' },
+    en: { name: 'Dr. Mostafa Ismail', role: 'Co-founder & CEO', spec: 'Neuromuscular Physiotherapy' } },
+  { initial: 'ع', initialEn: 'A', ar: { name: 'د. عبدالرحمن سامح', role: 'مؤسس شريك والمدير التقني (CTO)', spec: 'العلاج الطبيعي للقلب والصدر، الرعاية المركزة، وما قبل وبعد العمليات' },
+    en: { name: 'Dr. Abdelrahman Sameh', role: 'Co-founder & CTO', spec: 'Cardiopulmonary, Critical Care & Perioperative Physiotherapy' } },
   { initial: 'أ', initialEn: 'A', ar: { name: 'د. أحمد نادر', role: 'مؤسس شريك', spec: 'العلاج الطبيعي العصبي العضلي' },
     en: { name: 'Dr. Ahmed Nader', role: 'Co-founder', spec: 'Neuromuscular Physiotherapy' } },
 ];

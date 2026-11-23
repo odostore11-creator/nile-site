@@ -114,8 +114,6 @@ function egyptArt(lang) {
   <g class="eg-north" transform="translate(${GEO.W - 34} 30)"><circle r="16"/><path d="M0 -10 L5 6 L0 3 L-5 6 Z"/><text y="-20" text-anchor="middle">N</text></g>
 </svg>`;
 }
-// Underline: one tapered brush stroke that sweeps in (from the right in Arabic).
-const squiggle = '<svg class="squiggle" viewBox="0 0 240 26" preserveAspectRatio="none" aria-hidden="true"><path class="brush" d="M3 17 C 40 10, 95 8, 140 9.5 C 180 11, 214 8, 237 4.5 C 236 7.5, 233 10, 228 11.5 C 200 15, 170 17.5, 138 17 C 95 16.5, 50 18.5, 8 21.5 C 3.5 21.8, 1.5 19, 3 17 Z"/></svg>';
 const waveTop = cls => `<svg class="wave-top ${cls}" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 240 0 420 60 720 34 S 1200 10 1440 36 V60 H0 Z"/></svg>`;
 
 // ---------- layout ----------
@@ -192,7 +190,7 @@ function orgLd(lang) {
     alternateName: ['شركة النيل للعلاج الطبيعي', 'نايل ثيرابي', 'Nile Therapy Egypt'], url: SITE + (lang === 'ar' ? '/' : '/en'),
     logo: SITE + '/assets/logo/app-icon-filled.png', image: SITE + '/assets/og.png', telephone: CONTACT.phone, email: CONTACT.email,
     areaServed: { '@type': 'Country', name: 'Egypt' }, medicalSpecialty: 'Physiotherapy', priceRange: 'EGP 500–800',
-    founder: FOUNDERS.map(f => ({ '@type': 'Person', name: f.en.name, alternateName: f.ar.name, jobTitle: f.en.spec })),
+    founder: FOUNDERS.map(f => ({ '@type': 'Person', name: f.en.name, alternateName: f.ar.name, jobTitle: f.en.role, description: f.en.spec })),
     sameAs: [CONTACT.facebook, CONTACT.instagram, CONTACT.tiktok] };
 }
 const serviceLd = (s, lang) => ({ '@context': 'https://schema.org', '@type': 'Service', name: s[lang].name, description: s[lang].lead, serviceType: 'Physiotherapy',
@@ -213,7 +211,7 @@ function hero(p, lang) {
   return `<section class="hero"><div class="wrap hero-in">
   <div class="hero-text">
     <p class="eyebrow">${ar ? 'شركة النيل للعلاج الطبيعي والرعاية المنزلية' : 'Physiotherapy & home care across Egypt'}</p>
-    <h1>${ar ? `علاجك يوصلك <span class="mark">لحد بيتك${squiggle}</span>` : `Physiotherapy that comes <span class="mark">to your home${squiggle}</span>`}</h1>
+    <h1>${ar ? `علاجك يوصلك <span class="mark">لحد بيتك</span>` : `Physiotherapy that comes <span class="mark">to your home</span>`}</h1>
     <p class="lead">${ar ? 'أطباء علاج طبيعي مرخّصون يزورونك في منزلك، بخطة علاج مخصصة لحالتك ومتابعة مستمرة حتى تتعافى.' : 'Licensed physiotherapists visit you at home, with a treatment plan built around you and follow-up until you recover.'}</p>
     <form class="quick card" id="quick" data-book="${r(book)}" novalidate>
       <p class="quick-title">${ar ? 'احجز في أقل من دقيقة' : 'Book in under a minute'}</p>
@@ -238,7 +236,7 @@ function stats(lang) {
 function specialtyList(p, lang) {
   const { ar, r } = L(p, lang);
   return `<section class="sec" id="services"><div class="wrap">
-  <div class="sec-head split-head"><h2>${ar ? 'كل ما تحتاجه من علاج طبيعي، في بيتك' : 'Every kind of physiotherapy, at home'}</h2><p>${ar ? 'اكتشف خدمات العلاج الطبيعي الشاملة التي نقدمها والمصممة لتعزيز التعافي والصحة.' : 'Complete physiotherapy services designed to support recovery and health.'}</p></div>
+  <div class="sec-head split-head"><h2>${ar ? 'كل ما تحتاجه من علاج طبيعي، في بيتك' : 'Every kind of physiotherapy, at home'}</h2><p>${ar ? 'من تأهيل الجلطات وما بعد العمليات، لإصابات الملاعب ورعاية كبار السن، في بيتك ومن غير مشوار.' : 'From stroke rehab and recovery after surgery to sports injuries and elderly care, at home, with no trip to a clinic.'}</p></div>
   <ul class="spec-list">${SPEC_PAGES.map(s => { const sp = SPECIALTIES.find(x => x.icon === s.icon)[lang]; return `<li><a href="${r(s[lang])}">
     <span class="spec-ic">${icon(s.icon)}</span><span class="spec-tx"><b>${sp[0]}</b><span>${sp[1].split(/[.،]/)[0]}.</span></span>${icon('arrow', 'go flip')}</a></li>`; }).join('')}</ul>
 </div></section>`;
@@ -247,9 +245,10 @@ function timeline(lang) {
   const ar = lang === 'ar';
   const s = ar ? [['احجز أونلاين', 'نموذج قصير أو رسالة واتساب.'], ['نتصل بك', 'نؤكد الموعد ونفهم حالتك.'], ['الأخصائي يزورك', 'أقرب أخصائي مرخّص يأتي لمنزلك.'], ['ادفع بعد الجلسة', 'نقداً، بدون أي دفع أونلاين.']]
     : [['Book online', 'A short form or a WhatsApp message.'], ['We call you', 'We confirm the time and understand your case.'], ['Your physio visits', 'The nearest licensed physiotherapist comes to you.'], ['Pay after', 'Cash after the session, nothing online.']];
-  return `<section class="sec tint">${waveTop('to-tint')}<div class="wrap"><div class="sec-head"><h2>${ar ? 'كيف تحجز؟' : 'How it works'}</h2></div>
-  <div class="river"><svg class="river-line" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 125 5 250 75 375 40 S 625 5 750 40 S 925 70 1000 40"/></svg>
-  <ol class="steps">${s.map(([h, d], i) => `<li><span class="n">${i + 1}</span><h3>${h}</h3><p>${d}</p></li>`).join('')}</ol></div></div></section>`;
+  // One plain strip instead of numbered circles: what happens after you book, read left to right (right to left in Arabic).
+  return `<section class="sec how-sec"><div class="wrap"><div class="how">
+  <div class="how-head"><h2>${ar ? 'كيف تحجز؟' : 'How it works'}</h2><a class="how-wa" href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:how">${icon('wa')}${ar ? 'أو ابعتلنا على واتساب' : 'Or message us on WhatsApp'}</a></div>
+  <ol class="how-flow">${s.map(([h, d]) => `<li><b>${h}</b><span>${d}</span></li>`).join('')}</ol></div></div></section>`;
 }
 function priceStrip(p, lang, { heading = true } = {}) {
   const { t, ar, book, r } = L(p, lang);
@@ -270,8 +269,8 @@ function founders(lang, heading = true) {
   return `<section class="sec"><div class="wrap">
   ${heading ? `<div class="sec-head"><h2>${ar ? 'المؤسسون' : 'Meet the founders'}</h2><p>${ar ? 'أطباء علاج طبيعي أسّسوا Nile Therapy ليصل العلاج المتخصص إلى كل بيت في مصر.' : 'Physiotherapists who founded Nile Therapy to bring specialist care into every home in Egypt.'}</p></div>` : ''}
   <div class="founders">${FOUNDERS.map(f => `<article class="founder">
-    <div class="mono" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" class="mono-ring"/><g class="mono-lotus" transform="translate(30 4) scale(.4)">${LOTUS}</g></svg><span>${ar ? f.initial : f.initialEn}</span></div>
-    <h3>${f[lang].name}</h3><p class="role">${f[lang].role}</p><p class="spec">${f[lang].spec}</p></article>`).join('')}</div>
+    <span class="f-init" aria-hidden="true">${ar ? f.initial : f.initialEn}</span>
+    <div><p class="role">${f[lang].role}</p><h3>${f[lang].name}</h3><p class="spec">${f[lang].spec}</p></div></article>`).join('')}</div>
 </div></section>`;
 }
 function quote(lang) {
@@ -291,7 +290,7 @@ function articleCards(p, lang, items) {
 }
 function ctaBand(p, lang) {
   const { t, ar, book, r } = L(p, lang);
-  return `<section class="band"><div class="wrap band-in"><div><h2>${ar ? 'خطوتك الأولى نحو التعافي تبدأ اليوم' : 'Your recovery can start this week'}</h2><p>${ar ? 'خطوتك الأولى اليوم قد تكون الفارق في تعافيك غدًا — لا تؤجل قرار فى صحتك.' : 'Your first step today can make the difference in your recovery tomorrow.'}</p></div>
+  return `<section class="band"><div class="wrap band-in"><div><h2>${ar ? 'خطوتك الأولى نحو التعافي تبدأ اليوم' : 'Your recovery can start this week'}</h2><p>${ar ? 'احجز النهارده، وهنكلمك نحدد معاك ميعاد يناسبك.' : 'Book today and we will call you to set a time that suits you.'}</p></div>
   <div class="cta-row"><a class="btn book lg" href="${r(book)}" data-track="book:band">${icon('cal')}${t.book}</a><a class="btn lg ghost-light" href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:band">${icon('wa')}${t.wa}</a></div></div></section>`;
 }
 function aboutText(lang) {
