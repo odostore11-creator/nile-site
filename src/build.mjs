@@ -125,7 +125,7 @@ function page(pg) {
   const home = ar ? '/' : '/en', book = ar ? '/hjz-almwaayd' : '/en/book';
   const nav = ar
     ? [['/', t.home], ['/online-store', t.services], ['/almqalat', t.articles], ['/mn-nhn', t.about], ['/testimonials', t.reviews]]
-    : [['/en', t.home], ['/en#services', t.services], ['/en/resources', t.articles], ['/en/about', t.about], ['/en/testimonials', t.reviews]];
+    : [['/en', t.home], ['/en#prices', t.services], ['/en/resources', t.articles], ['/en/about', t.about], ['/en/testimonials', t.reviews]];
   const alt = pair ? [[lang, p], [t.otherLang, pair]] : [];
   const ld = [orgLd(lang), ...(pg.ld || [])];
   const booking = pg.bodyClass === 'is-booking';
@@ -218,7 +218,7 @@ function hero(p, lang) {
     <form class="quick card" id="quick" data-book="${r(book)}" novalidate>
       <p class="quick-title">${ar ? 'احجز في أقل من دقيقة' : 'Book in under a minute'}</p>
       <div class="quick-fields">
-        <label><span class="sr">${ar ? 'الاسم' : 'Name'}</span><input name="name" autocomplete="name" placeholder="${ar ? 'الاسم' : 'Your name'}" dir="auto" maxlength="120"></label>
+        <label><span class="sr">${ar ? 'الاسم' : 'Name'}</span><input type="text" name="name" autocomplete="name" placeholder="${ar ? 'الاسم' : 'Your name'}" dir="auto" maxlength="120"></label>
         <label><span class="sr">${ar ? 'رقم الموبايل' : 'Mobile number'}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="${ar ? 'رقم الموبايل' : 'Mobile number'}" dir="ltr" maxlength="20"></label>
         <label><span class="sr">${ar ? 'المحافظة' : 'Governorate'}</span><select name="governorate"><option value="">${ar ? 'المحافظة' : 'Governorate'}</option>${govOptions(lang)}</select></label>
         <button class="btn book" type="submit" data-track="book:hero-form">${ar ? 'ابدأ الحجز' : 'Start booking'} ${icon('arrow', 'flip')}</button>
@@ -253,7 +253,7 @@ function timeline(lang) {
 }
 function priceStrip(p, lang, { heading = true } = {}) {
   const { t, ar, book, r } = L(p, lang);
-  return `<section class="sec"><div class="wrap">
+  return `<section class="sec" id="prices"><div class="wrap">
   ${heading ? `<div class="sec-head"><h2>${t.services}</h2><p>${ar ? 'أسعار واضحة للجلسة في منزلك. احجز أونلاين وادفع نقداً بعد الجلسة.' : 'Clear prices per session at your home. Book online, pay cash after the session.'}</p></div>` : ''}
   <div class="prices">${SERVICES.map((s, i) => `<article class="price${i === 0 ? ' featured' : ''}">
     ${i === 0 ? `<p class="badge">${ar ? 'البداية الموصى بها' : 'Recommended first step'}</p>` : ''}
@@ -277,7 +277,7 @@ function founders(lang, heading = true) {
 function quote(lang) {
   const q = TESTIMONIAL[lang];
   return `<section class="sec tint">${waveTop('to-tint')}<div class="wrap narrow"><figure class="quote"><svg class="qmark" viewBox="0 0 60 48" aria-hidden="true"><path d="M0 48V28C0 12 8 3 24 0l3 6C17 9 13 15 13 24h12v24Zm33 0V28C33 12 41 3 57 0l3 6c-10 3-14 9-14 18h12v24Z"/></svg>
-  <blockquote>${q.quote}</blockquote><figcaption><span class="stars" aria-label="5/5">★★★★★</span> ${q.who}</figcaption></figure></div></section>`;
+  <blockquote>${q.quote}</blockquote><figcaption><span class="stars" role="img" aria-label="5/5">★★★★★</span> ${q.who}</figcaption></figure></div></section>`;
 }
 function faq(lang) {
   const ar = lang === 'ar';
@@ -286,7 +286,7 @@ function faq(lang) {
 }
 function articleCards(p, lang, items) {
   const { t, r } = L(p, lang);
-  return `<div class="posts">${items.map(x => `<article class="post"><a href="${r(x.path)}" class="post-img" tabindex="-1" aria-hidden="true">${pic(x.img, '', { sizes: '(max-width: 760px) 100vw, 33vw' })}</a>
+  return `<div class="posts">${items.map(x => `<article class="post"><div class="post-img">${pic(x.img, '', { sizes: '(max-width: 760px) 100vw, 33vw' })}</div>
     <div class="post-body"><p class="tag">${x.tag}</p><h3><a href="${r(x.path)}">${x.title}</a></h3><p>${x.lead}</p><a class="more" href="${r(x.path)}">${t.read} ${icon('arrow', 'flip')}</a></div></article>`).join('')}</div>`;
 }
 function ctaBand(p, lang) {
@@ -325,17 +325,17 @@ function bookingForm(lang) {
   const star = `<span class="req" aria-hidden="true">*</span>`;
   return `<form class="card booking" id="booking" novalidate data-lang="${lang}" aria-describedby="booking-err">
   <p class="step-label"><span>1</span>${f.s1}</p>
-  <div class="grid2"><label class="field"><span>${f.name}${star}</span><input name="name" autocomplete="name" required maxlength="120" dir="auto"></label>
+  <div class="grid2"><label class="field"><span>${f.name}${star}</span><input type="text" name="name" autocomplete="name" required maxlength="120" dir="auto"></label>
     <label class="field"><span>${f.phone}${star}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" dir="ltr" placeholder="01x xxxx xxxx"></label></div>
   <div class="grid2"><label class="field"><span>${f.gov}${star}</span><select name="governorate" required><option value="">${f.choose}</option>${govOptions(lang)}</select></label>
-    <label class="field"><span>${f.addr}${star}</span><input name="address" maxlength="300" dir="auto" placeholder="${f.addrPh}" required autocomplete="street-address"></label></div>
+    <label class="field"><span>${f.addr}${star}</span><input type="text" name="address" maxlength="300" dir="auto" placeholder="${f.addrPh}" required autocomplete="address-line1"></label></div>
   <p class="step-label"><span>2</span>${f.s2}</p>
   <div class="field"><span>${f.loc}</span><div class="loc-row"><button type="button" class="btn ghost sm" data-here>${icon('pin')}${f.locBtn}</button><input name="map_link" type="url" dir="ltr" inputmode="url" maxlength="500" placeholder="https://maps.app.goo.gl/…" aria-label="${f.loc}"></div><small>${f.locHelp}</small><input type="hidden" name="lat"><input type="hidden" name="lng"></div>
   <label class="field"><span>${f.service}</span><select name="service"><option value="">${f.choose}</option>${SERVICES.map(s => `<option value="${s.key}">${s[lang].name} — ${s.price} ${T[lang].egp}</option>`).join('')}<option value="other">${f.other}</option></select></label>
   <div class="grid2"><label class="field"><span>${f.date}${star}</span><input name="date" type="date" required></label>
     <label class="field"><span>${f.time}</span><select name="slot"><option value="any">${f.any}</option><option value="morning">${f.morning}</option><option value="afternoon">${f.afternoon}</option><option value="evening">${f.evening}</option></select></label></div>
   <label class="field"><span>${f.complaint}</span><textarea name="complaint" maxlength="1000" dir="auto" rows="3" placeholder="${f.complaintPh}"></textarea></label>
-  <label class="hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off"></label>
+  <label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
   <label class="consent"><input type="checkbox" name="consent" required> <span>${f.consent}</span></label>
   <p class="form-error" id="booking-err" role="alert" hidden></p>
   <button class="btn book lg block" type="submit">${f.send}</button>
@@ -348,7 +348,7 @@ function bookingForm(lang) {
 function bookingAside(lang) {
   const ar = lang === 'ar';
   return `<aside class="book-aside"><h2>${ar ? 'ماذا يحدث بعد الحجز؟' : 'What happens next?'}</h2>
-    <ol>${(ar ? ['نتصل بك خلال ساعات العمل لتأكيد الموعد.', 'نرسل لك أقرب أخصائي مرخّص.', 'الجلسة في بيتك، والدفع نقداً بعدها.'] : ['We call you during working hours to confirm.', 'We send the nearest licensed physiotherapist.', 'The session is at your home; pay cash after.']).map(x => `<li>${x}</li>`).join('')}</ol>
+    <ol>${(ar ? ['نتصل بك لتأكيد الموعد.', 'نرسل لك أقرب أخصائي مرخّص.', 'الجلسة في بيتك، والدفع نقداً بعدها.'] : ['We call you to confirm the time.', 'We send the nearest licensed physiotherapist.', 'The session is at your home; pay cash after.']).map(x => `<li>${x}</li>`).join('')}</ol>
     <p>${ar ? 'تفضّل واتساب؟' : 'Prefer WhatsApp?'}</p><a class="btn ghost block" href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:booking-aside">${icon('wa')}${T[lang].wa}</a></aside>`;
 }
 
@@ -367,10 +367,10 @@ const homeBody = lang => p => hero(p, lang) + stats(lang) + specialtyList(p, lan
   + `<section class="sec"><div class="wrap"><div class="sec-head split-head"><h2>${lang === 'ar' ? 'من مقالاتنا' : 'From our articles'}</h2><a class="more" href="${rel(p, lang === 'ar' ? '/almqalat' : '/en/resources')}">${lang === 'ar' ? 'كل المقالات' : 'All articles'} ${icon('arrow', 'flip')}</a></div>${articleCards(p, lang, (lang === 'ar' ? arArticleList : enArticleList).slice(0, 3))}</div></section>`
   + ctaBand(p, lang);
 add({ path: '/', lang: 'ar', pair: '/en', title: 'Nile Therapy | العلاج الطبيعي في المنزل - شركة النيل للعلاج الطبيعي', ld: [faqLd('ar')],
-  description: 'Nile Therapy (شركة النيل للعلاج الطبيعي) تقدم خدمات العلاج الطبيعي والرعاية المنزلية الفائقة في كل أنحاء مصر: تأهيل المخ والأعصاب، العظام، ما بعد العمليات والإصابات الرياضية. احجز جلستك في منزلك.',
+  description: 'Nile Therapy (شركة النيل للعلاج الطبيعي): علاج طبيعي ورعاية منزلية في كل أنحاء مصر، للمخ والأعصاب والعظام وما بعد العمليات. احجز جلستك في منزلك.',
   body: homeBody('ar') });
 add({ path: '/en', lang: 'en', pair: '/', title: 'Nile Therapy | Expert Physiotherapy at Home in Egypt', ld: [faqLd('en')],
-  description: 'Nile Therapy brings licensed physiotherapists to your home across Egypt: neuro rehabilitation, orthopedics, recovery after surgery, sports injuries and advanced home care. Book online, pay after the session.',
+  description: 'Licensed physiotherapists at your home across Egypt: neuro rehab, orthopedics, recovery after surgery and sports injuries. Book online, pay after the session.',
   body: homeBody('en') });
 
 add({ path: '/mn-nhn', lang: 'ar', pair: '/en/about', title: 'من نحن | Nile Therapy - شركة النيل للعلاج الطبيعي',
@@ -395,7 +395,7 @@ add({ path: '/en/book', lang: 'en', pair: '/hjz-almwaayd', title: 'Book a Home P
 add({ path: '/online-store', lang: 'ar', title: 'الخدمات والأسعار | Nile Therapy',
   description: 'أسعار جلسات العلاج الطبيعي في المنزل مع Nile Therapy: كشف منزلي وجلسة أولى، جلسات العظام، وجلسات المخ والأعصاب. احجز أونلاين وادفع بعد الجلسة.',
   body: p => pageHead('الخدمات والأسعار', 'أسعار واضحة للجلسة في منزلك. احجز أونلاين وادفع نقداً بعد الجلسة.') + priceStrip(p, 'ar', { heading: false }) + specialtyList(p, 'ar') + faq('ar') + ctaBand(p, 'ar'), ld: [faqLd('ar')] });
-for (const s of SERVICES) add({ path: s.path, lang: 'ar', title: `${s.ar.name} | Nile Therapy`, description: s.ar.lead + '. ' + s.ar.body[0].slice(0, 90) + '…',
+for (const s of SERVICES) add({ path: s.path, lang: 'ar', title: `${s.ar.name} | Nile Therapy`, description: (s.ar.lead + '. الدفع نقداً بعد الجلسة.').slice(0, 158),
   ld: [serviceLd(s, 'ar'), crumbLd([['الخدمات والأسعار', '/online-store'], [s.ar.name, s.path]])],
   body: p => `<section class="page-head"><div class="wrap service-in"><div><p class="crumbs"><a href="${rel(p, '/online-store')}">الخدمات والأسعار</a></p><h1>${s.ar.name}</h1><p class="lead">${s.ar.lead}</p></div>
     <div class="price-box"><p class="amount"><b>${s.price}</b> ج.م</p><p class="meta"><span>${icon('clock')}${s.minutes} دقيقة</span><span>${icon('home')}فى منزلك</span></p>
@@ -405,7 +405,7 @@ for (const s of SERVICES) add({ path: s.path, lang: 'ar', title: `${s.ar.name} |
 // One page per specialty (new; Arabic + English).
 for (const s of SPEC_PAGES) for (const lang of ['ar', 'en']) {
   const ar = lang === 'ar', other = ar ? 'en' : 'ar';
-  add({ path: s[lang], lang, pair: s[other], title: `${s.t[lang]} | Nile Therapy`, description: s.lead[lang],
+  add({ path: s[lang], lang, pair: s[other], title: `${s.t[lang]}${s.t[lang].length > 52 ? '' : ' | Nile Therapy'}`, description: s.lead[lang],
     ld: [{ '@context': 'https://schema.org', '@type': 'MedicalTherapy', name: s.t[lang], description: s.lead[lang], relevantSpecialty: 'PhysicalTherapy', url: SITE + s[lang] },
       crumbLd([[ar ? 'الرئيسية' : 'Home', ar ? '/' : '/en'], [s.t[lang], s[lang]]])],
     body: p => `<section class="page-head spec-head"><div class="wrap service-in"><div><p class="crumbs"><a href="${rel(p, ar ? '/' : '/en')}">${T[lang].home}</a> · ${T[lang].specialties}</p>
@@ -429,7 +429,7 @@ for (const a of ARTICLES) {
   add({ ...articlePage('ar', a.ar_t, a.ar_lead, a.ar_html, a.ar, a.date, a.img, '/almqalat-altbyh', 'المقالات الطبية', '23 نوفمبر 2026'), pair: a.en });
   add({ ...articlePage('en', a.en_t, a.en_lead, a.en_html, a.en, a.date, a.img, '/en/resources', 'Resources'), pair: a.ar });
 }
-add(articlePage('en', 'Physiotherapy at Home: What to Expect From Your First Visit', 'How a home physiotherapy visit with Nile Therapy works, who it helps, what the first assessment includes and how to prepare.',
+add(articlePage('en', 'Home Physiotherapy: Your First Visit', 'How a home physiotherapy visit with Nile Therapy works, who it helps, what the first assessment includes and how to prepare.',
   `<h2>Who home physiotherapy helps</h2><ul><li>People recovering from surgery (joint replacement, fractures, spine surgery).</li><li>Patients after a stroke or with other neurological conditions.</li><li>Older adults who find travelling to a clinic hard.</li><li>Patients discharged from hospital or intensive care who still need close follow-up.</li><li>Anyone with pain that limits daily life: neck, back, knee or shoulder.</li></ul>
   <h2>Your first visit</h2><p>Your first session is a full assessment (about 2 hours). The physiotherapist reviews your medical history and any reports or scans, then checks movement, strength, joint range, balance and pain. You leave with a clear plan: the goals, the number of sessions and a home exercise program.</p>
   <h2>How to prepare</h2><ul><li>Have your reports, scans and medication list ready.</li><li>Wear comfortable clothes that let the affected area move.</li><li>Clear a little space to move around, and have a firm chair nearby.</li><li>Write down your questions and what you want to be able to do again.</li></ul>

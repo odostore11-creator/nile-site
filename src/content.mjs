@@ -2,7 +2,7 @@
 // English mirrors it. Paths are the OLD URLs exactly (SEO): never change a path without a redirect plan.
 export const SITE = 'https://www.niletherapy.org';
 export const CONTACT = {
-  phone: '+201022478412', phoneShow: '+20 102 247 8412', wa: '201022478412', email: 'niletherapy.egy@gmail.com',
+  phone: '+201022478412', phoneShow: '+20&nbsp;102&nbsp;247&nbsp;8412', wa: '201022478412', email: 'niletherapy.egy@gmail.com',
   facebook: 'https://www.facebook.com/profile.php?id=61579452636995', instagram: 'https://instagram.com/niletherapy.egy', tiktok: 'https://www.tiktok.com/@nile.therapy',
 };
 export const GA = 'G-R0FRHE75S3';
@@ -92,7 +92,7 @@ export const NECK = {
 <ul><li><b>مقعد القيادة:</b> عدّل المقعد بحيث يكون ظهرك مستقيمًا ومسنودًا بالكامل على مسند الظهر، وتجنّب الميل الشديد للأمام أو الاسترخاء الزائد للخلف.</li><li><b>مسند الرأس:</b> يجب أن يكون قريبًا من مؤخرة الرأس (وليس أسفل الرقبة) ليسند الرقبة بشكل جيد.</li><li><b>المقود:</b> اضبطه بحيث يكون قريبًا من جسمك بدرجة تسمح بثني المرفقين بزاوية مريحة (حوالي 120°)، وتجنّب مدّ الذراعين بشكل كامل لفترات طويلة.</li><li><b>الركبتان والقدمان:</b> يجب أن تكون الركبتان مثنيتين قليلاً (حوالي 120°) مع القدرة على الضغط على الدواسات دون شد زائد، والكعب يلامس أرضية السيارة.</li><li><b>فترات الاستراحة:</b> إذا كنت تقود لمسافات طويلة، توقّف كل ساعة تقريبًا لتمديد الرقبة والظهر وتحريك الكتفين.</li><li><b>النظر للأمام:</b> اجعل مستوى النظر مستقيمًا للأمام لتقليل إجهاد الرقبة، وتجنّب الانحناء للأمام عند القيادة.</li></ul>
 <p class="tip">📌 <b>الخلاصة:</b> الوضعية الصحيحة في السيارة هي أن يكون ظهرك مسنودًا، رقبتك مستقيمة، وذراعاك ورجلاك في وضع مريح. هذا يقلل من آلام الرقبة والظهر خاصة في الرحلات الطويلة.</p>
 <h2>التمرينات المنزلية لتخفيف آلام الرقبة</h2><p>القيام بتمارين بسيطة في البيت يساعد على تقليل الألم، تحسين مرونة الرقبة، ومنع تكرار المشكلة. يفضل أداء التمارين يوميًا 1–2 مرة، مع التوقف إذا ظهر ألم شديد. اطلب من أخصائي العلاج الطبيعي برنامج تمارين مناسب لحالتك.</p>` },
-  en: { title: 'Neck Pain: Causes, When to See a Physiotherapist, and Posture Tips',
+  en: { title: 'Neck Pain: Causes, Treatment and Posture Tips',
     lead: 'Neck pain from long hours at a computer or long drives? A simple guide to what causes it, when to see a physiotherapist, and how to sit, work and drive without pain.',
     html: `<h2>What is neck pain?</h2><p>Neck pain is one of the most common problems at any age. It can be mild and pass within a few days, or last longer and get in the way of work and sleep.</p>
 <h2>Common causes</h2><ul><li><b>Muscle strain</b> from long hours at a computer or phone.</li><li><b>Poor posture</b>, such as constant bending forward or the wrong pillow.</li><li><b>Injuries</b>, like accidents or a sudden twist.</li><li>Wear of the neck vertebrae or disc problems.</li><li>Stress, which tightens the neck muscles.</li></ul>

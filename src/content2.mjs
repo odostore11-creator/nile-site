@@ -79,7 +79,7 @@ export const SPEC_PAGES = [
 // New articles (each with an Arabic and an English version).
 export const ARTICLES = [
   { key: 'back', img: 'neck-exam', date: '2026-11-23', ar: '/alam-asfal-aldhahr', en: '/en/lower-back-pain',
-    ar_t: 'آلام أسفل الظهر: الأسباب ومتى تحتاج للعلاج الطبيعي', en_t: 'Lower Back Pain: Causes and When to See a Physiotherapist',
+    ar_t: 'آلام أسفل الظهر: الأسباب ومتى تحتاج للعلاج الطبيعي', en_t: 'Lower Back Pain: Causes and When to Get Help',
     ar_lead: 'ألم أسفل الظهر من أكثر أسباب الغياب عن العمل. تعرّف على أسبابه الشائعة، وعلامات الخطر، وكيف يساعد العلاج الطبيعي.',
     en_lead: 'Lower back pain is one of the most common reasons people miss work. Learn the usual causes, the warning signs, and how physiotherapy helps.',
     ar_html: `<h2>لماذا يحدث ألم أسفل الظهر؟</h2><p>في أغلب الحالات يكون الألم ناتجاً عن إجهاد العضلات والأربطة، أو الجلوس الطويل، أو رفع الأشياء بطريقة خاطئة، أو ضعف عضلات الجذع. وقد يرتبط أحياناً بالانزلاق الغضروفي أو خشونة الفقرات.</p>
