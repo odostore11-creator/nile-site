@@ -123,20 +123,24 @@ p { margin: 0 0 1em; }
 [dir="rtl"] .spec-list a:hover .go { transform: scaleX(-1) translateX(4px); }
 @media (max-width: 760px) { .spec-list { grid-template-columns: 1fr; } .spec-list li:nth-last-child(2) { border-bottom: 0; } }
 
-/* How it works: one plain strip, no numbered circles. */
-.how { background: var(--tint); border-radius: var(--r); padding: 30px 34px; }
-.how-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 18px; }
-.how-head h2 { margin: 0; font-size: 26px; }
-.how-wa { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--teal); text-decoration: none; }
-.how-wa .ic { width: 20px; height: 20px; } .how-wa:hover { text-decoration: underline; }
-.how-flow { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); }
-.how-flow li { display: grid; gap: 4px; align-content: start; padding: 4px 20px; border-inline-start: 2px solid var(--mint); }
-.how-flow li:first-child { padding-inline-start: 0; border-inline-start: 0; }
-.how-flow b { color: var(--deep); font-size: 17px; } .how-flow span { color: var(--muted); font-size: 15px; }
-@media (max-width: 860px) {
+/* How it works: four steps with icons in one soft panel, sitting between services and prices. */
+.how-sec { padding: 8px 0; }
+.how { background: var(--tint); border-radius: var(--r); padding: 32px 36px 34px; }
+.how-head { display: flex; align-items: center; justify-content: space-between; gap: 10px 24px; flex-wrap: wrap; margin-bottom: 24px; }
+.how-head h2 { margin: 0; }
+.how-wa { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: var(--teal); text-decoration: none; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line); }
+.how-wa .ic { width: 20px; height: 20px; } .how-wa:hover { border-color: var(--teal); }
+.how-flow { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+.how-flow li { display: grid; gap: 4px; align-content: start; }
+.how-ic { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: #fff; color: var(--teal); margin-bottom: 8px; box-shadow: 0 1px 2px rgba(11, 79, 92, .08); }
+.how-ic .ic { width: 24px; height: 24px; }
+.how-flow b { color: var(--deep); font-size: 18px; } .how-flow span:not(.how-ic) { color: var(--muted); font-size: 15.5px; line-height: 1.55; }
+@media (max-width: 900px) { .how-flow { grid-template-columns: 1fr 1fr; gap: 22px 20px; } }
+@media (max-width: 560px) {
   .how { padding: 24px 20px; }
-  .how-flow { grid-template-columns: 1fr; gap: 14px; }
-  .how-flow li, .how-flow li:first-child { padding: 0 0 0; padding-inline-start: 14px; border-inline-start: 2px solid var(--mint); }
+  .how-flow { grid-template-columns: 1fr; gap: 16px; }
+  .how-flow li { grid-template-columns: 44px 1fr; column-gap: 14px; }
+  .how-ic { width: 44px; height: 44px; margin: 0; grid-row: span 2; }
 }
 
 /* Prices */
@@ -151,13 +155,13 @@ p { margin: 0 0 1em; }
 .pay-note { display: flex; gap: 8px; align-items: center; justify-content: center; color: var(--muted); margin: 20px 0 0; } .pay-note .ic { color: var(--teal); }
 @media (max-width: 900px) { .prices { grid-template-columns: 1fr; } }
 
-/* Founders: name-first rows with a small initial (real photos can replace the initial later). */
-.founders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 32px; border-top: 1px solid var(--line); }
-.founder { display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start; padding: 24px 0; }
+/* Founders: three soft cards with an initial (real photos can replace the initial later). */
+.founders { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.founder { display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start; padding: 22px; border: 1px solid var(--line); border-radius: var(--r); background: #fff; }
 .f-init { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 14px; background: var(--mint-soft); color: var(--deep); font-size: 24px; font-weight: 800; }
 .founder h3 { margin: 0 0 6px; font-size: 19px; } .founder .role { color: var(--teal); font-weight: 700; font-size: 14px; margin: 0 0 2px; }
 .founder .spec { color: var(--muted); font-size: 15px; margin: 0; line-height: 1.55; }
-@media (max-width: 860px) { .founders { grid-template-columns: 1fr; } .founder { border-bottom: 1px solid var(--line); } }
+@media (max-width: 900px) { .founders { grid-template-columns: 1fr; gap: 12px; } }
 
 /* Quote */
 .quote { margin: 0; position: relative; padding-top: 30px; }

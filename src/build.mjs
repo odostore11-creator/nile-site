@@ -80,16 +80,13 @@ const ROSETTA = [[30.05, 31.24], [30.4, 31.05], [30.82, 30.81], [31.1, 30.6], [3
 const DAMIETTA = [[30.05, 31.24], [30.47, 31.18], [30.79, 31.25], [31.04, 31.38], [31.25, 31.6], [31.42, 31.81]];
 const DELTA = [[30.05, 31.24], [30.6, 30.5], [31.15, 29.95], [31.6, 30.4], [31.7, 31.1], [31.6, 31.85], [31.3, 32.25], [30.75, 32.0], [30.3, 31.55]];
 const NASSER = [[21.8, 31.2], [22.4, 31.5], [22.85, 32.05], [23.35, 32.55], [23.9, 32.85], [23.75, 32.98], [23.2, 32.75], [22.7, 32.2], [22.2, 31.75], [21.8, 31.55]];
-const CITIES = [[30.05, 31.24, 'القاهرة', 'Cairo', 'cap'], [31.2, 29.92, 'الإسكندرية', 'Alexandria'], [25.69, 32.64, 'الأقصر', 'Luxor'], [24.09, 32.9, 'أسوان', 'Aswan'],
-  [27.18, 31.18, 'أسيوط', 'Assiut'], [27.26, 33.81, 'الغردقة', 'Hurghada']];
 function egyptArt(lang) {
   const ar = lang === 'ar';
   const [cx, cy] = PROJ([30.05, 31.24]);
   const label = (ll, t, cls = 'eg-sea') => { const [x, y] = PROJ(ll); return `<text class="${cls}" x="${x}" y="${y}" text-anchor="middle">${t}</text>`; };
-  const cities = CITIES.map(([lat, lng, a, e, cap]) => {
-    const [x, y] = PROJ([lat, lng]); const right = lng > 32.7 && !cap;
-    return cap ? '' : `<g class="eg-city"><circle cx="${x}" cy="${y}" r="3.4"/><text x="${x + (right ? 7 : -7)}" y="${y + 4}" text-anchor="${right ? 'start' : 'end'}">${ar ? a : e}</text></g>`;
-  }).join('');
+  // Decorative home visits along the Nile valley and the Delta (not a list of covered cities).
+  const homes = [[31.15, 29.95], [31.0, 31.45], [30.55, 32.25], [29.3, 30.6], [28.05, 30.95], [26.6, 31.9]].map((ll, i) => { const [x, y] = PROJ(ll); return { x, y, i }; });
+  const [lx, ly] = PROJ([26.3, 27.9]);
   return `<svg class="egypt" viewBox="0 0 ${GEO.W} ${GEO.H}" role="img" aria-label="${ar ? 'خريطة مصر ونهر النيل، ونحن في القاهرة نصل إليك في بيتك' : 'Map of Egypt and the Nile; from Cairo we come to your home'}">
   <defs>
     <linearGradient id="egSea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe8ef"/><stop offset="1" stop-color="#dff0f3"/></linearGradient>
@@ -105,12 +102,11 @@ function egyptArt(lang) {
   <path class="eg-lake" d="${poly(NASSER)}"/>
   <path class="eg-nile" d="${smooth(NILE)}"/><path class="eg-nile thin" d="${smooth(ROSETTA)}"/><path class="eg-nile thin" d="${smooth(DAMIETTA)}"/>
   ${label([32.25, 28.4], ar ? 'البحر المتوسط' : 'Mediterranean Sea')}${label([24.6, 36.05], ar ? 'البحر الأحمر' : 'Red Sea')}
-  ${label([26.6, 27.6], ar ? 'مـصـر' : 'EGYPT', 'eg-country')}
-  ${cities}
+  ${homes.map(h => `<path class="eg-route" d="M${cx} ${cy} Q${(cx + h.x) / 2 + (h.y > cy ? 34 : 0)} ${Math.min(cy, h.y) - 26} ${h.x} ${h.y}" style="animation-delay:${h.i * .35}s"/>
+    <g class="eg-home" transform="translate(${h.x - 11} ${h.y - 11})" style="animation-delay:${.4 + h.i * .35}s"><circle cx="11" cy="11" r="14"/><path d="M4.5 11.5 11 6l6.5 5.5M6.5 11v6h9v-6"/></g>`).join('')}
   <circle cx="${cx}" cy="${cy}" r="34" fill="url(#egGlow)"/><circle class="eg-pulse" cx="${cx}" cy="${cy}" r="10"/>
-  <circle class="eg-cap" cx="${cx}" cy="${cy}" r="6"/>
-  <g class="eg-pin" transform="translate(${cx + 6} ${cy - 40}) scale(.85)"><path class="eg-pin-body" d="M15 0C7 0 1 6 1 13.5 1 23 15 34 15 34s14-11 14-20.5C29 6 23 0 15 0Z"/><g transform="translate(5 3) scale(.2)">${LOTUS}</g></g>
-  <text class="eg-cap-label" x="${cx - 10}" y="${cy + 5}" text-anchor="end">${ar ? 'القاهرة' : 'Cairo'}</text>
+  <g transform="translate(${cx - 14} ${cy - 18}) scale(.28)" class="eg-lotus">${LOTUS}</g>
+  <g class="eg-tag" transform="translate(${lx} ${ly})"><rect x="-100" y="-24" width="200" height="48" rx="24"/><text x="0" y="7" text-anchor="middle">${ar ? 'العلاج يوصل لحد بيتك' : 'Care that comes home'}</text></g>
   <g class="eg-north" transform="translate(${GEO.W - 34} 30)"><circle r="16"/><path d="M0 -10 L5 6 L0 3 L-5 6 Z"/><text y="-20" text-anchor="middle">N</text></g>
 </svg>`;
 }
@@ -248,7 +244,7 @@ function timeline(lang) {
   // One plain strip instead of numbered circles: what happens after you book, read left to right (right to left in Arabic).
   return `<section class="sec how-sec"><div class="wrap"><div class="how">
   <div class="how-head"><h2>${ar ? 'كيف تحجز؟' : 'How it works'}</h2><a class="how-wa" href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:how">${icon('wa')}${ar ? 'أو ابعتلنا على واتساب' : 'Or message us on WhatsApp'}</a></div>
-  <ol class="how-flow">${s.map(([h, d]) => `<li><b>${h}</b><span>${d}</span></li>`).join('')}</ol></div></div></section>`;
+  <ol class="how-flow">${s.map(([h, d], i) => `<li><span class="how-ic">${icon(['cal', 'phone', 'home', 'cash'][i])}</span><b>${h}</b><span>${d}</span></li>`).join('')}</ol></div></div></section>`;
 }
 function priceStrip(p, lang, { heading = true } = {}) {
   const { t, ar, book, r } = L(p, lang);
