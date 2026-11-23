@@ -39,3 +39,9 @@ WITHOUT losing the #1 Google ranking and WITHOUT deleting the old Hostinger site
 - Logo: lotus wave (teal / mint / snow). The portal switches to the same teal palette.
 - English pages: keep the URLs, rebrand to Nile Therapy, real content mirroring the Arabic pages (replace the two filler posts' content but keep their URLs).
 - Search Console: probably not set up (the builder only has its own SEO checklist). Verify the domain with a DNS TXT record at launch, then submit the sitemap.
+
+## LAUNCHED 2026-11-23
+- DNS changed in Hostinger: `www CNAME odostore11-creator.github.io`, `@ A 185.199.108-111.153`, `@ AAAA 2606:50c0:8000-8003::153` (TTL 300). Old ALIAS `@ → niletherapy.org.cdn.hstgr.net` and old `www → www.niletherapy.org.cdn.hstgr.net` = rollback.
+- Custom domain set on the repo, certificate approved, HTTPS enforced. All 19 sitemap URLs return 200; bare domain 301 → www; canonical + robots correct, no noindex.
+- Next: Google Search Console (DNS TXT verification) → submit sitemap; watch rankings 2–4 weeks; keep the Hostinger site for a few weeks.
+- Search Console verified (DNS TXT google-site-verification) and sitemap submitted by Omar, 2026-11-23. http→https redirect confirmed.

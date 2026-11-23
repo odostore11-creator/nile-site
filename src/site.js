@@ -1,7 +1,28 @@
-// niletherapy.org: phone menu + booking form (sends to the Nile Therapy portal).
+// niletherapy.org: phone menu, quick booking, booking form (sends to the Nile Therapy portal), click tracking.
 (() => {
   const menu = document.querySelector('.menu'), nav = document.getElementById('nav');
-  if (menu && nav) menu.addEventListener('click', () => { const open = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', open); });
+  if (menu && nav) {
+    menu.addEventListener('click', () => { const open = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', open); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); menu.focus(); } });
+  }
+
+  // Analytics: which buttons lead to bookings (no personal data is sent).
+  const track = (name, params) => { try { if (window.gtag) gtag('event', name, params); } catch { /* blocked */ } };
+  document.addEventListener('click', e => {
+    const a = e.target.closest('[data-track]'); if (!a) return;
+    const [kind, where] = a.dataset.track.split(':');
+    track(kind === 'book' ? 'book_click' : kind === 'whatsapp' ? 'whatsapp_click' : 'call_click', { location: where });
+  });
+
+  // Hero quick booking: carries name/phone/governorate to the booking page in this tab only (sessionStorage, never the URL).
+  const quick = document.getElementById('quick');
+  if (quick) quick.addEventListener('submit', e => {
+    e.preventDefault();
+    const d = Object.fromEntries(new FormData(quick).entries());
+    try { sessionStorage.setItem('nt_quick', JSON.stringify(d)); } catch { /* private mode: they retype */ }
+    track('form_start', { method: 'hero_quick' });
+    location.href = quick.dataset.book;
+  });
 
   const form = document.getElementById('booking');
   if (!form) return;
@@ -20,8 +41,14 @@
   form.date.min = today; if (!form.date.value) form.date.value = today;
   const svc = new URLSearchParams(location.search).get('service');
   if (svc && [...form.service.options].some(o => o.value === svc)) form.service.value = svc;
+  try { // values typed in the home page's quick form
+    const q = JSON.parse(sessionStorage.getItem('nt_quick') || 'null');
+    if (q) { for (const k of ['name', 'phone', 'governorate']) if (q[k] && !form[k].value) form[k].value = q[k]; sessionStorage.removeItem('nt_quick'); (form.address || form.name).focus(); }
+  } catch { /* fine */ }
   const err = form.querySelector('.form-error');
   const showErr = t => { err.textContent = t; err.hidden = !t; if (t) err.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
+  let started = false;
+  form.addEventListener('input', () => { if (!started) { started = true; track('form_start', { method: 'booking_page' }); } }, { once: false });
 
   // "Use my current location": fills the hidden lat/lng (and a readable maps link).
   const here = form.querySelector('[data-here]'), label = here.innerHTML;
@@ -39,7 +66,7 @@
   const phoneOk = v => /^(\+?20|0)?1[0125]\d{8}$/.test(v.replace(/[\s-]/g, ''));
   const check = () => {
     const bad = [];
-    const mark = (el, ok, m) => { el.setAttribute('aria-invalid', !ok); if (!ok) bad.push([el, m]); };
+    const mark = (el, ok, m) => { el.setAttribute('aria-invalid', !ok); if (!ok) { bad.push([el, m]); el.setAttribute('aria-describedby', 'booking-err'); } };
     mark(form.name, form.name.value.trim().length >= 2, msg.name);
     mark(form.phone, phoneOk(form.phone.value), msg.phone);
     mark(form.governorate, !!form.governorate.value, msg.governorate);
@@ -67,7 +94,7 @@
       if (!r.ok) throw new Error(j.error || msg.network);
       form.hidden = true;
       const done = document.getElementById('booking-done'); done.hidden = false; done.focus();
-      if (window.gtag) gtag('event', 'generate_lead', { method: 'booking_form', service: d.service || 'none' });
+      track('generate_lead', { method: 'booking_form', service: d.service || 'none', has_location: !!d.lat });
     } catch (x) { showErr(x.message && !/fetch|network/i.test(x.message) ? x.message : msg.network); }
     sending = false; btn.disabled = false; btn.textContent = btnText;
   });

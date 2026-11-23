@@ -9,7 +9,7 @@ export const GA = 'G-R0FRHE75S3';
 
 // Bookable services (the old "online store"): pay cash at the visit.
 export const SERVICES = [
-  { key: 'home-assessment', path: '/kshf-mnzla-w-jlsh-awla-', price: 800, minutes: 120, img: 'neck-exam.jpg',
+  { key: 'home-assessment', path: '/kshf-mnzla-w-jlsh-awla-', price: 800, minutes: 120, img: 'neck-exam',
     ar: { name: 'كشف منزلى و جلسة اولى', short: 'تقييم شامل في بيتك وخطة علاج مخصصة',
       lead: 'كشف منزلي احترافي يشمل تقييم شامل للحركة والألم و الحالة الطبية لتحديد المشكلة بدقة ووضع خطة علاج وبرنامج تأهيلي مخصص',
       body: ['نقدّم خدمة كشف منزلي متكامل في العلاج الطبيعي على يد أخصائيين مؤهلين، تبدأ بدراسة الحالة الطبية والتاريخ المرضي بشكل دقيق، يليها تقييم طبي ووظيفي شامل يشمل الحركة، القوة العضلية، مدى المفاصل، ومستوى الألم باستخدام أدوات تقييم معتمدة. يهدف هذا التقييم إلى الوصول للتشخيص الوظيفي الصحيح وتحديد السبب الجذري للمشكلة، وليس فقط التعامل مع الأعراض.',
@@ -20,7 +20,7 @@ export const SERVICES = [
       body: ['A qualified physiotherapist comes to your home. We start with your medical history, then a full medical and functional assessment: movement, muscle strength, joint range and pain level, using validated assessment tools. The goal is the right functional diagnosis and the root cause, not just the symptoms.',
         'We also look at how you move in daily life, risk factors, and any reports or scans you have. From this we build a treatment plan around your goals, with a clear number of sessions, the techniques we will use, and a home exercise program based on current best practice.',
         'Suitable for orthopedic and neurological conditions, recovery after surgery, and older adults, with regular follow-up and plan updates for the best possible results at home.'] } },
-  { key: 'orthopedic', path: '/jlsat-alalaj-altbyaa-llazam-jrahtha', price: 500, minutes: 60, img: 'ortho.jpg',
+  { key: 'orthopedic', path: '/jlsat-alalaj-altbyaa-llazam-jrahtha', price: 500, minutes: 60, img: 'ortho',
     ar: { name: 'جلسات العلاج الطبيعى للعظام و جراحتها', short: 'تقليل الألم واستعادة الحركة بعد الإصابات والعمليات',
       lead: 'تقييم وعلاج وتأهيل متكامل لاستعادة الحركة وتقليل الألم وتحسين الوظيفة',
       body: ['نقدّم جلسات علاج طبيعي متخصصة للتعامل مع أمراض العظام، الإصابات المختلفة، وحالات ما بعد الجراحات، على يد أخصائيين مؤهلين. تبدأ الخدمة بدراسة الحالة الطبية والتاريخ المرضي، يليها تقييم طبي ووظيفي شامل يشمل مدى الحركة، القوة العضلية، ومستوى الألم.',
@@ -31,7 +31,7 @@ export const SERVICES = [
       body: ['Specialized physiotherapy sessions for bone and joint conditions, injuries and recovery after surgery, delivered by qualified physiotherapists. Every plan starts with your medical history and a full assessment of range of motion, strength and pain.',
         'We find the main cause of the problem and design a program just for you: chronic conditions, sports injuries, or rehabilitation after fractures, joint replacement and ligament repair.',
         'Sessions combine modern techniques, guided exercises and continuous follow-up, plus home guidance to speed up recovery and get you back to daily life safely.'] } },
-  { key: 'neuro', path: '/jlsat-alalaj-altbyaa-lamradh-almkh-w-alaasab-w-asabat-alhbl-alshwka-w-jrahthm-', price: 500, minutes: 120, img: 'neuro.jpg',
+  { key: 'neuro', path: '/jlsat-alalaj-altbyaa-lamradh-almkh-w-alaasab-w-asabat-alhbl-alshwka-w-jrahthm-', price: 500, minutes: 120, img: 'neuro',
     ar: { name: 'جلسات العلاج الطبيعى لأمراض المخ و الاعصاب و اصابات الحبل الشوكى و جراحتهم', short: 'تأهيل عصبي للحركة والتوازن والاستقلالية',
       lead: 'تأهيل عصبي متكامل لتحسين الحركة والتوازن واستعادة الوظائف الحركية بأمان',
       body: ['نقدّم جلسات علاج طبيعي متخصصة في التأهيل العصبي للتعامل مع أمراض المخ والأعصاب، إصابات الحبل الشوكي، وحالات ما بعد الجراحات، على يد أخصائيين مؤهلين. تبدأ الخدمة بدراسة الحالة الطبية والتاريخ المرضي، يليها تقييم طبي ووظيفي شامل يشمل الحركة، التوازن، الإحساس، التناسق العضلي العصبي، ومستوى الاستقلال الوظيفي.',
@@ -85,7 +85,7 @@ export const NECK = {
 <ul><li><b>الألم المتكرر أو المزمن:</b> إذا استمر الألم لأكثر من أسبوعين إلى 4 أسابيع دون تحسن.</li><li><b>تيبّس أو صعوبة الحركة:</b> عندما تجد صعوبة في إدارة الرأس أو القيام بالأنشطة اليومية بسبب الألم.</li><li><b>الاعتماد المستمر على المسكنات:</b> إذا أصبحت بحاجة لتناول أدوية بشكل دائم لتخفيف الألم.</li><li><b>بعد إصابة أو حادث:</b> مثل التواء الرقبة أو إصابات أثناء الرياضة أو الحوادث المرورية.</li><li><b>أعراض مصاحبة:</b> ألم يمتد إلى الكتف أو الذراع، تنميل أو وخز في اليدين أو الأصابع، ضعف في العضلات.</li><li><b>لأغراض الوقاية والتأهيل:</b> تعلم وضعيات صحيحة للجلوس والنوم والعمل، تمارين لتقوية عضلات الرقبة والكتفين، وبرنامج تدريجي للعودة إلى النشاط أو الرياضة.</li></ul>
 <h2>متى يجب مراجعة الطبيب؟</h2><p>اطلب المساعدة الطبية العاجلة إذا كان الألم:</p><ul><li>شديدًا ومفاجئًا.</li><li>مستمرًا لعدة أسابيع دون تحسن.</li><li>مصحوبًا بتنميل أو ضعف في الذراعين أو اليدين.</li><li>نتيجة سقوط أو إصابة قوية.</li></ul>
 <h2>وضعية الجلوس الصحيحة أمام الكمبيوتر</h2><p>الجلوس لفترات طويلة أمام الكمبيوتر من أكثر الأسباب شيوعًا لآلام الرقبة والظهر. لذلك من المهم اتباع القواعد التالية كما هو موضح في الصورة:</p>
-<figure><img src="{A}img/posture-desk.jpg" alt="وضعية الجلوس الصحيحة أمام الكمبيوتر: مستوى الشاشة، المسافة، زوايا المرفقين والركبتين" loading="lazy" width="1200" height="800"></figure>
+<figure><img src="{A}img/posture-desk.webp" alt="وضعية الجلوس الصحيحة أمام الكمبيوتر: مستوى الشاشة، المسافة، زوايا المرفقين والركبتين" loading="lazy" width="1200" height="800"></figure>
 <ul><li><b>مستوى الشاشة:</b> أعلى الشاشة يكون في مستوى العين أو أسفلها بقليل.</li><li><b>المسافة عن الشاشة:</b> تقريبًا طول ذراع بعيدًا عن الوجه.</li><li><b>الرأس والرقبة:</b> مستقيمة بدون انحناء للأمام.</li><li><b>الظهر:</b> مدعوم بمسند لأسفل الظهر، مع إبقاء الظهر مستقيمًا.</li><li><b>المرفقان:</b> قريبان من الجسم، بزاوية 90°–120°.</li><li><b>المعصمان:</b> في وضع مستقيم مع ثني خفيف فقط.</li><li><b>الكرسي:</b> قابل للتعديل، والمقعد لا يضغط على مؤخرة الركبتين.</li><li><b>الوركان والركبتان:</b> بزاوية 90°–120°.</li><li><b>القدمين:</b> ملامستان للأرض أو مستندتان على دعامة للقدمين.</li><li><b>أدوات العمل:</b> يفضل وجود حامل للوثائق بجانب الشاشة لتقليل حركة الرقبة المتكررة.</li></ul>
 <p class="tip">📌 <b>نصيحة:</b> أخذ استراحة قصيرة كل 30–45 دقيقة مع تحريك الرقبة والكتفين يساعد على تنشيط الدورة الدموية وتقليل الألم.</p>
 <h2>وضعية الجلوس الصحيحة أثناء القيادة</h2><p>الجلوس لفترات طويلة في السيارة مع انحناء الرقبة أو تقوّس الظهر يسبب إجهاد كبير للعضلات والمفاصل. للحفاظ على راحتك أثناء القيادة:</p>
@@ -99,7 +99,7 @@ export const NECK = {
 <h2>Symptoms</h2><ul><li>Pain or stiffness in the neck.</li><li>Difficulty turning the head.</li><li>Headache starting at the back of the head.</li><li>Sometimes pain or numbness spreading to the shoulder or arm.</li></ul>
 <h2>When to see a physiotherapist</h2><ul><li><b>Recurring or chronic pain</b> that hasn't improved in 2–4 weeks.</li><li><b>Stiffness</b> that makes it hard to turn your head or do daily tasks.</li><li><b>Relying on painkillers</b> to get through the day.</li><li><b>After an injury</b>: a sprain, a sports injury or a car accident.</li><li><b>Other symptoms</b>: pain into the shoulder or arm, tingling in the hands, muscle weakness.</li><li><b>Prevention</b>: learn good posture, strengthen the neck and shoulders, and return to sport gradually.</li></ul>
 <h2>When to see a doctor urgently</h2><p>Get medical help quickly if the pain is sudden and severe, lasts for weeks without improving, comes with numbness or weakness in the arms or hands, or follows a fall or a hard injury.</p>
-<h2>Sitting at a computer</h2><figure><img src="{A}img/posture-desk.jpg" alt="Correct sitting posture at a desk: screen height, distance, elbow and knee angles" loading="lazy" width="1200" height="800"></figure>
+<h2>Sitting at a computer</h2><figure><img src="{A}img/posture-desk.webp" alt="Correct sitting posture at a desk: screen height, distance, elbow and knee angles" loading="lazy" width="1200" height="800"></figure>
 <ul><li><b>Screen:</b> top of the screen at or slightly below eye level, about an arm's length away.</li><li><b>Head and neck:</b> straight, not leaning forward.</li><li><b>Back:</b> supported at the lower back.</li><li><b>Elbows:</b> close to the body at 90°–120°; wrists straight.</li><li><b>Chair:</b> adjustable; the seat shouldn't press behind the knees. Hips and knees at 90°–120°, feet flat or on a footrest.</li></ul>
 <p class="tip">📌 <b>Tip:</b> take a short break every 30–45 minutes and move your neck and shoulders.</p>
 <h2>Driving posture</h2><ul><li>Sit upright with your back fully supported.</li><li>Headrest close to the back of your head, not below the neck.</li><li>Steering wheel close enough to keep elbows bent at about 120°.</li><li>Knees slightly bent; heels resting on the floor.</li><li>On long drives, stop about every hour to stretch.</li></ul>
