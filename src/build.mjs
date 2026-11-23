@@ -60,8 +60,10 @@ const icon = (n, c = '') => `<svg class="ic ${c}" viewBox="0 0 24 24" fill="none
 const LOTUS = '<path d="M50 12 C61.5 25 65 43 50 63 C35 43 38.5 25 50 12 Z"/><path d="M46.5 66 C32 64.5 18.5 54 15 35 C30.5 37.5 42.5 48 46.5 66 Z"/><path d="M53.5 66 C68 64.5 81.5 54 85 35 C69.5 37.5 57.5 48 53.5 66 Z"/>';
 
 // ---------- custom graphics ----------
-// Egypt with the Nile, drawn from real coordinates (simplified). Visits flow from Cairo to homes.
-const PROJ = ([lat, lng]) => [Math.round((lng - 24.6) * 40 * 10) / 10, Math.round((31.8 - lat) * 40 * 10) / 10];
+// Hero map: Egypt and its neighbours from Natural Earth (1:10m, simplified by src/egypt-geo.json),
+// with the Nile, the Delta, Lake Nasser and a few real cities. A calm, real-looking map card.
+const GEO = JSON.parse(fs.readFileSync(path.join(ROOT, 'src', 'egypt-geo.json'), 'utf8'));
+const PROJ = ([lat, lng]) => [+((lng - GEO.box.w) * GEO.K * GEO.C).toFixed(1), +((GEO.box.n - lat) * GEO.K).toFixed(1)];
 const smooth = pts => { // Catmull-Rom -> cubic Bézier
   const P = pts.map(PROJ); let d = `M${P[0][0]} ${P[0][1]}`;
   for (let i = 0; i < P.length - 1; i++) {
@@ -70,50 +72,50 @@ const smooth = pts => { // Catmull-Rom -> cubic Bézier
   }
   return d;
 };
-// Coastline (lat, lng), simplified from real coordinates: Mediterranean coast with the Delta bulge,
-// Sinai with both gulfs, the Red Sea coast down to Halaib, then the straight borders.
-const COAST_MED = [[31.58, 25.15], [31.5, 25.9], [31.35, 27.0], [31.05, 27.9], [30.95, 28.5], [31.1, 29.4], [31.2, 29.9], [31.33, 30.2], [31.45, 30.4], [31.53, 30.75],
-  [31.56, 31.05], [31.52, 31.45], [31.45, 31.8], [31.32, 32.05], [31.27, 32.3], [31.13, 32.65], [31.08, 33.1], [31.16, 33.7], [31.25, 34.22]];
-const SINAI = [[30.6, 34.55], [29.5, 34.9], [29.0, 34.75], [28.6, 34.6], [28.1, 34.45], [27.75, 34.28], [27.95, 33.9], [28.6, 33.4], [29.05, 33.05], [29.4, 32.75], [29.95, 32.55]];
-const COAST_RED = [[29.6, 32.4], [29.2, 32.65], [28.7, 32.9], [28.2, 33.15], [27.7, 33.55], [27.2, 33.85], [26.6, 34.05], [26.1, 34.3], [25.5, 34.6], [25.0, 34.95],
-  [24.5, 35.25], [24.0, 35.6], [23.6, 35.55], [23.2, 35.65], [22.6, 36.3], [22.0, 36.85]];
-const EGYPT = [...COAST_MED, ...SINAI, ...COAST_RED, [22.0, 33.2], [22.0, 31.3], [22.0, 24.98]];
-const DELTA = [[30.05, 31.24], [30.55, 30.55], [31.1, 29.95], [31.33, 30.2], [31.45, 30.4], [31.53, 30.75], [31.56, 31.05], [31.52, 31.45], [31.45, 31.8], [31.3, 32.1], [30.85, 31.95], [30.4, 31.55]];
-const NASSER = [[22.0, 31.3], [22.6, 31.55], [23.1, 32.25], [23.55, 32.75], [23.95, 32.85], [23.7, 32.95], [23.2, 32.6], [22.7, 31.95], [22.2, 31.75], [22.0, 31.65]];
-const NILE = [[22.35, 31.6], [23.4, 32.6], [24.09, 32.9], [24.98, 32.87], [25.69, 32.64], [26.16, 32.72], [26.05, 32.25], [26.56, 31.69], [27.18, 31.18], [28.1, 30.75], [29.07, 31.1], [30.05, 31.24]];
-const ROSETTA = [[30.05, 31.24], [30.6, 30.9], [31.4, 30.42]], DAMIETTA = [[30.05, 31.24], [30.8, 31.35], [31.45, 31.82]];
+const poly = pts => 'M' + pts.map(PROJ).map(p => p.join(' ')).join(' L') + ' Z';
+// The Nile (real towns along its course), its two Delta branches, the Delta fan and Lake Nasser.
+const NILE = [[21.8, 31.35], [22.34, 31.61], [23.2, 32.55], [24.09, 32.9], [24.47, 32.95], [24.98, 32.87], [25.29, 32.55], [25.69, 32.64], [26.16, 32.72], [26.05, 32.24],
+  [26.34, 31.89], [26.56, 31.69], [27.18, 31.18], [27.73, 30.84], [28.1, 30.75], [28.65, 30.9], [29.07, 31.1], [29.55, 31.2], [29.85, 31.33], [30.05, 31.24]];
+const ROSETTA = [[30.05, 31.24], [30.4, 31.05], [30.82, 30.81], [31.1, 30.6], [31.4, 30.42]];
+const DAMIETTA = [[30.05, 31.24], [30.47, 31.18], [30.79, 31.25], [31.04, 31.38], [31.25, 31.6], [31.42, 31.81]];
+const DELTA = [[30.05, 31.24], [30.6, 30.5], [31.15, 29.95], [31.6, 30.4], [31.7, 31.1], [31.6, 31.85], [31.3, 32.25], [30.75, 32.0], [30.3, 31.55]];
+const NASSER = [[21.8, 31.2], [22.4, 31.5], [22.85, 32.05], [23.35, 32.55], [23.9, 32.85], [23.75, 32.98], [23.2, 32.75], [22.7, 32.2], [22.2, 31.75], [21.8, 31.55]];
+const CITIES = [[30.05, 31.24, 'القاهرة', 'Cairo', 'cap'], [31.2, 29.92, 'الإسكندرية', 'Alexandria'], [25.69, 32.64, 'الأقصر', 'Luxor'], [24.09, 32.9, 'أسوان', 'Aswan'],
+  [27.18, 31.18, 'أسيوط', 'Assiut'], [27.26, 33.81, 'الغردقة', 'Hurghada']];
 function egyptArt(lang) {
   const ar = lang === 'ar';
-  const outline = 'M' + EGYPT.map(PROJ).map(p => p.join(' ')).join(' L') + ' Z';
   const [cx, cy] = PROJ([30.05, 31.24]);
-  // Decorative home visits spread along the Nile valley and the Delta (not a list of covered cities).
-  const homes = [[31.15, 29.95], [31.0, 31.45], [30.55, 32.25], [29.3, 30.6], [28.05, 30.95], [26.6, 31.9]].map((ll, i) => { const [x, y] = PROJ(ll); return { x, y, i }; });
-  const [lx, ly] = PROJ([26.4, 27.6]);
-  const sea = (ll, t) => { const [x, y] = PROJ(ll); return `<text class="eg-sea" x="${x}" y="${y}" text-anchor="middle">${t}</text>`; };
-  const poly = pts => 'M' + pts.map(PROJ).map(p => p.join(' ')).join(' L') + ' Z';
-  // Seas drawn under the land: the Mediterranean above the coast, the Red Sea with both gulfs.
-  const med = poly([...COAST_MED, [31.6, 37.4], [33.2, 37.4], [33.2, 24.3], [31.58, 24.3]]);
-  const red = poly([[29.95, 32.55], ...COAST_RED.slice(1), [21.0, 37.4], [26.9, 37.4], [28.3, 35.05], [29.55, 34.98], [29.5, 34.9], ...SINAI.slice(2, -1)]);
-  return `<svg class="egypt" viewBox="-10 -46 520 470" role="img" aria-label="${ar ? 'خريطة مصر ونهر النيل: نصل إليك في بيتك' : 'Map of Egypt and the Nile: we come to your home'}">
+  const label = (ll, t, cls = 'eg-sea') => { const [x, y] = PROJ(ll); return `<text class="${cls}" x="${x}" y="${y}" text-anchor="middle">${t}</text>`; };
+  const cities = CITIES.map(([lat, lng, a, e, cap]) => {
+    const [x, y] = PROJ([lat, lng]); const right = lng > 32.7 && !cap;
+    return cap ? '' : `<g class="eg-city"><circle cx="${x}" cy="${y}" r="3.4"/><text x="${x + (right ? 7 : -7)}" y="${y + 4}" text-anchor="${right ? 'start' : 'end'}">${ar ? a : e}</text></g>`;
+  }).join('');
+  return `<svg class="egypt" viewBox="0 0 ${GEO.W} ${GEO.H}" role="img" aria-label="${ar ? 'خريطة مصر ونهر النيل، ونحن في القاهرة نصل إليك في بيتك' : 'Map of Egypt and the Nile; from Cairo we come to your home'}">
   <defs>
-    <linearGradient id="egSand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6efe0"/><stop offset=".6" stop-color="#f1e6cf"/><stop offset="1" stop-color="#ead9b8"/></linearGradient>
-    <linearGradient id="egSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe9f0"/><stop offset="1" stop-color="#e6f4f6"/></linearGradient>
-    <pattern id="egDots" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".9" fill="#d9c79f"/></pattern>
+    <linearGradient id="egSea" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cfe8ef"/><stop offset="1" stop-color="#dff0f3"/></linearGradient>
+    <linearGradient id="egSand" x1="0" y1="0" x2=".4" y2="1"><stop offset="0" stop-color="#f7f0e1"/><stop offset=".55" stop-color="#f2e7d0"/><stop offset="1" stop-color="#ecdcbc"/></linearGradient>
+    <pattern id="egDots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".8" fill="#dccaa3"/></pattern>
+    <clipPath id="egClip"><path d="${GEO.egypt}"/></clipPath>
+    <radialGradient id="egGlow"><stop offset="0" stop-color="#5cc9b5" stop-opacity=".45"/><stop offset="1" stop-color="#5cc9b5" stop-opacity="0"/></radialGradient>
   </defs>
-  <rect class="eg-bg" x="-10" y="-46" width="520" height="470"/><path class="eg-water" d="${med}"/><path class="eg-water" d="${red}"/>
-  ${sea([32.35, 28.6], ar ? 'البحر المتوسط' : 'Mediterranean Sea')}${sea([23.1, 36.45], ar ? 'البحر الأحمر' : 'Red Sea')}
-  <path class="eg-land" d="${outline}"/><path class="eg-dots" d="${outline}"/>
-  <path class="eg-valley" d="${smooth(NILE)}"/><path class="eg-delta" d="${poly(DELTA)}"/><path class="eg-lake" d="${poly(NASSER)}"/>
+  <rect class="eg-sea-bg" width="${GEO.W}" height="${GEO.H}"/>
+  <path class="eg-nb" d="${GEO.neighbours}"/>
+  <path class="eg-land" d="${GEO.egypt}"/><path class="eg-dots" d="${GEO.egypt}"/>
+  <g clip-path="url(#egClip)"><path class="eg-valley" d="${smooth(NILE)}"/><path class="eg-delta" d="${poly(DELTA)}"/></g>
+  <path class="eg-lake" d="${poly(NASSER)}"/>
   <path class="eg-nile" d="${smooth(NILE)}"/><path class="eg-nile thin" d="${smooth(ROSETTA)}"/><path class="eg-nile thin" d="${smooth(DAMIETTA)}"/>
-  ${homes.map(h => `<path class="eg-route" d="M${cx} ${cy} Q${(cx + h.x) / 2 + (h.y > cy ? 34 : 0)} ${Math.min(cy, h.y) - 26} ${h.x} ${h.y}" style="animation-delay:${h.i * .35}s"/>
-    <g class="eg-home" transform="translate(${h.x - 11} ${h.y - 11})" style="animation-delay:${.4 + h.i * .35}s"><circle cx="11" cy="11" r="14"/><path d="M4.5 11.5 11 6l6.5 5.5M6.5 11v6h9v-6"/></g>`).join('')}
-  <circle class="eg-pulse" cx="${cx}" cy="${cy}" r="16"/>
-  <g transform="translate(${cx - 20} ${cy - 22}) scale(.4)" class="eg-lotus">${LOTUS}</g>
-  <g class="eg-tag" transform="translate(${lx} ${ly})"><rect x="-100" y="-24" width="200" height="48" rx="24"/><text x="0" y="7" text-anchor="middle">${ar ? 'العلاج يوصل لحد بيتك' : 'Care that comes home'}</text></g>
+  ${label([32.25, 28.4], ar ? 'البحر المتوسط' : 'Mediterranean Sea')}${label([24.6, 36.05], ar ? 'البحر الأحمر' : 'Red Sea')}
+  ${label([26.6, 27.6], ar ? 'مـصـر' : 'EGYPT', 'eg-country')}
+  ${cities}
+  <circle cx="${cx}" cy="${cy}" r="34" fill="url(#egGlow)"/><circle class="eg-pulse" cx="${cx}" cy="${cy}" r="10"/>
+  <circle class="eg-cap" cx="${cx}" cy="${cy}" r="6"/>
+  <g class="eg-pin" transform="translate(${cx + 6} ${cy - 40}) scale(.85)"><path class="eg-pin-body" d="M15 0C7 0 1 6 1 13.5 1 23 15 34 15 34s14-11 14-20.5C29 6 23 0 15 0Z"/><g transform="translate(5 3) scale(.2)">${LOTUS}</g></g>
+  <text class="eg-cap-label" x="${cx - 10}" y="${cy + 5}" text-anchor="end">${ar ? 'القاهرة' : 'Cairo'}</text>
+  <g class="eg-north" transform="translate(${GEO.W - 34} 30)"><circle r="16"/><path d="M0 -10 L5 6 L0 3 L-5 6 Z"/><text y="-20" text-anchor="middle">N</text></g>
 </svg>`;
 }
-// Hand-drawn underline: a main brush stroke plus a lighter second pass, each drawn in like a pen.
-const squiggle = '<svg class="squiggle" viewBox="0 0 220 22" preserveAspectRatio="none" aria-hidden="true"><path class="s1" pathLength="1" d="M4 13 C 32 6, 58 16, 92 10 S 150 5, 214 11"/><path class="s2" pathLength="1" d="M14 18 C 48 13, 90 19, 130 15 S 180 13, 206 16"/></svg>';
+// Underline: one tapered brush stroke that sweeps in (from the right in Arabic).
+const squiggle = '<svg class="squiggle" viewBox="0 0 240 26" preserveAspectRatio="none" aria-hidden="true"><path class="brush" d="M3 17 C 40 10, 95 8, 140 9.5 C 180 11, 214 8, 237 4.5 C 236 7.5, 233 10, 228 11.5 C 200 15, 170 17.5, 138 17 C 95 16.5, 50 18.5, 8 21.5 C 3.5 21.8, 1.5 19, 3 17 Z"/></svg>';
 const waveTop = cls => `<svg class="wave-top ${cls}" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 C 240 0 420 60 720 34 S 1200 10 1440 36 V60 H0 Z"/></svg>`;
 
 // ---------- layout ----------

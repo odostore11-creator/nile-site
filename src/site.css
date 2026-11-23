@@ -271,24 +271,38 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--bo
 @media (min-width: 901px) { .hero-art { margin-inline-end: -24px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } .squiggle path { stroke-dashoffset: 0; } .eg-route, .eg-home { opacity: .95; } }
 
-/* Map, more real: sand desert, green Nile valley and Delta, blue seas, Lake Nasser. */
-.eg-water { fill: url(#egSea); }
-.eg-land { fill: url(#egSand); stroke: #dcc9a2; stroke-width: 1.6; }
-.eg-dots { fill: url(#egDots); opacity: .55; }
-.eg-valley { fill: none; stroke: #cfe6c2; stroke-width: 15; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
-.eg-delta { fill: #cfe6c2; stroke: #b9d9a9; stroke-width: 1; stroke-linejoin: round; }
-.eg-lake { fill: #9fd3e0; stroke: #82c1d1; stroke-width: 1; }
-.eg-nile { stroke: #1f8fb3; stroke-width: 4.5; } .eg-nile.thin { stroke-width: 3; }
-.eg-sea { fill: #5d9fb0; font-style: italic; }
+/* Hero map card (real Natural Earth outline). */
+.egypt { border-radius: 28px; overflow: hidden; border: 1px solid #e3dccb; box-shadow: 0 1px 2px rgba(11, 79, 92, .06), 0 22px 48px rgba(11, 79, 92, .12); background: #d8edf2; }
+.eg-sea-bg { fill: url(#egSea); }
+.eg-nb { fill: #efeadf; stroke: #ddd3bf; stroke-width: .8; stroke-linejoin: round; }
+.eg-land { fill: url(#egSand); stroke: #c9b58c; stroke-width: 1.4; stroke-linejoin: round; }
+.eg-dots { fill: url(#egDots); opacity: .5; }
+.eg-valley { fill: none; stroke: #cfe5bf; stroke-width: 13; stroke-linecap: round; stroke-linejoin: round; }
+.eg-delta { fill: #cfe5bf; }
+.eg-lake { fill: #a9d6e2; stroke: #8fc7d6; stroke-width: .8; }
+.eg-nile { fill: none; stroke: #2f8fb0; stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; } .eg-nile.thin { stroke-width: 2.4; }
+.eg-sea { font: italic 500 14px var(--font); fill: #5f97a6; letter-spacing: .04em; }
+.eg-country { font: 700 26px var(--font); fill: #c7b48c; letter-spacing: .35em; }
+.eg-city circle { fill: #fff; stroke: #6b7f86; stroke-width: 1.6; } .eg-city text { font: 500 12.5px var(--font); fill: #4f6b73; }
+.eg-cap { fill: var(--book); stroke: #fff; stroke-width: 2.5; }
+.eg-cap-label { font: 700 15px var(--font); fill: var(--deep); paint-order: stroke; stroke: rgba(255, 255, 255, .85); stroke-width: 4px; }
+.eg-pulse { fill: rgba(200, 80, 47, .28); transform-origin: center; transform-box: fill-box; animation: pulse 2.4s ease-out infinite; }
+.eg-pin { animation: pindrop .7s cubic-bezier(.34, 1.56, .64, 1) .2s both; transform-box: fill-box; }
+.eg-pin-body { fill: var(--deep); filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .25)); }
+.eg-pin path:not(.eg-pin-body) { fill: #fff; } .eg-pin path + path:not(.eg-pin-body) { fill: var(--mint); }
+@keyframes pindrop { from { opacity: 0; translate: 0 -18px; } to { opacity: 1; translate: 0 0; } }
+.eg-north circle { fill: rgba(255, 255, 255, .8); stroke: #cbdde1; } .eg-north path { fill: var(--deep); } .eg-north text { font: 700 11px var(--font); fill: var(--deep); }
 
-/* Underline under "لحد بيتك": a pen stroke that draws in, then a lighter second pass. */
-.squiggle { height: .42em; bottom: -.2em; overflow: visible; }
-.squiggle path { fill: none; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
-.squiggle .s1 { stroke: var(--book); stroke-width: 5.5; animation: pen 1.05s cubic-bezier(.65, 0, .35, 1) .45s forwards; }
-.squiggle .s2 { stroke: var(--book); stroke-width: 2.5; opacity: .45; animation: pen .8s cubic-bezier(.65, 0, .35, 1) 1.35s forwards; }
-@keyframes pen { to { stroke-dashoffset: 0; } }
-.hero:hover .squiggle .s1 { animation: pen 1.05s cubic-bezier(.65, 0, .35, 1) .45s forwards, wiggle 2.4s ease-in-out 1.6s infinite; }
-@keyframes wiggle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1.5px); } }
-@media (prefers-reduced-motion: reduce) { .squiggle path { stroke-dashoffset: 0 !important; } }
-.egypt { border-radius: 28px; overflow: hidden; box-shadow: 0 1px 2px rgba(11, 79, 92, .08), 0 18px 40px rgba(11, 79, 92, .12); border: 1px solid #e4dcc8; }
-.eg-bg { fill: #efe9dc; }
+/* Underline: one tapered brush stroke that sweeps in. */
+.squiggle { height: .38em; bottom: -.18em; inset-inline: -2%; width: 104%; }
+.squiggle .brush { fill: var(--book); stroke: none; animation: none; stroke-dasharray: none; }
+.squiggle { clip-path: inset(0 100% 0 0); animation: sweep-l .9s cubic-bezier(.7, 0, .25, 1) .5s forwards; }
+[dir="rtl"] .squiggle { clip-path: inset(0 0 0 100%); animation-name: sweep-r; }
+@keyframes sweep-l { to { clip-path: inset(0 0 0 0); } } @keyframes sweep-r { to { clip-path: inset(0 0 0 0); } }
+@media (prefers-reduced-motion: reduce) { .squiggle { clip-path: none !important; } .eg-pin { opacity: 1 !important; } }
+.egypt { direction: ltr; }
+.egypt text { unicode-bidi: plaintext; }
+.quick-fields { grid-template-columns: 1fr 1fr; }
+.quick-fields .btn { padding: 12px 18px; }
+@media (max-width: 900px) { .quick-fields .btn { grid-column: auto; } }
+@media (max-width: 420px) { .quick-fields { grid-template-columns: 1fr; } }
