@@ -1,0 +1,483 @@
+[
+  {
+    "url": "https://www.niletherapy.org/neckpain",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "آلام الرقبة و كيفية التخلص منها | Nile Therapy",
+    "description": "هل تعاني من آلام في الرقبة بسبب الجلوس الطويل أمام الكمبيوتر أو القيادة لمسافات طويلة؟ 🤔\n\nفي هذا المقال ستجد دليلك المبسط لفهم أسباب ألم الرقبة، متى تحتاج لزيارة دكتور العلاج الطبيعي، وأهم \nالتمارين والنصائح العملية للجلوس والعمل والقيادة والتسوق بدون ألم. 💪\n\nاقرأ لتتعلم كيف تحمي رقبتك وتعيش يومك براحة أكثر!",
+    "canonical": "https://www.niletherapy.org/neckpain",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/neckpain",
+      "ar https://www.niletherapy.org/neckpain"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "آلام الرقبة و كيفية التخلص منها"
+    ],
+    "h2": [
+      "ما هو ألم الرقبة؟",
+      "ما هى الأسباب الشائعة؟",
+      "الأعراض :",
+      "متى يمكن زيارة دكتور العلاج الطبيعي؟",
+      "متى يجب مراجعة الطبيب؟",
+      "وضعية الجلوس الصحيحة أمام الكمبيوتر"
+    ],
+    "jsonld": [
+      "Article"
+    ],
+    "images": 20,
+    "images_no_alt": 6,
+    "words": 742
+  },
+  {
+    "url": "https://www.niletherapy.org/online-store",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "Product list | Nile Therapy",
+    "description": "",
+    "canonical": "https://www.niletherapy.org/online-store",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/online-store",
+      "ar https://www.niletherapy.org/online-store"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 6,
+    "images_no_alt": 0,
+    "words": 70
+  },
+  {
+    "url": "https://www.niletherapy.org/hjz-almwaayd",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "حجز جلسات العلاج الطبيعى فى المنزل | Nile Therapy",
+    "description": "استمتع بخدمات العلاج الطبيعى فى المنزل مع حجز مواعيد لجلسات مخصصة حسب احتياجاتك. احصل على أفضل رعاية صحية من خلال جلسات العلاج الطبيعى المتاحة في مختلف الأقسام.",
+    "canonical": "https://www.niletherapy.org/hjz-almwaayd",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/hjz-almwaayd",
+      "ar https://www.niletherapy.org/hjz-almwaayd"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "تواصل معنا"
+    ],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 6,
+    "images_no_alt": 0,
+    "words": 152
+  },
+  {
+    "url": "https://www.niletherapy.org/akhr-alakhbar",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "أخر الأخبار | Nile Therapy",
+    "description": "",
+    "canonical": "https://www.niletherapy.org/akhr-alakhbar",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/akhr-alakhbar",
+      "ar https://www.niletherapy.org/akhr-alakhbar"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "أخر الأخبار"
+    ],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 6,
+    "images_no_alt": 0,
+    "words": 72
+  },
+  {
+    "url": "https://www.niletherapy.org/almqalat",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "المقالات | Nile Therapy",
+    "description": "",
+    "canonical": "https://www.niletherapy.org/almqalat",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/almqalat",
+      "ar https://www.niletherapy.org/almqalat"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "المقالات",
+      "المقالات و أخر الاخبار"
+    ],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 12,
+    "images_no_alt": 6,
+    "words": 164
+  },
+  {
+    "url": "https://www.niletherapy.org/almqalat-altbyh",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "المقالات الطبية | Nile Therapy",
+    "description": "",
+    "canonical": "https://www.niletherapy.org/almqalat-altbyh",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/almqalat-altbyh",
+      "ar https://www.niletherapy.org/almqalat-altbyh"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "المقالات الطبية"
+    ],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 6,
+    "images_no_alt": 0,
+    "words": 72
+  },
+  {
+    "url": "https://www.niletherapy.org",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "Nile Therapy - Excellent physiotherapy services at your home | Nile Therapy",
+    "description": "Nile Therapy provides professional physiotherapy and home healthcare services across Egypt, delivering personalized rehabilitation, post-surgical recovery, and elderly care directly to patients’ homes with licensed specialists.",
+    "canonical": "https://www.niletherapy.org/",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/",
+      "ar https://www.niletherapy.org/",
+      "en https://www.niletherapy.org/en"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "خدمات علاج متكاملة تنتظرك!",
+      "تابعنا"
+    ],
+    "h2": [],
+    "jsonld": [
+      "WebSite"
+    ],
+    "images": 31,
+    "images_no_alt": 14,
+    "words": 653
+  },
+  {
+    "url": "https://www.niletherapy.org/en",
+    "status": 200,
+    "redirect": null,
+    "lang": "en-US",
+    "title": "Dr. Abdelrahman Sameh - Expert Physical Therapy Services | Dr. Abdelrahman Sameh",
+    "description": "Welcome to Dr. Abdelrahman Sameh's physical therapy practice. Explore our professional services, patient testimonials, educational resources, and HIPAA-compliant contact form for appointment requests. Your journey to recovery starts here with trusted care and expertise.",
+    "canonical": "https://www.niletherapy.org/en",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/en",
+      "ar https://www.niletherapy.org/",
+      "en https://www.niletherapy.org/en"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "Expert Physical Therapy Services Await You"
+    ],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 20,
+    "images_no_alt": 4,
+    "words": 233
+  },
+  {
+    "url": "https://www.niletherapy.org/testimonials",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "Patient Testimonials for Nile Therapy | Nile Therapy",
+    "description": "Read what our patients say about their experiences with Dr. Abdelrahman Sameh. Discover how our physical therapy practice has helped them regain mobility and improve their quality of life through personalized care and effective treatment plans.",
+    "canonical": "https://www.niletherapy.org/testimonials",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/testimonials",
+      "ar https://www.niletherapy.org/testimonials",
+      "en https://www.niletherapy.org/en/testimonials"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "Patient Feedback"
+    ],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 12,
+    "images_no_alt": 0,
+    "words": 166
+  },
+  {
+    "url": "https://www.niletherapy.org/en/testimonials",
+    "status": 200,
+    "redirect": null,
+    "lang": "en-US",
+    "title": "Patient Testimonials for Dr. Abdelrahman Sameh's Practice | Dr. Abdelrahman Sameh",
+    "description": "Read what our patients say about their experiences with Dr. Abdelrahman Sameh. Discover how our physical therapy practice has helped them regain mobility and improve their quality of life through personalized care and effective treatment plans.",
+    "canonical": "https://www.niletherapy.org/en/testimonials",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/en/testimonials",
+      "ar https://www.niletherapy.org/testimonials",
+      "en https://www.niletherapy.org/en/testimonials"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "Patient Feedback"
+    ],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 10,
+    "images_no_alt": 0,
+    "words": 143
+  },
+  {
+    "url": "https://www.niletherapy.org/mn-nhn",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "Nile Therapy - Expert Physical Therapy Services | Nile Therapy",
+    "description": "Nile Therapy provides professional physiotherapy and home healthcare services across Egypt, delivering personalized rehabilitation, post-surgical recovery, and elderly care directly to patients’ homes with licensed specialists.",
+    "canonical": "https://www.niletherapy.org/mn-nhn",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/mn-nhn",
+      "ar https://www.niletherapy.org/mn-nhn",
+      "en https://www.niletherapy.org/en/about"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 20,
+    "images_no_alt": 0,
+    "words": 154
+  },
+  {
+    "url": "https://www.niletherapy.org/en/about",
+    "status": 200,
+    "redirect": null,
+    "lang": "en-US",
+    "title": "Dr. Abdelrahman Sameh - Expert Physical Therapy Services | Dr. Abdelrahman Sameh",
+    "description": "Welcome to Dr. Abdelrahman Sameh's professional physical therapy practice. Our website features an about me section, patient testimonials, educational materials, and a HIPAA-compliant contact form for appointment requests. Trust us for your rehabilitation needs and discover effective resources for your health.",
+    "canonical": "https://www.niletherapy.org/en/about",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/en/about",
+      "ar https://www.niletherapy.org/mn-nhn",
+      "en https://www.niletherapy.org/en/about"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 18,
+    "images_no_alt": 0,
+    "words": 130
+  },
+  {
+    "url": "https://www.niletherapy.org/jlsat-alalaj-altbyaa-llazam-jrahtha",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "جلسات العلاج الطبيعى للعظام  و جراحتها | Nile Therapy",
+    "description": "نقدّم جلسات علاج طبيعي متخصصة للتعامل مع أمراض العظام، الإصابات المختلفة، وحالات ما بعد الجراحات، على يد أخصائيين مؤهلين. تبدأ الخدمة بدراسة الحالة الطبية والتاريخ المرضي، يليها تقييم طبي ووظيفي شامل يشمل مدى الحركة، القوة العضلية، ومستوى الألم.تهدف الجلسات إلى تشخيص دقيق للحالة وتحديد السبب ...",
+    "canonical": "https://www.niletherapy.org/jlsat-alalaj-altbyaa-llazam-jrahtha",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/jlsat-alalaj-altbyaa-llazam-jrahtha",
+      "ar https://www.niletherapy.org/jlsat-alalaj-altbyaa-llazam-jrahtha"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "جلسات العلاج الطبيعى للعظام و جراحتها"
+    ],
+    "h2": [
+      "تقييم وعلاج وتأهيل متكامل لاستعادة الحركة وتقليل الألم وتحسين الوظيفة"
+    ],
+    "jsonld": [
+      "Product"
+    ],
+    "images": 7,
+    "images_no_alt": 0,
+    "words": 203
+  },
+  {
+    "url": "https://www.niletherapy.org/kshf-mnzla-w-jlsh-awla-",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "كشف منزلى و جلسة اولى  | Nile Therapy",
+    "description": "نقدّم خدمة كشف منزلي متكامل في العلاج الطبيعي على يد أخصائيين مؤهلين، تبدأ بدراسة الحالة الطبية والتاريخ المرضي بشكل دقيق، يليها تقييم طبي ووظيفي شامل يشمل الحركة، القوة العضلية، مدى المفاصل، ومستوى الألم باستخدام أدوات تقييم معتمدة. يهدف هذا التقييم إلى الوصول للتشخيص الوظيفي الصحيح وتحديد ...",
+    "canonical": "https://www.niletherapy.org/kshf-mnzla-w-jlsh-awla-",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/kshf-mnzla-w-jlsh-awla-",
+      "ar https://www.niletherapy.org/kshf-mnzla-w-jlsh-awla-"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "كشف منزلى و جلسة اولى"
+    ],
+    "h2": [
+      "كشف منزلي احترافي يشمل تقييم شامل للحركة والألم و الحالة الطبية لتحديد المشكلة بدقة ووضع خطة علاج وبرنامج تأهيلي مخصص"
+    ],
+    "jsonld": [
+      "Product"
+    ],
+    "images": 7,
+    "images_no_alt": 0,
+    "words": 240
+  },
+  {
+    "url": "https://www.niletherapy.org/jlsat-alalaj-altbyaa-lamradh-almkh-w-alaasab-w-asabat-alhbl-alshwka-w-jrahthm-",
+    "status": 200,
+    "redirect": null,
+    "lang": "ar-EG",
+    "title": "جلسات العلاج الطبيعى لأمراض المخ و الاعصاب و اصابات الحبل الشوكى و جراحتهم  | Nile Therapy",
+    "description": "نقدّم جلسات علاج طبيعي متخصصة في التأهيل العصبي للتعامل مع أمراض المخ والأعصاب، إصابات الحبل الشوكي، وحالات ما بعد الجراحات، على يد أخصائيين مؤهلين. تبدأ الخدمة بدراسة الحالة الطبية والتاريخ المرضي، يليها تقييم طبي ووظيفي شامل يشمل الحركة، التوازن، الإحساس، التناسق العضلي العصبي، ومستوى ...",
+    "canonical": "https://www.niletherapy.org/jlsat-alalaj-altbyaa-lamradh-almkh-w-alaasab-w-asabat-alhbl-alshwka-w-jrahthm-",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/jlsat-alalaj-altbyaa-lamradh-almkh-w-alaasab-w-asabat-alhbl-alshwka-w-jrahthm-",
+      "ar https://www.niletherapy.org/jlsat-alalaj-altbyaa-lamradh-almkh-w-alaasab-w-asabat-alhbl-alshwka-w-jrahthm-"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "جلسات العلاج الطبيعى لأمراض المخ و الاعصاب و اصابات الحبل الشوكى و جراحتهم"
+    ],
+    "h2": [
+      "تأهيل عصبي متكامل لتحسين الحركة والتوازن واستعادة الوظائف الحركية بأمان"
+    ],
+    "jsonld": [
+      "Product"
+    ],
+    "images": 7,
+    "images_no_alt": 0,
+    "words": 228
+  },
+  {
+    "url": "https://www.niletherapy.org/en/enhancing-your-physical-therapy-practice-with-a-professional-online-presence",
+    "status": 200,
+    "redirect": null,
+    "lang": "en-US",
+    "title": "Enhancing Your Physical Therapy Practice with a Professional Online Presence | Dr. Abdelrahman Sameh",
+    "description": "Discover how to create a professional website for your physical therapy practice. Highlight your credentials, showcase patient testimonials, share educational resources, and ensure HIPAA compliance for appointment requests. Build trust and connect with patients effectively in just minutes with our comprehensive website solutions.",
+    "canonical": "https://www.niletherapy.org/en/enhancing-your-physical-therapy-practice-with-a-professional-online-presence",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/en/enhancing-your-physical-therapy-practice-with-a-professional-online-presence",
+      "en https://www.niletherapy.org/en/enhancing-your-physical-therapy-practice-with-a-professional-online-presence"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "Enhancing Your Physical Therapy Practice with a Professional Online Presence"
+    ],
+    "h2": [],
+    "jsonld": [
+      "Article"
+    ],
+    "images": 6,
+    "images_no_alt": 0,
+    "words": 113
+  },
+  {
+    "url": "https://www.niletherapy.org/en/enhancing-your-physical-therapy-practice-with-a-professional-website",
+    "status": 200,
+    "redirect": null,
+    "lang": "en-US",
+    "title": "Enhancing Your Physical Therapy Practice with a Professional Website | Dr. Abdelrahman Sameh",
+    "description": "Discover how a well-designed website can elevate your physical therapy practice. Highlight your credentials, showcase patient testimonials, and provide valuable educational resources. Ensure HIPAA compliance with a secure contact form for appointment requests, making it easier for patients to connect with you and trust your expertise.",
+    "canonical": "https://www.niletherapy.org/en/enhancing-your-physical-therapy-practice-with-a-professional-website",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/en/enhancing-your-physical-therapy-practice-with-a-professional-website",
+      "en https://www.niletherapy.org/en/enhancing-your-physical-therapy-practice-with-a-professional-website"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [
+      "Enhancing Your Physical Therapy Practice with a Professional Website"
+    ],
+    "h2": [],
+    "jsonld": [
+      "Article"
+    ],
+    "images": 6,
+    "images_no_alt": 0,
+    "words": 114
+  },
+  {
+    "url": "https://www.niletherapy.org/en/resources",
+    "status": 200,
+    "redirect": null,
+    "lang": "en-US",
+    "title": "Professional Physical Therapy Resources for Patients and Practitioners | Dr. Abdelrahman Sameh",
+    "description": "Explore our comprehensive resources for physical therapy, including exercise guides, educational materials, and patient testimonials. Enhance your practice and build trust with valuable information tailored for both patients and healthcare professionals.",
+    "canonical": "https://www.niletherapy.org/en/resources",
+    "hreflang": [
+      "x-default https://www.niletherapy.org/en/resources",
+      "en https://www.niletherapy.org/en/resources"
+    ],
+    "robots": "",
+    "og_title": "",
+    "og_image": "",
+    "h1": [],
+    "h2": [],
+    "jsonld": [
+      "WebPage"
+    ],
+    "images": 10,
+    "images_no_alt": 0,
+    "words": 114
+  }
+]

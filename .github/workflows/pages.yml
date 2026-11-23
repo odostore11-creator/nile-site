@@ -1,0 +1,31 @@
+# Builds the site and publishes it to GitHub Pages.
+# STAGING (now): noindex everywhere, served at odostore11-creator.github.io/nile-site/.
+# LAUNCH: set NT_STAGING to "0" and NT_BASE to "/" (and add the custom domain www.niletherapy.org).
+name: Publish site
+on:
+  push: { branches: [main] }
+  workflow_dispatch:
+permissions: { contents: read, pages: write, id-token: write }
+concurrency: { group: pages, cancel-in-progress: true }
+env:
+  NT_STAGING: "1"
+  NT_BASE: "/nile-site/"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: node src/build.mjs
+      - run: node scripts/check.mjs
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: dist }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: "${{ steps.d.outputs.page_url }}" }
+    steps:
+      - id: d
+        uses: actions/deploy-pages@v4
