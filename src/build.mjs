@@ -214,7 +214,7 @@ function hero(p, lang) {
   <div class="hero-text">
     <p class="eyebrow">${ar ? 'شركة النيل للعلاج الطبيعي والرعاية المنزلية' : 'Physiotherapy & home care across Egypt'}</p>
     <h1>${ar ? `علاجك يوصلك <span class="mark">لحد بيتك${squiggle}</span>` : `Physiotherapy that comes <span class="mark">to your home${squiggle}</span>`}</h1>
-    <p class="lead">${ar ? 'أخصائيو علاج طبيعي مرخّصون يزورونك في منزلك، بخطة علاج مخصصة لحالتك ومتابعة مستمرة حتى تتعافى.' : 'Licensed physiotherapists visit you at home, with a treatment plan built around you and follow-up until you recover.'}</p>
+    <p class="lead">${ar ? 'علاج طبيعي في منزلك على يد فريق مرخّص، بخطة علاج مخصصة لحالتك ومتابعة مستمرة حتى تتعافى.' : 'Licensed physiotherapists visit you at home, with a treatment plan built around you and follow-up until you recover.'}</p>
     <form class="quick card" id="quick" data-book="${r(book)}" novalidate>
       <p class="quick-title">${ar ? 'احجز في أقل من دقيقة' : 'Book in under a minute'}</p>
       <div class="quick-fields">
@@ -224,7 +224,7 @@ function hero(p, lang) {
         <button class="btn book" type="submit" data-track="book:hero-form">${ar ? 'ابدأ الحجز' : 'Start booking'} ${icon('arrow', 'flip')}</button>
       </div>
     </form>
-    <ul class="ticks"><li>${icon('shield')}${ar ? 'أخصائيون مرخّصون' : 'Licensed physiotherapists'}</li><li>${icon('home')}${ar ? 'في منزلك' : 'At your home'}</li><li>${icon('cash')}${t.payNote}</li></ul>
+    <ul class="ticks"><li>${icon('shield')}${ar ? 'فريق مرخّص' : 'Licensed physiotherapists'}</li><li>${icon('home')}${ar ? 'في منزلك' : 'At your home'}</li><li>${icon('cash')}${t.payNote}</li></ul>
   </div>
   <div class="hero-art">${egyptArt(lang)}</div>
 </div></section>`;
@@ -268,7 +268,7 @@ function priceStrip(p, lang, { heading = true } = {}) {
 function founders(lang, heading = true) {
   const ar = lang === 'ar';
   return `<section class="sec"><div class="wrap">
-  ${heading ? `<div class="sec-head"><h2>${ar ? 'المؤسسون' : 'Meet the founders'}</h2><p>${ar ? 'أخصائيو علاج طبيعي أسّسوا Nile Therapy ليصل العلاج المتخصص إلى كل بيت في مصر.' : 'Physiotherapists who founded Nile Therapy to bring specialist care into every home in Egypt.'}</p></div>` : ''}
+  ${heading ? `<div class="sec-head"><h2>${ar ? 'المؤسسون' : 'Meet the founders'}</h2><p>${ar ? 'دكاترة علاج طبيعي أسّسوا Nile Therapy ليصل العلاج المتخصص إلى كل بيت في مصر.' : 'Physiotherapists who founded Nile Therapy to bring specialist care into every home in Egypt.'}</p></div>` : ''}
   <div class="founders">${FOUNDERS.map(f => `<article class="founder">
     <div class="mono" aria-hidden="true"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" class="mono-ring"/><g class="mono-lotus" transform="translate(30 4) scale(.4)">${LOTUS}</g></svg><span>${ar ? f.initial : f.initialEn}</span></div>
     <h3>${f[lang].name}</h3><p class="role">${f[lang].role}</p><p class="spec">${f[lang].spec}</p></article>`).join('')}</div>
@@ -374,7 +374,7 @@ add({ path: '/en', lang: 'en', pair: '/', title: 'Nile Therapy | Expert Physioth
   body: homeBody('en') });
 
 add({ path: '/mn-nhn', lang: 'ar', pair: '/en/about', title: 'من نحن | Nile Therapy - شركة النيل للعلاج الطبيعي',
-  description: 'Nile Therapy وكالة متخصصة في العلاج الطبيعي والرعاية المنزلية، أسسها أخصائيو علاج طبيعي، وتربط المرضى بأخصائيين مرخّصين في كل أنحاء مصر.',
+  description: 'Nile Therapy وكالة متخصصة في العلاج الطبيعي والرعاية المنزلية، أسسها دكاترة علاج طبيعي، وتربط المرضى بفريق علاج طبيعي مرخّص في كل أنحاء مصر.',
   body: p => pageHead('من نحن', 'شركة النيل للعلاج الطبيعي والرعاية المنزلية — العلاج يوصل لحد باب بيتك.') + aboutText('ar') + stats('ar') + founders('ar') + timeline('ar') + partners('ar') + ctaBand(p, 'ar') });
 add({ path: '/en/about', lang: 'en', pair: '/mn-nhn', title: 'About Nile Therapy | Physiotherapy & Home Care in Egypt',
   description: 'Nile Therapy is a physiotherapy and home-care agency founded by physiotherapists, connecting patients with licensed physiotherapists across Egypt.',
