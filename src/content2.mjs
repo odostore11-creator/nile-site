@@ -7,8 +7,8 @@ export const FOUNDERS = [
     en: { name: 'Dr. Mostafa Ismail', role: 'Co-founder & CEO', spec: 'Neuromuscular Physiotherapy' } },
   { initial: 'ع', initialEn: 'A', ar: { name: 'د. عبدالرحمن سامح', role: 'مؤسس شريك والمدير التقني (CTO)', spec: 'العلاج الطبيعي للقلب والصدر، الرعاية المركزة، وما قبل وبعد العمليات' },
     en: { name: 'Dr. Abdelrahman Sameh', role: 'Co-founder & CTO', spec: 'Cardiopulmonary, Critical Care & Perioperative Physiotherapy' } },
-  { initial: 'أ', initialEn: 'A', ar: { name: 'د. أحمد نادر', role: 'مؤسس شريك', spec: 'العلاج الطبيعي العصبي العضلي' },
-    en: { name: 'Dr. Ahmed Nader', role: 'Co-founder', spec: 'Neuromuscular Physiotherapy' } },
+  { initial: 'أ', initialEn: 'A', ar: { name: 'د. أحمد نادر', role: 'مؤسس شريك والمدير التشغيلي (COO)', spec: 'العلاج الطبيعي العصبي العضلي' },
+    en: { name: 'Dr. Ahmed Nader', role: 'Co-founder & COO', spec: 'Neuromuscular Physiotherapy' } },
 ];
 
 export const FAQ = {
