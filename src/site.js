@@ -6,6 +6,59 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape' && nav.classList.contains('open')) { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); menu.focus(); } });
   }
 
+  // Dropdown menus. Desktop: open on hover (CSS) or focus; the chevron button and touch taps open/close them.
+  // Phones: the chevron opens a group inside the ☰ menu. A dropdown that would run off the screen is nudged back in.
+  const items = [...document.querySelectorAll('[data-drop]')];
+  const wide = matchMedia('(min-width: 981px)'), touch = matchMedia('(hover: none)');
+  const setOpen = (it, open) => { it.classList.toggle('open', open); it.querySelector('.drop-btn').setAttribute('aria-expanded', open); if (open) fit(it); };
+  const closeAll = except => items.forEach(it => { if (it !== except) setOpen(it, false); });
+  const fit = it => {
+    const d = it.querySelector('.drop'); if (!wide.matches) { d.style.marginLeft = ''; return; }
+    d.style.marginLeft = '0px';
+    const r = d.getBoundingClientRect(), pad = 12;
+    const shift = r.right > innerWidth - pad ? innerWidth - pad - r.right : r.left < pad ? pad - r.left : 0;
+    d.style.marginLeft = shift + 'px';
+  };
+  items.forEach(it => {
+    it.querySelector('.drop-btn').addEventListener('click', e => { e.preventDefault(); const open = !it.classList.contains('open'); closeAll(it); setOpen(it, open); });
+    it.addEventListener('mouseenter', () => fit(it));
+    it.addEventListener('focusin', () => fit(it));
+    // A tablet with a wide screen has no hover: the first tap on "Services" opens its list, the second follows the link.
+    it.querySelector('.nav-top').addEventListener('click', e => {
+      if (wide.matches && touch.matches && !it.classList.contains('open')) { e.preventDefault(); closeAll(it); setOpen(it, true); }
+    });
+  });
+  document.addEventListener('click', e => { if (!e.target.closest('[data-drop]')) closeAll(); });
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    const it = items.find(x => x.classList.contains('open') || x.contains(document.activeElement));
+    if (it) { setOpen(it, false); it.querySelector('.nav-top').focus(); }
+  });
+  addEventListener('resize', () => items.forEach(it => it.classList.contains('open') && fit(it)));
+
+  // Header gets a soft shadow once the page scrolls.
+  const top = document.querySelector('.top');
+  if (top) { const onScroll = () => top.classList.toggle('scrolled', scrollY > 8); addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
+
+  // FAQ answers slide open and closed instead of jumping.
+  const still = matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll('.faq details').forEach(d => {
+    const s = d.querySelector('summary'), a = d.querySelector('.faq-a'); if (!s || !a) return;
+    s.addEventListener('click', e => {
+      if (still.matches || !a.animate) return;
+      e.preventDefault();
+      if (d.open) {
+        a.animate([{ height: a.offsetHeight + 'px', opacity: 1 }, { height: '0px', opacity: 0 }], { duration: 220, easing: 'ease' }).onfinish = () => { d.open = false; };
+      } else {
+        d.open = true;
+        a.animate([{ height: '0px', opacity: 0 }, { height: a.offsetHeight + 'px', opacity: 1 }], { duration: 260, easing: 'ease' });
+      }
+    });
+  });
+
+  // Finder: which problem people pick (no personal data).
+  document.querySelectorAll('.finder-chips input').forEach(i => i.addEventListener('change', () => { try { window.gtag && gtag('event', 'finder_pick', { need: i.value }); } catch { /* blocked */ } }));
+
   // Analytics: which buttons lead to bookings (no personal data is sent).
   const track = (name, params) => { try { if (window.gtag) gtag('event', name, params); } catch { /* blocked */ } };
   document.addEventListener('click', e => {

@@ -3,11 +3,11 @@
 
 // The three founders (no phone numbers on the public site, by decision).
 export const FOUNDERS = [
-  { initial: 'م', initialEn: 'M', ar: { name: 'د. مصطفى إسماعيل', role: 'مؤسس شريك والمدير التنفيذي (CEO)', spec: 'العلاج الطبيعي العصبي العضلي' },
+  { key: 'mostafa', initial: 'م', initialEn: 'M', ar: { name: 'د. مصطفى إسماعيل', role: 'مؤسس شريك والمدير التنفيذي (CEO)', spec: 'العلاج الطبيعي العصبي العضلي' },
     en: { name: 'Dr. Mostafa Ismail', role: 'Co-founder & CEO', spec: 'Neuromuscular Physiotherapy' } },
-  { initial: 'ع', initialEn: 'A', ar: { name: 'د. عبدالرحمن سامح', role: 'مؤسس شريك والمدير التقني (CTO)', spec: 'العلاج الطبيعي للقلب والصدر، الرعاية المركزة، وما قبل وبعد العمليات' },
+  { key: 'abdelrahman', initial: 'ع', initialEn: 'A', ar: { name: 'د. عبدالرحمن سامح', role: 'مؤسس شريك والمدير التقني (CTO)', spec: 'العلاج الطبيعي للقلب والصدر، الرعاية المركزة، وما قبل وبعد العمليات' },
     en: { name: 'Dr. Abdelrahman Sameh', role: 'Co-founder & CTO', spec: 'Cardiopulmonary, Critical Care & Perioperative Physiotherapy' } },
-  { initial: 'أ', initialEn: 'A', ar: { name: 'د. أحمد نادر', role: 'مؤسس شريك والمدير التشغيلي (COO)', spec: 'العلاج الطبيعي العصبي العضلي' },
+  { key: 'ahmed', initial: 'أ', initialEn: 'A', ar: { name: 'د. أحمد نادر', role: 'مؤسس شريك والمدير التشغيلي (COO)', spec: 'العلاج الطبيعي العصبي العضلي' },
     en: { name: 'Dr. Ahmed Nader', role: 'Co-founder & COO', spec: 'Neuromuscular Physiotherapy' } },
 ];
 
@@ -78,7 +78,7 @@ export const SPEC_PAGES = [
 
 // New articles (each with an Arabic and an English version).
 export const ARTICLES = [
-  { key: 'back', img: 'neck-exam', date: '2026-11-23', ar: '/alam-asfal-aldhahr', en: '/en/lower-back-pain',
+  { key: 'back', img: 'posture-desk', date: '2026-11-23', ar: '/alam-asfal-aldhahr', en: '/en/lower-back-pain',
     ar_t: 'آلام أسفل الظهر: الأسباب ومتى تحتاج للعلاج الطبيعي', en_t: 'Lower Back Pain: Causes and When to Get Help',
     ar_lead: 'ألم أسفل الظهر من أكثر أسباب الغياب عن العمل. تعرّف على أسبابه الشائعة، وعلامات الخطر، وكيف يساعد العلاج الطبيعي.',
     en_lead: 'Lower back pain is one of the most common reasons people miss work. Learn the usual causes, the warning signs, and how physiotherapy helps.',
