@@ -5,8 +5,8 @@
 // hostnames www.niletherapy.org, niletherapy.org and odostore11-creator.github.io; mode "Managed". Paste the SITE key here.
 // The SECRET key goes ONLY into Supabase > Edge Functions > Secrets as TURNSTILE_SECRET_KEY, and only AFTER this site key
 // is live (otherwise the booking function would demand a check the form can't show yet).
-export const TURNSTILE_SITEKEY = '';
+export const TURNSTILE_SITEKEY = '0x4AAAAAAGT8AaOK7UWMONg7';
 
 // Cloudflare Web Analytics (visitors, pages, countries; no cookies, so no consent banner). Cloudflare dashboard >
 // Analytics & Logs > Web Analytics > Add a site > www.niletherapy.org > "manual JS snippet": paste the token from it here.
-export const CF_ANALYTICS_TOKEN = '';
+export const CF_ANALYTICS_TOKEN = '7d3cf210f99d46cda6cd740637ffd9de';
