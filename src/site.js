@@ -83,11 +83,11 @@
   const ar = form.dataset.lang === 'ar';
   const msg = ar ? {
     name: 'اكتب الاسم بالكامل.', phone: 'اكتب رقم موبايل مصري صحيح، مثال 01012345678.', governorate: 'اختر المحافظة.', address: 'اكتب العنوان أو المنطقة.',
-    date: 'اختر يوماً من اليوم فصاعداً.', consent: 'يجب الموافقة لنتمكن من التواصل معك.', map: 'رابط الموقع يجب أن يبدأ بـ https://',
+    date: 'اختر يوماً من اليوم فصاعداً.', consent: 'يجب الموافقة لنتمكن من التواصل معك.', email: 'البريد الإلكتروني غير صحيح، صححه أو اتركه فارغاً.', map: 'رابط الموقع يجب أن يبدأ بـ https://',
     network: 'تعذّر الإرسال. تأكد من الاتصال بالإنترنت وحاول مرة أخرى، أو راسلنا على واتساب.', busy: 'جاري الإرسال…', locating: 'جاري تحديد موقعك…', located: '✓ تم تحديد موقعك', locFail: 'تعذّر تحديد الموقع. يمكنك لصق رابط خرائط جوجل.', bot: 'انتظر لحظة حتى يكتمل التحقق الأمني، ثم أرسل مرة أخرى.',
   } : {
     name: 'Enter your full name.', phone: 'Enter a valid Egyptian mobile number, e.g. 01012345678.', governorate: 'Choose your governorate.', address: 'Enter your address or area.',
-    date: 'Choose today or a later day.', consent: 'Please agree so we can contact you.', map: 'The map link must start with https://',
+    date: 'Choose today or a later day.', consent: 'Please agree so we can contact you.', email: 'That email does not look right. Fix it or leave it empty.', map: 'The map link must start with https://',
     network: "Couldn't send. Check your connection and try again, or message us on WhatsApp.", busy: 'Sending…', locating: 'Finding your location…', located: '✓ Location added', locFail: "Couldn't get your location. You can paste a Google Maps link instead.", bot: "Please wait a moment for the security check to finish, then send again.",
   };
   const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
@@ -125,6 +125,7 @@
     mark(form.governorate, !!form.governorate.value, msg.governorate);
     mark(form.address, form.address.value.trim().length >= 3, msg.address);
     mark(form.date, form.date.value >= today, msg.date);
+    const mail = form.email.value.trim(); mark(form.email, !mail || /^[^@\s<>,;"]+@[^@\s]+\.[a-z]{2,24}$/i.test(mail), msg.email);
     const link = form.map_link.value.trim(); mark(form.map_link, !link || /^https:\/\/\S+$/i.test(link), msg.map);
     if (!form.consent.checked) bad.push([form.consent, msg.consent]);
     return bad;
