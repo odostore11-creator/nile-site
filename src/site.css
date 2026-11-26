@@ -506,3 +506,6 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--bo
   .posts.feature .post:not(:first-child) .post-body > p:not(.tag) { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   .posts.feature .post:first-child .post-body h3 { font-size: 24px; }
 }
+
+/* Cloudflare Turnstile widget on the booking form (only when a site key is set) */
+.cf-turnstile { margin: 6px 0 4px; min-height: 65px; }

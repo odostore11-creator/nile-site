@@ -84,11 +84,11 @@
   const msg = ar ? {
     name: 'اكتب الاسم بالكامل.', phone: 'اكتب رقم موبايل مصري صحيح، مثال 01012345678.', governorate: 'اختر المحافظة.', address: 'اكتب العنوان أو المنطقة.',
     date: 'اختر يوماً من اليوم فصاعداً.', consent: 'يجب الموافقة لنتمكن من التواصل معك.', map: 'رابط الموقع يجب أن يبدأ بـ https://',
-    network: 'تعذّر الإرسال. تأكد من الاتصال بالإنترنت وحاول مرة أخرى، أو راسلنا على واتساب.', busy: 'جاري الإرسال…', locating: 'جاري تحديد موقعك…', located: '✓ تم تحديد موقعك', locFail: 'تعذّر تحديد الموقع. يمكنك لصق رابط خرائط جوجل.',
+    network: 'تعذّر الإرسال. تأكد من الاتصال بالإنترنت وحاول مرة أخرى، أو راسلنا على واتساب.', busy: 'جاري الإرسال…', locating: 'جاري تحديد موقعك…', located: '✓ تم تحديد موقعك', locFail: 'تعذّر تحديد الموقع. يمكنك لصق رابط خرائط جوجل.', bot: 'انتظر لحظة حتى يكتمل التحقق الأمني، ثم أرسل مرة أخرى.',
   } : {
     name: 'Enter your full name.', phone: 'Enter a valid Egyptian mobile number, e.g. 01012345678.', governorate: 'Choose your governorate.', address: 'Enter your address or area.',
     date: 'Choose today or a later day.', consent: 'Please agree so we can contact you.', map: 'The map link must start with https://',
-    network: "Couldn't send. Check your connection and try again, or message us on WhatsApp.", busy: 'Sending…', locating: 'Finding your location…', located: '✓ Location added', locFail: "Couldn't get your location. You can paste a Google Maps link instead.",
+    network: "Couldn't send. Check your connection and try again, or message us on WhatsApp.", busy: 'Sending…', locating: 'Finding your location…', located: '✓ Location added', locFail: "Couldn't get your location. You can paste a Google Maps link instead.", bot: "Please wait a moment for the security check to finish, then send again.",
   };
   const today = new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
   form.date.min = today; if (!form.date.value) form.date.value = today;
@@ -138,17 +138,23 @@
     if (sending) return;
     const bad = check();
     if (bad.length) { showErr(bad[0][1]); bad[0][0].focus(); return; }
-    showErr(''); sending = true; btn.disabled = true; btn.textContent = msg.busy;
+    // Cloudflare Turnstile (only when the site key is set): the widget puts its token in cf-turnstile-response.
     const d = Object.fromEntries(new FormData(form).entries());
+    const turnstile = d['cf-turnstile-response'] || ''; delete d['cf-turnstile-response'];
+    if (form.querySelector('.cf-turnstile') && !turnstile) { showErr(msg.bot); return; }
+    showErr(''); sending = true; btn.disabled = true; btn.textContent = msg.busy;
     try {
       const r = await fetch(ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...d, consent: !!form.consent.checked, lang: ar ? 'ar' : 'en', page: location.pathname }) });
+        body: JSON.stringify({ ...d, turnstile, consent: !!form.consent.checked, lang: ar ? 'ar' : 'en', page: location.pathname }) });
       const j = await r.json().catch(() => ({}));
       if (!r.ok) throw new Error(j.error || msg.network);
       form.hidden = true;
       const done = document.getElementById('booking-done'); done.hidden = false; done.focus();
       track('generate_lead', { method: 'booking_form', service: d.service || 'none', has_location: !!d.lat });
-    } catch (x) { showErr(x.message && !/fetch|network/i.test(x.message) ? x.message : msg.network); }
+    } catch (x) {
+      showErr(x.message && !/fetch|network/i.test(x.message) ? x.message : msg.network);
+      try { window.turnstile?.reset(); } catch { /* no widget */ } // a token works once: get a fresh one for the retry
+    }
     sending = false; btn.disabled = false; btn.textContent = btnText;
   });
 })();

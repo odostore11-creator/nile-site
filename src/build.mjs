@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { SITE, CONTACT, GA, SERVICES, SPECIALTIES, TESTIMONIAL, GOVERNORATES, NECK } from './content.mjs';
 import { FOUNDERS, FAQ, SPEC_PAGES, ARTICLES } from './content2.mjs';
+import { TURNSTILE_SITEKEY, CF_ANALYTICS_TOKEN } from './services.mjs'; // public keys: empty = off
 import { PHOTOS, REVIEWS, STATS, NEWS, STORY } from './pending.mjs'; // founders' content: empty = hidden
 
 const ROOT = path.resolve(path.dirname(decodeURIComponent(new URL(import.meta.url).pathname).replace(/^\/(\w:)/, '$1')), '..');
@@ -209,7 +210,9 @@ ${alt.map(([l, u]) => `<link rel="alternate" hreflang="${l}" href="${SITE}${u}">
 <script type="application/ld+json">${JSON.stringify(ld.length === 1 ? ld[0] : { '@context': 'https://schema.org', '@graph': ld.map(({ '@context': _, ...x }) => x) })}</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=${GA}"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA}');</script>
-</head>
+${CF_ANALYTICS_TOKEN ? `<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"${CF_ANALYTICS_TOKEN}"}'></script>
+` : ''}${booking && TURNSTILE_SITEKEY ? `<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+` : ''}</head>
 <body class="${pg.bodyClass || ''}">
 <a class="skip" href="#main">${ar ? 'تخطَّ إلى المحتوى' : 'Skip to content'}</a>
 <header class="top"><div class="wrap top-in">
@@ -503,6 +506,7 @@ function bookingForm(lang) {
   <label class="field"><span>${f.complaint}</span><textarea name="complaint" maxlength="1000" dir="auto" rows="3" placeholder="${f.complaintPh}"></textarea></label>
   <label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
   <label class="consent"><input type="checkbox" name="consent" required> <span>${f.consent}</span></label>
+  ${TURNSTILE_SITEKEY ? `<div class="cf-turnstile" data-sitekey="${TURNSTILE_SITEKEY}" data-language="${lang}" data-size="flexible" data-theme="light"></div>` : ''}
   <p class="form-error" id="booking-err" role="alert" hidden></p>
   <button class="btn book lg block" type="submit">${f.send}</button>
   <p class="small muted center">${f.note}</p>
