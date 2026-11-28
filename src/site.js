@@ -86,6 +86,19 @@
     return /^01[0125]\d{8}$/.test(d) ? d : '';
   };
 
+  // "Who is this for?": booking for a relative relabels the fields (patient's name, your number) and shows the
+  // optional "your name and relationship" field on the booking page.
+  const applyFor = f => {
+    const fam = f.querySelector('input[name="for"]:checked')?.value === 'family';
+    f.querySelectorAll('[data-self]').forEach(el => { el.textContent = fam ? el.dataset.family : el.dataset.self; });
+    f.querySelectorAll('[data-family-only]').forEach(el => { el.hidden = !fam; });
+  };
+  document.querySelectorAll('form').forEach(f => {
+    if (!f.querySelector('input[name="for"]')) return;
+    f.addEventListener('change', e => { if (e.target.name === 'for') applyFor(f); });
+    applyFor(f); // the browser may restore a choice on Back
+  });
+
   // Hero quick booking: carries name/phone/governorate to the booking page in this tab only (sessionStorage, never the URL).
   // Each field shows its own message under it; nothing moves on until all three are filled in.
   const quick = document.getElementById('quick');
@@ -137,7 +150,11 @@
   if (svc && [...form.service.options].some(o => o.value === svc)) form.service.value = svc;
   try { // values typed in the home page's quick form
     const q = JSON.parse(sessionStorage.getItem('nt_quick') || 'null');
-    if (q) { for (const k of ['name', 'phone', 'governorate']) if (q[k] && !form[k].value) form[k].value = q[k]; sessionStorage.removeItem('nt_quick'); (form.address || form.name).focus(); }
+    if (q) {
+      for (const k of ['name', 'phone', 'governorate']) if (q[k] && !form[k].value) form[k].value = q[k];
+      const who = form.querySelector(`input[name="for"][value="${q.for === 'family' ? 'family' : 'self'}"]`); if (who) { who.checked = true; applyFor(form); }
+      sessionStorage.removeItem('nt_quick'); (form.address || form.name).focus();
+    }
   } catch { /* fine */ }
   const err = form.querySelector('.form-error');
   const showErr = t => { err.textContent = t; err.hidden = !t; if (t) err.scrollIntoView({ behavior: 'smooth', block: 'center' }); };
@@ -184,6 +201,13 @@
     if (bad.length) { showErr(bad[0][1]); bad[0][0].focus(); return; }
     // Cloudflare Turnstile (only when the site key is set): the widget puts its token in cf-turnstile-response.
     const d = Object.fromEntries(new FormData(form).entries());
+    // The portal has no "booked by" column: a relative's booking is noted at the top of the complaint the founders read.
+    if (d.for === 'family') {
+      const by = (d.booker || '').trim();
+      const head = ar ? `الحجز بواسطة أحد أفراد الأسرة${by ? `: ${by}` : ''}.` : `Booked by a family member${by ? `: ${by}` : ''}.`;
+      d.complaint = `${head}\n${d.complaint || ''}`.trim().slice(0, 1000);
+    }
+    delete d.for; delete d.booker;
     const turnstile = d['cf-turnstile-response'] || ''; delete d['cf-turnstile-response'];
     if (form.querySelector('.cf-turnstile') && !turnstile) { showErr(msg.bot); return; }
     showErr(''); sending = true; btn.disabled = true; btn.textContent = msg.busy;

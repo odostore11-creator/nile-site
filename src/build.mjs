@@ -31,10 +31,10 @@ const pic = (name, alt, { cls = '', eager = false, sizes = '(max-width: 760px) 1
 // ---------- text ----------
 const T = {
   ar: { home: 'الرئيسية', services: 'الخدمات والأسعار', articles: 'المقالات', about: 'من نحن', reviews: 'آراء المرضى', book: 'احجز الآن', other: 'English', otherLang: 'en',
-    menu: 'القائمة', wa: 'واتساب', call: 'اتصل', egp: 'ج.م', min: 'دقيقة', atHome: 'في منزلك', bookThis: 'احجز هذه الخدمة', more: 'التفاصيل',
+    menu: 'القائمة', wa: 'واتساب', call: 'اتصل', egp: 'ج.م', min: 'دقيقة', atHome: 'في منزلك', bookThis: 'احجز الآن', more: 'التفاصيل',
     payNote: 'الدفع نقداً بعد الجلسة', tagline: 'شريكك الموثوق في رحلة العلاج الطبيعي.', rights: 'جميع الحقوق محفوظة لشركة النيل للعلاج الطبيعي', contact: 'تواصل معنا', read: 'اقرأ المقال', specialties: 'التخصصات' },
   en: { home: 'Home', services: 'Services & prices', articles: 'Resources', about: 'About', reviews: 'Testimonials', book: 'Book now', other: 'العربية', otherLang: 'ar',
-    menu: 'Menu', wa: 'WhatsApp', call: 'Call', egp: 'EGP', min: 'min', atHome: 'At your home', bookThis: 'Book this service', more: 'Details',
+    menu: 'Menu', wa: 'WhatsApp', call: 'Call', egp: 'EGP', min: 'min', atHome: 'At your home', bookThis: 'Book now', more: 'Details',
     payNote: 'Pay cash after the session', tagline: 'Your trusted partner on your physiotherapy journey.', rights: 'All rights reserved, Nile Therapy', contact: 'Contact', read: 'Read article', specialties: 'Specialties' },
 };
 const waText = lang => encodeURIComponent(lang === 'ar' ? 'مرحباً، أريد حجز جلسة علاج طبيعي' : 'Hello, I would like to book a physiotherapy session');
@@ -232,7 +232,7 @@ ${pg.body.replace(/\{A\}/g, a)}
     <li>${icon('phone')}<a href="tel:${CONTACT.phone}" dir="ltr" data-track="call:footer">${CONTACT.phoneShow}</a></li>
     <li>${icon('wa')}<a href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:footer">${t.wa}</a></li>
     <li>${icon('mail')}<a href="mailto:${CONTACT.email}">${CONTACT.email}</a></li></ul>
-    <a class="btn book foot-book" href="${rel(p, book)}" data-track="book:footer">${t.book}</a></div>
+    <a class="btn ghost-light foot-book" href="${rel(p, book)}" data-track="book:footer">${t.book}</a></div>
   <div><h2>${t.specialties}</h2><ul class="links">${SPEC_PAGES.map(s => `<li><a href="${rel(p, s[lang])}">${esc(SPECIALTIES.find(x => x.icon === s.icon)[lang][0])}</a></li>`).join('')}</ul></div>
   <div><h2>${ar ? 'روابط' : 'Links'}</h2><ul class="links">${nav.map(([u, l]) => `<li><a href="${rel(p, u)}">${l}</a></li>`).join('')}</ul></div>
 </div><p class="wrap copy">© ${new Date().getFullYear()} Nile Therapy · ${t.rights}</p></footer>
@@ -264,6 +264,14 @@ const crumbLd = (items) => ({ '@context': 'https://schema.org', '@type': 'Breadc
 
 // ---------- sections ----------
 const L = (p, lang) => ({ t: T[lang], ar: lang === 'ar', book: lang === 'ar' ? '/hjz-almwaayd' : '/en/book', r: to => rel(p, to) });
+// "Who is this booking for?": half the people who book are arranging care for a parent or relative.
+// The choice relabels the name/phone fields (site.js) and travels from the quick form to the booking page.
+const forWhom = (lang, id) => {
+  const ar = lang === 'ar';
+  return `<fieldset class="for-whom"><legend>${ar ? 'لمين الحجز؟' : 'Who is this for?'}</legend>
+    <input class="sr" type="radio" name="for" value="self" id="${id}-for-self" checked><label for="${id}-for-self">${ar ? 'لنفسي' : 'Me'}</label>
+    <input class="sr" type="radio" name="for" value="family" id="${id}-for-family"><label for="${id}-for-family">${ar ? 'لحد من عيلتي' : 'Someone in my family'}</label></fieldset>`;
+};
 const govOptions = lang => GOVERNORATES.map(([e, a]) => `<option value="${e}">${lang === 'ar' ? a : e}</option>`).join('');
 
 function hero(p, lang) {
@@ -272,14 +280,15 @@ function hero(p, lang) {
   <div class="hero-text">
     <p class="eyebrow">${ar ? 'شركة النيل للعلاج الطبيعي والرعاية المنزلية' : 'Physiotherapy & home care across Egypt'}</p>
     <h1>${ar ? `علاجك يوصلك <span class="mark">لحد بيتك</span>` : `Physiotherapy that comes <span class="mark">to your home</span>`}</h1>
-    <p class="lead">${ar ? 'أطباء علاج طبيعي مرخّصون يزورونك في منزلك، بخطة علاج مخصصة لحالتك ومتابعة مستمرة حتى تتعافى.' : 'Licensed physiotherapists visit you at home, with a treatment plan built around you and follow-up until you recover.'}</p>
+    <p class="lead">${ar ? `نبدأ بكشف كامل في البيت لمدة ${SERVICES[0].minutes} دقيقة، ثم خطة علاج طبيعي يشرف عليها أخصائي من مؤسسي Nile&nbsp;Therapy، لك أو لحد من عيلتك.` : `We start with a full ${SERVICES[0].minutes}-minute assessment at home, then a physiotherapy plan overseen by one of Nile Therapy's specialist founders, for you or someone in your family.`}</p>
     <form class="quick card" id="quick" data-book="${r(book)}" data-lang="${lang}" novalidate>
       <p class="quick-title">${ar ? 'احجز في أقل من دقيقة' : 'Book in under a minute'}</p>
+      ${forWhom(lang, 'q')}
       <div class="quick-fields">
-        <label class="qf"><span class="qf-l">${ar ? 'الاسم' : 'Name'}</span><input type="text" name="name" autocomplete="name" dir="auto" maxlength="120" required aria-describedby="qe-name"><small class="qf-err" id="qe-name" hidden></small></label>
-        <label class="qf"><span class="qf-l">${ar ? 'رقم الموبايل' : 'Mobile number'}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01x xxxx xxxx" dir="ltr" maxlength="20" required aria-describedby="qe-phone"><small class="qf-err" id="qe-phone" hidden></small></label>
+        <label class="qf"><span class="qf-l" data-self="${ar ? 'الاسم' : 'Name'}" data-family="${ar ? 'اسم المريض' : "Patient's name"}">${ar ? 'الاسم' : 'Name'}</span><input type="text" name="name" autocomplete="name" dir="auto" maxlength="120" required aria-describedby="qe-name"><small class="qf-err" id="qe-name" hidden></small></label>
+        <label class="qf"><span class="qf-l" data-self="${ar ? 'رقم الموبايل' : 'Mobile number'}" data-family="${ar ? 'رقم موبايلك للتواصل' : 'Your mobile number'}">${ar ? 'رقم الموبايل' : 'Mobile number'}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01x xxxx xxxx" dir="ltr" maxlength="20" required aria-describedby="qe-phone"><small class="qf-err" id="qe-phone" hidden></small></label>
         <label class="qf"><span class="qf-l">${ar ? 'المحافظة' : 'Governorate'}</span><select name="governorate" required aria-describedby="qe-governorate"><option value="">${ar ? 'اختر المحافظة' : 'Choose…'}</option>${govOptions(lang)}</select><small class="qf-err" id="qe-governorate" hidden></small></label>
-        <button class="btn book" type="submit" data-track="book:hero-form">${ar ? 'ابدأ الحجز' : 'Start booking'} ${icon('arrow', 'flip')}</button>
+        <button class="btn book" type="submit" data-track="book:hero-form">${ar ? 'أكمل الحجز' : 'Continue booking'} ${icon('arrow', 'flip')}</button>
       </div>
       <p class="quick-note">${ar ? 'الخطوة التالية: العنوان والموعد المناسب، ثم نتصل بك للتأكيد.' : 'Next: your address and a good day, then we call you to confirm.'}</p>
     </form>
@@ -326,7 +335,7 @@ function finder(p, lang) {
         <div class="fp-img">${pic(s.img, '', { sizes: '(max-width: 760px) 100vw, 30vw' })}</div>
         <div class="fp-body"><p class="eyebrow">${SPEC_SHORT[f.key][lang][0]}</p><h3>${s.t[lang]}</h3><p>${s.lead[lang]}</p>
           <ul class="fp-facts"><li>${icon('home')}${t.atHome}</li><li>${icon('clock')}${ar ? `البداية: ${first.ar.name.replace(/\s+/g, ' ')} (${first.minutes} دقيقة)` : `Start: first home assessment (${first.minutes} min)`}</li><li>${icon('cash')}${t.payNote}</li></ul>
-          <div class="cta-row"><a class="btn book" href="${r(book)}?service=${s.book}" data-track="book:finder-${f.key}">${icon('cal')}${t.book}</a><a class="btn ghost" href="${r(s[lang])}">${ar ? 'تفاصيل هذا العلاج' : 'About this care'} ${icon('arrow', 'flip')}</a></div></div>
+          <div class="cta-row"><a class="btn" href="${r(book)}?service=${s.book}" data-track="book:finder-${f.key}">${icon('cal')}${t.book}</a><a class="btn ghost" href="${r(s[lang])}">${ar ? 'تفاصيل هذا العلاج' : 'About this care'} ${icon('arrow', 'flip')}</a></div></div>
       </article>`;
     }).join('')}</div>
   </div>
@@ -364,7 +373,7 @@ function priceTable(p, lang) {
     <div class="pt-cell"><span class="pt-l">${rows[1]}</span>${icon('home')}${t.atHome}</div>
     <div class="pt-cell"><span class="pt-l">${rows[2]}</span>${icon('cash')}${ar ? 'نقداً بعد الجلسة' : 'Cash, after the session'}</div>
     <div class="pt-cell"><span class="pt-l">${rows[3]}</span><span>${s[lang].short}</span></div>
-    <div class="pt-cta"><a class="btn book block" href="${r(book)}?service=${s.key}" data-track="book:table-${s.key}">${t.bookThis}</a>${ar ? `<a class="more" href="${r(s.path)}">${t.more} ${icon('arrow', 'flip')}</a>` : ''}</div>
+    <div class="pt-cta"><a class="btn ${i === 0 ? 'book' : 'ghost'} block" href="${r(book)}?service=${s.key}" data-track="book:table-${s.key}">${t.bookThis}</a>${ar ? `<a class="more" href="${r(s.path)}">${t.more} ${icon('arrow', 'flip')}</a>` : ''}</div>
   </article>`).join('')}
 </div></div></section>`;
 }
@@ -395,12 +404,19 @@ function specialtyList(p, lang) {
 }
 function timeline(lang) {
   const ar = lang === 'ar';
-  const s = ar ? [['احجز أونلاين', 'نموذج قصير أو رسالة واتساب.'], ['نتصل بك', 'نؤكد الموعد ونفهم حالتك.'], ['الأخصائي يزورك', 'أقرب أخصائي مرخّص يأتي لمنزلك.'], ['ادفع بعد الجلسة', 'نقداً، بدون أي دفع أونلاين.']]
-    : [['Book online', 'A short form or a WhatsApp message.'], ['We call you', 'We confirm the time and understand your case.'], ['Your physio visits', 'The nearest licensed physiotherapist comes to you.'], ['Pay after', 'Cash after the session, nothing online.']];
-  // One plain strip instead of numbered circles: what happens after you book, read left to right (right to left in Arabic).
+  const first = SERVICES[0];
+  // Booking and the first visit as one path: the full assessment and the founder-reviewed plan are the method, so they
+  // sit in the middle of the strip (marked .key) between "book" and "pay after".
+  const s = ar ? [['cal', 'احجز', 'نموذج قصير أو رسالة واتساب.'], ['phone', 'نتصل بك', 'نؤكد الموعد ونفهم الحالة.'],
+      ['pulse', 'كشف كامل في البيت', `حوالي ${first.minutes} دقيقة: التاريخ المرضي والتقارير، ثم الحركة والقوة ومدى المفاصل والألم.`, 1],
+      ['target', 'خطة علاج مكتوبة', 'أهداف واضحة وعدد الجلسات وتمارين منزلية، يشرف عليها أخصائي من المؤسسين.', 1], ['cash', 'ادفع بعد الجلسة', 'نقداً، بدون أي دفع أونلاين.']]
+    : [['cal', 'Book', 'A short form or a WhatsApp message.'], ['phone', 'We call you', 'We confirm the time and understand the case.'],
+      ['pulse', 'A full assessment at home', `About ${first.minutes} minutes: history and reports, then movement, strength, joint range and pain.`, 1],
+      ['target', 'A written plan', 'Clear goals, the number of sessions and home exercises, overseen by a specialist founder.', 1], ['cash', 'Pay after the session', 'Cash, nothing online.']];
   return `<section class="sec how-sec"><div class="wrap"><div class="how">
-  <div class="how-head"><h2>${ar ? 'كيف تحجز؟' : 'How it works'}</h2><a class="how-wa" href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:how">${icon('wa')}${ar ? 'أو ابعتلنا على واتساب' : 'Or message us on WhatsApp'}</a></div>
-  <ol class="how-flow">${s.map(([h, d], i) => `<li><span class="how-ic">${icon(['cal', 'phone', 'home', 'cash'][i])}</span><b>${h}</b><span>${d}</span></li>`).join('')}</ol></div></div></section>`;
+  <div class="how-head"><div><h2>${ar ? 'زيارتك الأولى، خطوة بخطوة' : 'Your first visit, step by step'}</h2><p class="how-sub">${ar ? `${first.ar.name.replace(/\s+/g, ' ')}: ${first.price} ج.م` : `Home assessment and first session: EGP ${first.price}`}</p></div>
+    <a class="how-wa" href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:how">${icon('wa')}${ar ? 'أو ابعتلنا على واتساب' : 'Or message us on WhatsApp'}</a></div>
+  <ol class="how-flow">${s.map(([ic, h, d, key]) => `<li${key ? ' class="key"' : ''}><span class="how-ic">${icon(ic)}</span><b>${h}</b><span>${d}</span></li>`).join('')}</ol></div></div></section>`;
 }
 function priceStrip(p, lang, { heading = true } = {}) {
   const { t, ar, book, r } = L(p, lang);
@@ -411,20 +427,26 @@ function priceStrip(p, lang, { heading = true } = {}) {
     <h3>${ar ? `<a href="${r(s.path)}">${s.ar.name}</a>` : s.en.name}</h3><p class="desc">${s[lang].short}</p>
     <p class="amount"><b>${s.price}</b> ${t.egp}</p>
     <p class="meta"><span>${icon('clock')}${s.minutes} ${t.min}</span><span>${icon('home')}${t.atHome}</span></p>
-    <a class="btn book block" href="${r(book)}?service=${s.key}" data-track="book:price-${s.key}">${t.bookThis}</a>
+    <a class="btn ${i === 0 ? 'book' : 'ghost'} block" href="${r(book)}?service=${s.key}" data-track="book:price-${s.key}">${t.bookThis}</a>
     ${ar ? `<a class="more" href="${r(s.path)}">${t.more} ${icon('arrow', 'flip')}</a>` : ''}</article>`).join('')}</div>
   <p class="pay-note">${icon('cash')}${t.payNote}</p>
 </div></section>`;
 }
+// Until the portraits arrive: each founder's mark is the Nile Therapy lotus holding their specialty
+// (neuromuscular → brain, cardiopulmonary/critical care → heart). On hover the side petals open a little.
+const founderMark = f => {
+  const ic = /neuro/i.test(f.en.spec) ? 'brain' : 'heart';
+  return `<span class="f-mark" aria-hidden="true"><svg class="f-lotus" viewBox="0 0 100 100">${LOTUS}</svg><svg class="f-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[ic]}</svg></span>`;
+};
 function founders(lang, heading = true) {
   const ar = lang === 'ar';
   const photo = f => PHOTOS.founders?.[f.key];
   const withPhotos = FOUNDERS.every(photo); // portraits only when all three are in, so the cards match
   return `<section class="sec" id="founders"><div class="wrap">
-  ${heading ? `<div class="sec-head"><h2>${ar ? 'المؤسسون' : 'Meet the founders'}</h2><p>${ar ? 'أطباء علاج طبيعي أسّسوا Nile Therapy ليصل العلاج المتخصص إلى كل بيت في مصر.' : 'Physiotherapists who founded Nile Therapy to bring specialist care into every home in Egypt.'}</p></div>` : ''}
+  ${heading ? `<div class="sec-head"><h2>${ar ? 'المؤسسون' : 'Meet the founders'}</h2><p>${ar ? 'ثلاثة أخصائيين علاج طبيعي أسّسوا Nile&nbsp;Therapy، ويشرفون على خطط العلاج ويتابعونها مع الأخصائي الذي يزورك.' : 'Three specialist physiotherapists founded Nile Therapy. They oversee every treatment plan and follow it up with the physiotherapist who visits you.'}</p></div>` : ''}
   <div class="founders${withPhotos ? ' with-photos' : ''}">${FOUNDERS.map(f => `<article class="founder">
-    ${withPhotos ? `<img class="f-photo" src="{A}img/${photo(f)}-600.webp" alt="${esc(f[lang].name)}" width="600" height="600" loading="lazy" decoding="async">` : `<span class="f-init" aria-hidden="true">${ar ? f.initial : f.initialEn}</span>`}
-    <div><p class="role">${f[lang].role}</p><h3>${f[lang].name}</h3><p class="spec">${f[lang].spec}</p></div></article>`).join('')}</div>
+    ${withPhotos ? `<img class="f-photo" src="{A}img/${photo(f)}-600.webp" alt="${esc(f[lang].name)}" width="600" height="600" loading="lazy" decoding="async">` : founderMark(f)}
+    <div><p class="role">${f[lang].spec}</p><h3>${f[lang].name}</h3><p class="spec">${f[lang].role.replace(/\s*\([A-Z]{2,4}\)/, '')}</p></div></article>`).join('')}</div>
 </div></section>`;
 }
 // Patient reviews: the single real quote until the founders send more (pending.mjs REVIEWS, 2+ to show the grid).
@@ -439,7 +461,7 @@ function reviews(lang, { all = false } = {}) {
 }
 function quote(lang) {
   const q = TESTIMONIAL[lang];
-  return `<section class="sec tint">${waveTop('to-tint')}<div class="wrap narrow"><figure class="quote"><svg class="qmark" viewBox="0 0 60 48" aria-hidden="true"><path d="M0 48V28C0 12 8 3 24 0l3 6C17 9 13 15 13 24h12v24Zm33 0V28C33 12 41 3 57 0l3 6c-10 3-14 9-14 18h12v24Z"/></svg>
+  return `<section class="sec tint">${waveTop('to-tint')}<div class="wrap narrow"><h2 class="quote-h">${lang === 'ar' ? 'من مرضانا' : 'From a patient'}</h2><figure class="quote"><svg class="qmark" viewBox="0 0 60 48" aria-hidden="true"><path d="M0 48V28C0 12 8 3 24 0l3 6C17 9 13 15 13 24h12v24Zm33 0V28C33 12 41 3 57 0l3 6c-10 3-14 9-14 18h12v24Z"/></svg>
   <blockquote>${q.quote}</blockquote><figcaption><span class="stars" role="img" aria-label="5/5">★★★★★</span> ${q.who}</figcaption></figure></div></section>`;
 }
 function faq(lang) {
@@ -495,10 +517,12 @@ function bookingForm(lang) {
   const star = `<span class="req" aria-hidden="true">*</span>`;
   return `<form class="card booking" id="booking" novalidate data-lang="${lang}" aria-describedby="booking-err">
   <p class="step-label"><span>1</span>${f.s1}</p>
-  <div class="grid2"><label class="field"><span>${f.name}${star}</span><input type="text" name="name" autocomplete="name" required maxlength="120" dir="auto"></label>
-    <label class="field"><span>${f.phone}${star}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" dir="ltr" placeholder="01x xxxx xxxx"></label></div>
+  ${forWhom(lang, 'b')}
+  <div class="grid2"><label class="field"><span><span data-self="${f.name}" data-family="${ar ? 'اسم المريض بالكامل' : "Patient's full name"}">${f.name}</span>${star}</span><input type="text" name="name" autocomplete="name" required maxlength="120" dir="auto"></label>
+    <label class="field"><span><span data-self="${f.phone}" data-family="${ar ? 'رقم موبايلك للتواصل (واتساب إن أمكن)' : 'Your mobile number (WhatsApp if possible)'}">${f.phone}</span>${star}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" dir="ltr" placeholder="01x xxxx xxxx"></label></div>
   <div class="grid2"><label class="field"><span>${f.gov}${star}</span><select name="governorate" required><option value="">${f.choose}</option>${govOptions(lang)}</select></label>
     <label class="field"><span>${f.addr}${star}</span><input type="text" name="address" maxlength="300" dir="auto" placeholder="${f.addrPh}" required autocomplete="address-line1"></label></div>
+  <label class="field" data-family-only hidden><span>${ar ? 'اسمك وصلة القرابة (اختياري)' : 'Your name and relationship (optional)'}</span><input type="text" name="booker" maxlength="80" dir="auto" placeholder="${ar ? 'مثال: منى، ابنته' : 'e.g. Mona, his daughter'}"><small>${ar ? 'حتى نعرف مين بنكلّم لما نتصل.' : 'So we know who we are speaking to when we call.'}</small></label>
   <label class="field"><span>${f.email}</span><input name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" dir="ltr" placeholder="name@example.com"><small>${f.emailHelp}</small></label>
   <p class="step-label"><span>2</span>${f.s2}</p>
   <div class="field"><span>${f.loc}</span><div class="loc-row"><button type="button" class="btn ghost sm" data-here>${icon('pin')}${f.locBtn}</button><input name="map_link" type="url" dir="ltr" inputmode="url" maxlength="500" placeholder="https://maps.app.goo.gl/…" aria-label="${f.loc}"></div><small>${f.locHelp}</small><input type="hidden" name="lat"><input type="hidden" name="lng"></div>
@@ -535,7 +559,7 @@ const enArticleList = [{ path: NECK_EN, img: 'neck-exam', tag: 'Medical article'
   ...ARTICLES.map(a => ({ path: a.en, img: a.img, tag: 'Medical article', title: a.en_t, lead: a.en_lead })),
   { path: HOMECARE_EN, img: 'icu', tag: 'Home care', title: 'Physiotherapy at Home: What to Expect From Your First Visit', lead: 'How a home physiotherapy visit works, who it helps, and how to get ready for it.' }];
 
-const homeBody = lang => p => hero(p, lang) + stats(lang) + finder(p, lang) + timeline(lang) + priceStrip(p, lang) + visits(lang) + founders(lang) + reviews(lang) + faq(lang)
+const homeBody = lang => p => hero(p, lang) + stats(lang) + finder(p, lang) + timeline(lang) + founders(lang) + priceStrip(p, lang) + visits(lang) + reviews(lang) + faq(lang)
   + `<section class="sec"><div class="wrap"><div class="sec-head split-head"><h2>${lang === 'ar' ? 'من مقالاتنا' : 'From our articles'}</h2><a class="more" href="${rel(p, lang === 'ar' ? '/almqalat' : '/en/resources')}">${lang === 'ar' ? 'كل المقالات' : 'All articles'} ${icon('arrow', 'flip')}</a></div>${articleCards(p, lang, (lang === 'ar' ? arArticleList : enArticleList).slice(0, 3)).replace('class="posts"', 'class="posts feature"')}</div></section>`
   + ctaBand(p, lang);
 add({ path: '/', lang: 'ar', pair: '/en', title: 'Nile Therapy | العلاج الطبيعي في المنزل - شركة النيل للعلاج الطبيعي', ld: [faqLd('ar')],
