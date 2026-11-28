@@ -31,10 +31,10 @@ const pic = (name, alt, { cls = '', eager = false, sizes = '(max-width: 760px) 1
 // ---------- text ----------
 const T = {
   ar: { home: 'الرئيسية', services: 'الخدمات والأسعار', articles: 'المقالات', about: 'من نحن', reviews: 'آراء المرضى', book: 'احجز الآن', other: 'English', otherLang: 'en',
-    menu: 'القائمة', wa: 'واتساب', call: 'اتصل', egp: 'ج.م', min: 'دقيقة', atHome: 'في منزلك', bookThis: 'احجز الآن', more: 'التفاصيل',
+    menu: 'القائمة', wa: 'واتساب', call: 'اتصل', egp: 'ج.م', min: 'دقيقة', atHome: 'في منزلك', bookThis: 'احجز الآن', bookFirst: 'ابدأ بالكشف المنزلي', afterFirst: 'الجلسات تبدأ بعد الكشف المنزلي الأول.', more: 'التفاصيل',
     payNote: 'الدفع نقداً بعد الجلسة', tagline: 'شريكك الموثوق في رحلة العلاج الطبيعي.', rights: 'جميع الحقوق محفوظة لشركة النيل للعلاج الطبيعي', contact: 'تواصل معنا', read: 'اقرأ المقال', specialties: 'التخصصات' },
   en: { home: 'Home', services: 'Services & prices', articles: 'Resources', about: 'About', reviews: 'Testimonials', book: 'Book now', other: 'العربية', otherLang: 'ar',
-    menu: 'Menu', wa: 'WhatsApp', call: 'Call', egp: 'EGP', min: 'min', atHome: 'At your home', bookThis: 'Book now', more: 'Details',
+    menu: 'Menu', wa: 'WhatsApp', call: 'Call', egp: 'EGP', min: 'min', atHome: 'At your home', bookThis: 'Book now', bookFirst: 'Start with the home assessment', afterFirst: 'Sessions follow the first home assessment.', more: 'Details',
     payNote: 'Pay cash after the session', tagline: 'Your trusted partner on your physiotherapy journey.', rights: 'All rights reserved, Nile Therapy', contact: 'Contact', read: 'Read article', specialties: 'Specialties' },
 };
 const waText = lang => encodeURIComponent(lang === 'ar' ? 'مرحباً، أريد حجز جلسة علاج طبيعي' : 'Hello, I would like to book a physiotherapy session');
@@ -113,7 +113,7 @@ function egyptArt(lang) {
     <g class="eg-home" transform="translate(${h.x - 11} ${h.y - 11})" style="animation-delay:${.4 + h.i * .35}s"><circle cx="11" cy="11" r="14"/><path d="M4.5 11.5 11 6l6.5 5.5M6.5 11v6h9v-6"/></g>`).join('')}
   <circle cx="${cx}" cy="${cy}" r="34" fill="url(#egGlow)"/><circle class="eg-pulse" cx="${cx}" cy="${cy}" r="10"/>
   <g class="eg-hub"><circle cx="${cx}" cy="${cy}" r="17"/><g transform="translate(${cx - 12} ${cy - 13.5}) scale(.24)">${LOTUS}</g></g>
-  <g class="eg-tag" transform="translate(${lx} ${ly})"><rect x="-100" y="-24" width="200" height="48" rx="24"/><text x="0" y="7" text-anchor="middle">${ar ? 'العلاج يوصل لحد بيتك' : 'Care that comes home'}</text></g>
+  <g class="eg-tag" transform="translate(${lx} ${ly})"><rect x="-62" y="-24" width="124" height="48" rx="24"/><text x="0" y="7" text-anchor="middle">${ar ? 'القاهرة' : 'Cairo'}</text></g>
   <g class="eg-north" transform="translate(${GEO.W - 34} 30)"><circle r="16"/><path d="M0 -10 L5 6 L0 3 L-5 6 Z"/><text y="-20" text-anchor="middle">N</text></g>
 </svg>`;
 }
@@ -289,6 +289,7 @@ function hero(p, lang) {
         <label class="qf"><span class="qf-l">${ar ? 'المحافظة' : 'Governorate'}</span><select name="governorate" required aria-describedby="qe-governorate"><option value="">${ar ? 'اختر المحافظة' : 'Choose…'}</option>${govOptions(lang)}</select><small class="qf-err" id="qe-governorate" hidden></small></label>
         <button class="btn book" type="submit" data-track="book:hero-form">${ar ? 'أكمل الحجز' : 'Continue booking'} ${icon('arrow', 'flip')}</button>
       </div>
+      <p class="sr" id="q-status" role="status" aria-live="polite"></p>
       <p class="quick-note">${ar ? 'الخطوة التالية: العنوان والموعد المناسب، ثم نتصل بك للتأكيد.' : 'Next: your address and a good day, then we call you to confirm.'}</p>
     </form>
     <ul class="ticks"><li>${icon('shield')}${ar ? 'أطباء مرخّصون' : 'Licensed physiotherapists'}</li><li>${icon('home')}${ar ? 'في منزلك' : 'At your home'}</li><li>${icon('cash')}${t.payNote}</li></ul>
@@ -312,13 +313,29 @@ function stats(lang) {
 // "What do you need help with?": pick a problem, see the matching care, its first step and a Book button.
 // Works without JavaScript (radio buttons + :has); site.js only keeps the analytics.
 const FINDER = [
-  { key: 'ortho', ar: 'ألم في الظهر أو الرقبة أو المفاصل', en: 'Back, neck or joint pain' },
+  { key: 'ortho', ar: 'ألم في الظهر أو الرقبة أو الركبة أو المفاصل', en: 'Back, neck, knee or joint pain' },
   { key: 'neuro', ar: 'جلطة أو مشكلة في الأعصاب', en: 'Stroke or a nerve problem' },
   { key: 'surgery', ar: 'قبل عملية أو بعدها', en: 'Before or after surgery' },
   { key: 'sports', ar: 'إصابة رياضية', en: 'A sports injury' },
   { key: 'homecare', ar: 'كبير سن أو بعد الخروج من المستشفى', en: 'An older adult, or just home from hospital' },
   { key: 'icu', ar: 'عناية مركزة أو رقود طويل', en: 'Intensive care or long bed rest' },
 ];
+// In the finder answers for stroke/nerves, surgery and intensive care: which founders share that specialty (a plain
+// fact from their profiles, linking the problem the visitor picked to the people behind the plan).
+const FINDER_SPEC = { neuro: /neuro/i, surgery: /perioperative/i, icu: /critical care/i };
+function finderFounders(key, lang) {
+  const re = FINDER_SPEC[key]; if (!re) return '';
+  const names = FOUNDERS.filter(x => re.test(x.en.spec)).map(x => x[lang].name);
+  if (!names.length) return '';
+  const ar = lang === 'ar', list = names.join(ar ? ' و' : ' and ');
+  return `<li class="fp-founders">${icon('users')}<span>${ar ? `من المؤسسين في هذا التخصص: ${list}` : `Founder${names.length > 1 ? 's' : ''} in this specialty: ${list}`}</span></li>`;
+}
+const PHOTO_ALT = {
+  ortho: { ar: 'أخصائي علاج طبيعي يشرح مفصل الركبة على نموذج تشريحي', en: 'A physiotherapist explaining the knee joint on an anatomical model' },
+  neuro: { ar: 'مراجعة صور أشعة الرنين المغناطيسي للمخ', en: 'Reviewing brain MRI scans' },
+  surgery: { ar: 'فريق جراحي أثناء عملية', en: 'A surgical team during an operation' },
+  icu: { ar: 'أجهزة متابعة في غرفة عناية مركزة', en: 'Monitoring equipment in an intensive care room' },
+};
 function finder(p, lang) {
   const { t, ar, book, r } = L(p, lang), first = SERVICES[0];
   return `<section class="sec finder-sec" id="services"><div class="wrap finder">
@@ -331,10 +348,10 @@ function finder(p, lang) {
     <div class="finder-panels">${FINDER.map(f => {
       const s = SPEC_PAGES.find(x => x.key === f.key);
       return `<article class="finder-panel" data-for="${f.key}">
-        <div class="fp-img">${pic(s.img, '', { sizes: '(max-width: 760px) 100vw, 30vw' })}</div>
+        <div class="fp-img">${pic(s.img, PHOTO_ALT[s.img]?.[lang] || '', { sizes: '(max-width: 760px) 100vw, 30vw' })}</div>
         <div class="fp-body"><p class="eyebrow">${SPEC_SHORT[f.key][lang][0]}</p><h3>${s.t[lang]}</h3><p>${s.lead[lang]}</p>
-          <ul class="fp-facts"><li>${icon('home')}${t.atHome}</li><li>${icon('clock')}${ar ? `البداية: ${first.ar.name.replace(/\s+/g, ' ')} (${first.minutes} دقيقة)` : `Start: first home assessment (${first.minutes} min)`}</li><li>${icon('cash')}${t.payNote}</li></ul>
-          <div class="cta-row"><a class="btn" href="${r(book)}?service=${s.book}" data-track="book:finder-${f.key}">${icon('cal')}${t.book}</a><a class="btn ghost" href="${r(s[lang])}">${ar ? 'تفاصيل هذا العلاج' : 'About this care'} ${icon('arrow', 'flip')}</a></div></div>
+          <ul class="fp-facts"><li>${icon('clock')}${ar ? `البداية: ${first.ar.name.replace(/\s+/g, ' ')} (${first.minutes} دقيقة)` : `Start: first home assessment (${first.minutes} min)`}</li>${finderFounders(f.key, lang)}</ul>
+          <div class="cta-row"><a class="btn book" href="${r(book)}?service=${s.book}" data-track="book:finder-${f.key}">${icon('cal')}${t.book}</a><a class="btn ghost" href="${r(s[lang])}">${ar ? 'تفاصيل هذا العلاج' : 'About this care'} ${icon('arrow', 'flip')}</a></div></div>
       </article>`;
     }).join('')}</div>
   </div>
@@ -372,7 +389,7 @@ function priceTable(p, lang) {
     <div class="pt-cell"><span class="pt-l">${rows[1]}</span>${icon('home')}${t.atHome}</div>
     <div class="pt-cell"><span class="pt-l">${rows[2]}</span>${icon('cash')}${ar ? 'نقداً بعد الجلسة' : 'Cash, after the session'}</div>
     <div class="pt-cell"><span class="pt-l">${rows[3]}</span><span>${s[lang].short}</span></div>
-    <div class="pt-cta"><a class="btn ${i === 0 ? 'book' : 'ghost'} block" href="${r(book)}?service=${s.key}" data-track="book:table-${s.key}">${t.bookThis}</a>${ar ? `<a class="more" href="${r(s.path)}">${t.more} ${icon('arrow', 'flip')}</a>` : ''}</div>
+    <div class="pt-cta"><a class="btn ${i === 0 ? 'book' : 'ghost'} block" href="${r(book)}?service=${s.key}" data-track="book:table-${s.key}">${i === 0 ? t.bookFirst : t.bookThis}</a>${ar ? `<a class="more" href="${r(s.path)}">${t.more} ${icon('arrow', 'flip')}</a>` : ''}</div>
   </article>`).join('')}
 </div></div></section>`;
 }
@@ -413,20 +430,20 @@ function timeline(lang) {
       ['pulse', 'A full assessment at home', `About ${first.minutes} minutes: history and reports, then movement, strength, joint range and pain.`, 1],
       ['target', 'A written plan', 'Clear goals, the number of sessions and home exercises, overseen by a specialist founder.', 1], ['cash', 'Pay after the session', 'Cash, nothing online.']];
   return `<section class="sec how-sec"><div class="wrap"><div class="how">
-  <div class="how-head"><div><h2>${ar ? 'زيارتك الأولى، خطوة بخطوة' : 'Your first visit, step by step'}</h2><p class="how-sub">${ar ? `${first.ar.name.replace(/\s+/g, ' ')}: ${first.price} ج.م` : `Home assessment and first session: EGP ${first.price}`}</p></div>
+  <div class="how-head"><div><h2>${ar ? 'زيارتك الأولى، خطوة بخطوة' : 'Your first visit, step by step'}</h2></div>
     <a class="how-wa" href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:how">${icon('wa')}${ar ? 'أو ابعتلنا على واتساب' : 'Or message us on WhatsApp'}</a></div>
   <ol class="how-flow">${s.map(([ic, h, d, key]) => `<li${key ? ' class="key"' : ''}><span class="how-ic">${icon(ic)}</span><b>${h}</b><span>${d}</span></li>`).join('')}</ol></div></div></section>`;
 }
-function priceStrip(p, lang, { heading = true } = {}) {
+function priceStrip(p, lang, { heading = true, home = false } = {}) {
   const { t, ar, book, r } = L(p, lang);
   return `<section class="sec" id="prices"><div class="wrap">
   ${heading ? `<div class="sec-head"><h2>${t.services}</h2><p>${ar ? 'أسعار واضحة للجلسة في منزلك. احجز أونلاين وادفع نقداً بعد الجلسة.' : 'Clear prices per session at your home. Book online, pay cash after the session.'}</p></div>` : ''}
   <div class="prices">${SERVICES.map((s, i) => `<article class="price${i === 0 ? ' featured' : ''}">
     ${i === 0 ? `<p class="badge">${ar ? 'البداية الموصى بها' : 'Recommended first step'}</p>` : ''}
-    <h3>${ar ? `<a href="${r(s.path)}">${s.ar.name}</a>` : s.en.name}</h3><p class="desc">${s[lang].short}</p>
+    <h3>${ar ? `<a href="${r(s.path)}">${s.ar.name}</a>` : s.en.name}</h3><p class="desc">${s[lang].short}</p>${i === 0 ? '' : `<p class="after-first">${t.afterFirst}</p>`}
     <p class="amount"><b>${s.price}</b> ${t.egp}</p>
-    <p class="meta"><span>${icon('clock')}${s.minutes} ${t.min}</span><span>${icon('home')}${t.atHome}</span></p>
-    <a class="btn ${i === 0 ? 'book' : 'ghost'} block" href="${r(book)}?service=${s.key}" data-track="book:price-${s.key}">${t.bookThis}</a>
+    <p class="meta"><span>${icon('clock')}${s.minutes} ${t.min}</span>${home ? '' : `<span>${icon('home')}${t.atHome}</span>`}</p>
+    <a class="btn ${i === 0 ? 'book' : 'ghost'} block" href="${r(book)}?service=${s.key}" data-track="book:price-${s.key}">${i === 0 ? t.bookFirst : t.bookThis}</a>
     ${ar ? `<a class="more" href="${r(s.path)}">${t.more} ${icon('arrow', 'flip')}</a>` : ''}</article>`).join('')}</div>
   <p class="pay-note">${icon('cash')}${t.payNote}</p>
 </div></section>`;
@@ -437,10 +454,20 @@ const founderMark = f => {
   const ic = /neuro/i.test(f.en.spec) ? 'brain' : 'heart';
   return `<span class="f-mark" aria-hidden="true"><svg class="f-lotus" viewBox="0 0 100 100">${LOTUS}</svg><svg class="f-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${I[ic]}</svg></span>`;
 };
-function founders(lang, heading = true) {
+function founders(lang, heading = true, { feature = false, p = '/' } = {}) {
   const ar = lang === 'ar';
   const photo = f => PHOTOS.founders?.[f.key];
   const withPhotos = FOUNDERS.every(photo); // portraits only when all three are in, so the cards match
+  // Home: the founders are the lead claim, so they get the deep-teal band (like the facts band and the mission panel)
+  // with the lotus behind, the question a family actually asks, and each name before its specialty.
+  if (feature) return `<section class="sec ff" id="founders"><svg class="ff-lotus" viewBox="0 0 100 100" aria-hidden="true">${LOTUS}</svg><div class="wrap ff-in">
+  <div class="ff-head"><h2>${ar ? 'مين بيشرف على خطة علاجك؟' : 'Who oversees your treatment plan?'}</h2>
+    <p>${ar ? 'ثلاثة أخصائيين علاج طبيعي أسّسوا Nile&nbsp;Therapy، ويشرفون على خطط العلاج ويتابعونها مع الأخصائي الذي يزورك.' : 'Three specialist physiotherapists founded Nile Therapy. They oversee every treatment plan and follow it up with the physiotherapist who visits you.'}</p>
+    <a class="ff-more" href="${rel(p, ar ? '/mn-nhn' : '/en/about')}#founders">${ar ? 'اعرف أكثر عن المؤسسين' : 'More about the founders'} ${icon('arrow', 'flip')}</a></div>
+  <ol class="ff-list">${FOUNDERS.map(f => `<li class="ff-item">
+    ${withPhotos ? `<img class="ff-photo" src="{A}img/${photo(f)}-600.webp" alt="" width="600" height="600" loading="lazy" decoding="async">` : founderMark(f)}
+    <div><h3>${f[lang].name}</h3><p class="ff-plain">${f[lang].plain}</p><p class="ff-meta">${f[lang].role.replace(/\s*\([A-Z]{2,4}\)/, '')}</p></div></li>`).join('')}</ol>
+</div></section>`;
   return `<section class="sec" id="founders"><div class="wrap">
   ${heading ? `<div class="sec-head"><h2>${ar ? 'المؤسسون' : 'Meet the founders'}</h2><p>${ar ? 'ثلاثة أخصائيين علاج طبيعي أسّسوا Nile&nbsp;Therapy، ويشرفون على خطط العلاج ويتابعونها مع الأخصائي الذي يزورك.' : 'Three specialist physiotherapists founded Nile Therapy. They oversee every treatment plan and follow it up with the physiotherapist who visits you.'}</p></div>` : ''}
   <div class="founders${withPhotos ? ' with-photos' : ''}">${FOUNDERS.map(f => `<article class="founder">
@@ -461,7 +488,7 @@ function reviews(lang, { all = false } = {}) {
 function quote(lang) {
   const q = TESTIMONIAL[lang];
   return `<section class="sec tint">${waveTop('to-tint')}<div class="wrap narrow"><h2 class="quote-h">${lang === 'ar' ? 'من مرضانا' : 'From a patient'}</h2><figure class="quote"><svg class="qmark" viewBox="0 0 60 48" aria-hidden="true"><path d="M0 48V28C0 12 8 3 24 0l3 6C17 9 13 15 13 24h12v24Zm33 0V28C33 12 41 3 57 0l3 6c-10 3-14 9-14 18h12v24Z"/></svg>
-  <blockquote>${q.quote}</blockquote><figcaption><span class="stars" role="img" aria-label="5/5">★★★★★</span> ${q.who}</figcaption></figure></div></section>`;
+  <blockquote>${q.quote}</blockquote><figcaption>${q.who}</figcaption></figure></div></section>`;
 }
 function faq(lang) {
   const ar = lang === 'ar';
@@ -477,7 +504,7 @@ function articleCards(p, lang, items) {
 }
 function ctaBand(p, lang) {
   const { t, ar, book, r } = L(p, lang);
-  return `<section class="band"><div class="wrap band-in"><div><h2>${ar ? 'خطوتك الأولى نحو التعافي تبدأ اليوم' : 'Your recovery can start this week'}</h2><p>${ar ? 'احجز النهارده، وهنكلمك نحدد معاك ميعاد يناسبك.' : 'Book today and we will call you to set a time that suits you.'}</p></div>
+  return `<section class="band"><div class="wrap band-in"><div><h2>${ar ? 'خطوتك الأولى نحو التعافي تبدأ اليوم' : 'Your recovery can start this week'}</h2><p>${ar ? 'احجز النهارده، وهنكلمك نحدد معاك ميعاد يناسبك. ومفيش أي دفع قبل الزيارة: الدفع نقداً بعد الجلسة.' : 'Book today and we will call you to set a time that suits you. Nothing to pay before the visit: you pay in cash after the session.'}</p></div>
   <div class="cta-row"><a class="btn book lg" href="${r(book)}" data-track="book:band">${icon('cal')}${t.book}</a><a class="btn lg ghost-light" href="${WA(lang)}" rel="noopener" target="_blank" data-track="whatsapp:band">${icon('wa')}${t.wa}</a></div></div></section>`;
 }
 function aboutText(lang) {
@@ -490,7 +517,7 @@ function aboutText(lang) {
       'Through a growing network of accredited specialists, continuous medical supervision and field coordinators, we guarantee professional service, ongoing follow-up and genuine human care.'];
   // The same three paragraphs, laid out as an opening statement, two pillars and the mission card.
   return `<section class="sec about-sec"><div class="wrap">
-  <div class="about-open"><p class="eyebrow">${ar ? 'من نحن' : 'About us'}</p><h2>${ar ? 'شركة النيل للعلاج الطبيعى' : 'About Nile Therapy'}</h2><p class="about-lead">${paras[0]}</p></div>
+  <div class="about-open"><p class="eyebrow">${ar ? 'من نحن' : 'About us'}</p><h2>${ar ? 'شركة النيل للعلاج الطبيعي' : 'About Nile Therapy'}</h2><p class="about-lead">${paras[0]}</p></div>
   <div class="pillars">
     <article class="pillar"><span class="pl-ic">${icon('home')}</span><h3>${ar ? 'رعاية متكاملة في بيتك' : 'Complete care at home'}</h3><p>${paras[1]}</p></article>
     <article class="pillar"><span class="pl-ic">${icon('users')}</span><h3>${ar ? 'فريق معتمد ومتابعة مستمرة' : 'An accredited team, always following up'}</h3><p>${paras[2]}</p></article>
@@ -558,7 +585,8 @@ const enArticleList = [{ path: NECK_EN, img: 'neck-exam', tag: 'Medical article'
   ...ARTICLES.map(a => ({ path: a.en, img: a.img, tag: 'Medical article', title: a.en_t, lead: a.en_lead })),
   { path: HOMECARE_EN, img: 'icu', tag: 'Home care', title: 'Physiotherapy at Home: What to Expect From Your First Visit', lead: 'How a home physiotherapy visit works, who it helps, and how to get ready for it.' }];
 
-const homeBody = lang => p => hero(p, lang) + stats(lang) + finder(p, lang) + timeline(lang) + founders(lang) + priceStrip(p, lang) + visits(lang) + reviews(lang) + faq(lang)
+const statsConfirmed = () => !!STATS && ['partners', 'cities', 'patients', 'rating'].filter(k => STATS[k] != null).length >= 2;
+const homeBody = lang => p => hero(p, lang) + (statsConfirmed() ? stats(lang) : '') + finder(p, lang) + founders(lang, true, { feature: true, p }) + timeline(lang) + priceStrip(p, lang, { home: true }) + visits(lang) + reviews(lang) + faq(lang)
   + `<section class="sec"><div class="wrap"><div class="sec-head split-head"><h2>${lang === 'ar' ? 'من مقالاتنا' : 'From our articles'}</h2><a class="more" href="${rel(p, lang === 'ar' ? '/almqalat' : '/en/resources')}">${lang === 'ar' ? 'كل المقالات' : 'All articles'} ${icon('arrow', 'flip')}</a></div>${articleCards(p, lang, (lang === 'ar' ? arArticleList : enArticleList).filter(x => x.img !== SPEC_PAGES.find(s => s.key === FINDER[0].key).img).slice(0, 3)).replace('class="posts"', 'class="posts feature"')}</div></section>`
   + ctaBand(p, lang);
 add({ path: '/', lang: 'ar', pair: '/en', title: 'Nile Therapy | العلاج الطبيعي في المنزل - شركة النيل للعلاج الطبيعي', ld: [faqLd('ar')],
@@ -580,8 +608,8 @@ const reviewsBody = lang => p => pageHead(lang === 'ar' ? 'آراء المرضى
 add({ path: '/testimonials', lang: 'ar', pair: '/en/testimonials', title: 'آراء المرضى | Nile Therapy', description: 'اقرأ تجارب مرضى Nile Therapy مع جلسات العلاج الطبيعي والرعاية المنزلية في منازلهم.', body: reviewsBody('ar') });
 add({ path: '/en/testimonials', lang: 'en', pair: '/testimonials', title: 'Patient Testimonials | Nile Therapy', description: 'Read what Nile Therapy patients say about their physiotherapy and home-care experience at home.', body: reviewsBody('en') });
 
-add({ path: '/hjz-almwaayd', lang: 'ar', pair: '/en/book', title: 'حجز جلسات العلاج الطبيعى فى المنزل | Nile Therapy', bodyClass: 'is-booking',
-  description: 'استمتع بخدمات العلاج الطبيعى فى المنزل مع حجز مواعيد لجلسات العلاج الطبيعي بسهولة. املأ نموذج الحجز وسيتواصل معك أحد المتخصصين، والدفع بعد الجلسة.',
+add({ path: '/hjz-almwaayd', lang: 'ar', pair: '/en/book', title: 'حجز جلسات العلاج الطبيعي في المنزل | Nile Therapy', bodyClass: 'is-booking',
+  description: 'استمتع بخدمات العلاج الطبيعي في المنزل مع حجز مواعيد لجلسات العلاج الطبيعي بسهولة. املأ نموذج الحجز وسيتواصل معك أحد المتخصصين، والدفع بعد الجلسة.',
   body: p => pageHead('حجز المواعيد', 'سواء كان لديك استفسار طبي أو تحتاج إلى حجز جلسة علاج طبيعي، نحن هنا من أجلك. املأ النموذج وسيتواصل معك أحد المتخصصين.') + `<section class="sec"><div class="wrap book-layout">${bookingForm('ar')}${bookingAside('ar')}</div></section>` });
 add({ path: '/en/book', lang: 'en', pair: '/hjz-almwaayd', title: 'Book a Home Physiotherapy Session | Nile Therapy', bodyClass: 'is-booking',
   description: 'Book a physiotherapy session at your home with Nile Therapy. Fill in the form and a specialist will call you; pay after the session.',
@@ -593,8 +621,8 @@ add({ path: '/online-store', lang: 'ar', title: 'الخدمات والأسعار
 for (const s of SERVICES) add({ path: s.path, lang: 'ar', title: `${s.ar.name} | Nile Therapy`, description: (s.ar.lead + '. الدفع نقداً بعد الجلسة.').slice(0, 158),
   ld: [serviceLd(s, 'ar'), crumbLd([['الخدمات والأسعار', '/online-store'], [s.ar.name, s.path]])],
   body: p => `<section class="page-head"><div class="wrap service-in"><div><p class="crumbs"><a href="${rel(p, '/online-store')}">الخدمات والأسعار</a></p><h1>${s.ar.name}</h1><p class="lead">${s.ar.lead}</p></div>
-    <div class="price-box"><p class="amount"><b>${s.price}</b> ج.م</p><p class="meta"><span>${icon('clock')}${s.minutes} دقيقة</span><span>${icon('home')}فى منزلك</span></p>
-    <a class="btn book lg block" href="${rel(p, '/hjz-almwaayd')}?service=${s.key}" data-track="book:service-${s.key}">${icon('cal')}احجز الان</a><p class="small muted">الدفع نقداً بعد الجلسة</p></div></div></section>
+    <div class="price-box"><p class="amount"><b>${s.price}</b> ج.م</p><p class="meta"><span>${icon('clock')}${s.minutes} دقيقة</span><span>${icon('home')}في منزلك</span></p>
+    <a class="btn book lg block" href="${rel(p, '/hjz-almwaayd')}?service=${s.key}" data-track="book:service-${s.key}">${icon('cal')}احجز الآن</a><p class="small muted">الدفع نقداً بعد الجلسة</p></div></div></section>
   <section class="sec"><div class="wrap narrow prose">${s.ar.body.map(x => `<p>${x}</p>`).join('')}</div></section>` + firstVisit('ar') + faq('ar') + ctaBand(p, 'ar') });
 
 // One page per specialty (new; Arabic + English).

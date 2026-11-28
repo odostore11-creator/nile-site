@@ -3,12 +3,12 @@
 
 // The three founders (no phone numbers on the public site, by decision).
 export const FOUNDERS = [
-  { key: 'mostafa', initial: 'م', initialEn: 'M', ar: { name: 'د. مصطفى إسماعيل', role: 'مؤسس شريك والمدير التنفيذي (CEO)', spec: 'العلاج الطبيعي العصبي العضلي' },
-    en: { name: 'Dr. Mostafa Ismail', role: 'Co-founder & CEO', spec: 'Neuromuscular Physiotherapy' } },
-  { key: 'abdelrahman', initial: 'ع', initialEn: 'A', ar: { name: 'د. عبدالرحمن سامح', role: 'مؤسس شريك والمدير التقني (CTO)', spec: 'العلاج الطبيعي للقلب والصدر، الرعاية المركزة، وما قبل وبعد العمليات' },
-    en: { name: 'Dr. Abdelrahman Sameh', role: 'Co-founder & CTO', spec: 'Cardiopulmonary, Critical Care & Perioperative Physiotherapy' } },
-  { key: 'ahmed', initial: 'أ', initialEn: 'A', ar: { name: 'د. أحمد نادر', role: 'مؤسس شريك والمدير التشغيلي (COO)', spec: 'العلاج الطبيعي العصبي العضلي' },
-    en: { name: 'Dr. Ahmed Nader', role: 'Co-founder & COO', spec: 'Neuromuscular Physiotherapy' } },
+  { key: 'mostafa', initial: 'م', initialEn: 'M', ar: { name: 'د. مصطفى إسماعيل', role: 'مؤسس شريك والمدير التنفيذي (CEO)', spec: 'العلاج الطبيعي العصبي العضلي', plain: 'الجلطات والأعصاب والعضلات' },
+    en: { name: 'Dr. Mostafa Ismail', role: 'Co-founder & CEO', spec: 'Neuromuscular Physiotherapy', plain: 'Stroke, nerves and muscles' } },
+  { key: 'abdelrahman', initial: 'ع', initialEn: 'A', ar: { name: 'د. عبدالرحمن سامح', role: 'مؤسس شريك والمدير التقني (CTO)', spec: 'العلاج الطبيعي للقلب والصدر، الرعاية المركزة، وما قبل وبعد العمليات', plain: 'القلب والصدر، العناية المركزة، وقبل العمليات وبعدها' },
+    en: { name: 'Dr. Abdelrahman Sameh', role: 'Co-founder & CTO', spec: 'Cardiopulmonary, Critical Care & Perioperative Physiotherapy', plain: 'Heart and lungs, intensive care, before and after surgery' } },
+  { key: 'ahmed', initial: 'أ', initialEn: 'A', ar: { name: 'د. أحمد نادر', role: 'مؤسس شريك والمدير التشغيلي (COO)', spec: 'العلاج الطبيعي العصبي العضلي', plain: 'الجلطات والأعصاب والعضلات' },
+    en: { name: 'Dr. Ahmed Nader', role: 'Co-founder & COO', spec: 'Neuromuscular Physiotherapy', plain: 'Stroke, nerves and muscles' } },
 ];
 
 export const FAQ = {

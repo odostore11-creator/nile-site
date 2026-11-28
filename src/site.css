@@ -526,11 +526,11 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--er
 
   /* Prices: name and price share the top row; the details link sits beside the button. */
   .prices { gap: 16px; }
-  .price { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name amount" "desc desc" "meta meta" "btn btn" "more more"; column-gap: 14px; row-gap: 6px; padding: 22px 18px 16px; }
+  .price { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name name" "amount amount" "desc desc" "after after" "meta meta" "btn btn" "more more"; column-gap: 14px; row-gap: 6px; padding: 22px 18px 16px; }
   .price.featured { padding-top: 26px; }
   .price h3 { grid-area: name; font-size: 17px; align-self: center; }
   .price .desc { grid-area: desc; }
-  .price .amount { grid-area: amount; margin: 0; align-self: center; text-align: end; white-space: nowrap; } .amount b { font-size: 32px; }
+  .price .amount { grid-area: amount; margin: 0 0 2px; white-space: nowrap; } .amount b { font-size: 32px; }
   .price .meta { grid-area: meta; margin: 2px 0 8px; }
   .price .btn { grid-area: btn; margin: 0; }
   .price .more { grid-area: more; min-height: 44px; }
@@ -557,7 +557,6 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--er
 @media (max-width: 900px) { .quick-fields:has(.qf-err:not([hidden])) .btn { margin-top: 0; } }
 
 /* ---- Home: booking + first visit as one path (2026-11-28 layout) ---- */
-.how-sub { margin: 6px 0 0; color: var(--muted); font-size: 15px; }
 .how-flow { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
 .how-flow li { padding: 4px 0; }
 .how-flow li.key { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 18px 16px; margin: -18px 0; box-shadow: 0 1px 2px rgba(11, 79, 92, .06), 0 12px 28px rgba(11, 79, 92, .08); }
@@ -585,6 +584,44 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--er
   .founder:hover .f-lotus path:nth-child(3) { transform: rotate(9deg); opacity: .45; }
   .founder:hover .f-lotus path:first-child { transform: translateY(-2px); opacity: .55; }
 }
+
+/* ---- Home founders band (2026-11-28 bolder): the lead claim at full strength, in the deep teal the page already
+   uses for its facts band and mission panel, with the lotus large behind. Names lead; the plain specialty follows. ---- */
+.ff { position: relative; background: var(--deep); color: #d6efe9; overflow: hidden; }
+.ff-lotus { position: absolute; width: 520px; height: 520px; inset-inline-end: -140px; top: 50%; transform: translateY(-46%); pointer-events: none; }
+.ff-lotus path { fill: var(--mint); opacity: .07; }
+.ff-in { position: relative; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.35fr); gap: 56px; align-items: start; }
+.ff-head h2 { color: #fff; margin-bottom: 14px; max-width: 12em; }
+.ff-head p { color: #d6efe9; font-size: 18px; line-height: 1.75; margin: 0 0 18px; max-width: 30em; }
+.ff-more { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--mint); font-weight: 600; text-decoration: none; }
+.ff-more:hover { color: #fff; } .ff-more .ic { width: 18px; height: 18px; }
+.ff-list { list-style: none; padding: 0; margin: 0; display: grid; }
+.ff-item { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 20px; align-items: start; padding: 24px 0; border-top: 1px solid rgba(92, 201, 181, .22); }
+.ff-item:first-child { border-top: 0; padding-top: 4px; }
+.ff-item:last-child { padding-bottom: 0; }
+.ff-item h3 { color: #fff; font-size: clamp(22px, 2.2vw, 26px); margin: 0 0 4px; }
+.ff-plain { color: var(--mint); font-size: 18px; font-weight: 600; margin: 0 0 6px; line-height: 1.5; }
+.ff-meta { color: #a9d3cb; font-size: 15px; margin: 0; line-height: 1.6; }
+.ff .f-mark { background: rgba(255, 255, 255, .06); border: 1px solid rgba(92, 201, 181, .32); }
+.ff .f-lotus path { opacity: .38; }
+.ff-photo { width: 64px; height: 64px; border-radius: 18px; object-fit: cover; }
+@media (hover: hover) {
+  .ff-item:hover .f-lotus path:nth-child(2) { transform: rotate(-9deg); opacity: .55; }
+  .ff-item:hover .f-lotus path:nth-child(3) { transform: rotate(9deg); opacity: .55; }
+  .ff-item:hover .f-lotus path:first-child { transform: translateY(-2px); opacity: .6; }
+}
+@media (max-width: 900px) {
+  .ff-in { grid-template-columns: 1fr; gap: 28px; }
+  .ff-lotus { width: 360px; height: 360px; top: auto; bottom: -120px; transform: none; inset-inline-end: -110px; }
+  .ff-item { grid-template-columns: 56px minmax(0, 1fr); gap: 16px; padding: 20px 0; }
+  .ff .f-mark { width: 56px; height: 56px; border-radius: 16px; }
+  .ff-head p { font-size: 17px; }
+}
+.fp-founders span { color: var(--deep); font-weight: 600; }
+
+/* Price cards: sessions come after the first home assessment (said on each 500 EGP card). */
+.after-first { margin: 0; font-size: 14px; font-weight: 600; color: var(--teal-2); line-height: 1.5; }
+@media (max-width: 560px) { .price .after-first { grid-area: after; } }
 
 /* "Who is this for?" (quick form + booking form): two plain choices, same pressed look as the finder. */
 .for-whom { border: 0; padding: 0; margin: 0 0 12px; min-width: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; max-width: 420px; }

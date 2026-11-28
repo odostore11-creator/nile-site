@@ -10,7 +10,7 @@ export const GA = 'G-R0FRHE75S3';
 // Bookable services (the old "online store"): pay cash at the visit.
 export const SERVICES = [
   { key: 'home-assessment', path: '/kshf-mnzla-w-jlsh-awla-', price: 800, minutes: 120, img: 'neck-exam',
-    ar: { name: 'كشف منزلى و جلسة اولى', short: 'تقييم شامل في بيتك وخطة علاج مخصصة',
+    ar: { name: 'كشف منزلي وجلسة أولى', short: 'تقييم شامل في بيتك وخطة علاج مخصصة',
       lead: 'كشف منزلي احترافي يشمل تقييم شامل للحركة والألم و الحالة الطبية لتحديد المشكلة بدقة ووضع خطة علاج وبرنامج تأهيلي مخصص',
       body: ['نقدّم خدمة كشف منزلي متكامل في العلاج الطبيعي على يد أخصائيين مؤهلين، تبدأ بدراسة الحالة الطبية والتاريخ المرضي بشكل دقيق، يليها تقييم طبي ووظيفي شامل يشمل الحركة، القوة العضلية، مدى المفاصل، ومستوى الألم باستخدام أدوات تقييم معتمدة. يهدف هذا التقييم إلى الوصول للتشخيص الوظيفي الصحيح وتحديد السبب الجذري للمشكلة، وليس فقط التعامل مع الأعراض.',
         'تشمل الخدمة أيضًا تحليل نمط الحركة والأنشطة اليومية، تقييم عوامل الخطورة، ومراجعة التقارير والفحوصات الطبية إن وجدت، لضمان تكامل الرؤية العلاجية. بناءً على ذلك، يتم وضع خطة علاج وتأهيل مخصصة تناسب حالة كل مريض وأهدافه الوظيفية، مع تحديد واضح لعدد الجلسات، التقنيات المستخدمة، وبرنامج تمارين منزلية مبني على أحدث الممارسات في العلاج الطبيعي.',
@@ -21,7 +21,7 @@ export const SERVICES = [
         'We also look at how you move in daily life, risk factors, and any reports or scans you have. From this we build a treatment plan around your goals, with a clear number of sessions, the techniques we will use, and a home exercise program based on current best practice.',
         'Suitable for orthopedic and neurological conditions, recovery after surgery, and older adults, with regular follow-up and plan updates for the best possible results at home.'] } },
   { key: 'orthopedic', path: '/jlsat-alalaj-altbyaa-llazam-jrahtha', price: 500, minutes: 60, img: 'ortho',
-    ar: { name: 'جلسات العلاج الطبيعى للعظام و جراحتها', short: 'تقليل الألم واستعادة الحركة بعد الإصابات والعمليات',
+    ar: { name: 'جلسات العلاج الطبيعي للعظام وجراحتها', short: 'تقليل الألم واستعادة الحركة بعد الإصابات والعمليات',
       lead: 'تقييم وعلاج وتأهيل متكامل لاستعادة الحركة وتقليل الألم وتحسين الوظيفة',
       body: ['نقدّم جلسات علاج طبيعي متخصصة للتعامل مع أمراض العظام، الإصابات المختلفة، وحالات ما بعد الجراحات، على يد أخصائيين مؤهلين. تبدأ الخدمة بدراسة الحالة الطبية والتاريخ المرضي، يليها تقييم طبي ووظيفي شامل يشمل مدى الحركة، القوة العضلية، ومستوى الألم.',
         'تهدف الجلسات إلى تشخيص دقيق للحالة وتحديد السبب الرئيسي للمشكلة، مع تصميم برنامج علاجي وتأهيلي مخصص لكل مريض، سواء للحالات المزمنة، الإصابات الرياضية، أو التأهيل بعد العمليات الجراحية مثل الكسور وتغيير المفاصل وإصلاح الأربطة.',
@@ -32,7 +32,7 @@ export const SERVICES = [
         'We find the main cause of the problem and design a program just for you: chronic conditions, sports injuries, or rehabilitation after fractures, joint replacement and ligament repair.',
         'Sessions combine modern techniques, guided exercises and continuous follow-up, plus home guidance to speed up recovery and get you back to daily life safely.'] } },
   { key: 'neuro', path: '/jlsat-alalaj-altbyaa-lamradh-almkh-w-alaasab-w-asabat-alhbl-alshwka-w-jrahthm-', price: 500, minutes: 120, img: 'neuro',
-    ar: { name: 'جلسات العلاج الطبيعى لأمراض المخ و الاعصاب و اصابات الحبل الشوكى و جراحتهم', short: 'تأهيل عصبي للحركة والتوازن والاستقلالية',
+    ar: { name: 'جلسات العلاج الطبيعي لأمراض المخ والأعصاب وإصابات الحبل الشوكي وجراحتهم', short: 'تأهيل عصبي للحركة والتوازن والاستقلالية',
       lead: 'تأهيل عصبي متكامل لتحسين الحركة والتوازن واستعادة الوظائف الحركية بأمان',
       body: ['نقدّم جلسات علاج طبيعي متخصصة في التأهيل العصبي للتعامل مع أمراض المخ والأعصاب، إصابات الحبل الشوكي، وحالات ما بعد الجراحات، على يد أخصائيين مؤهلين. تبدأ الخدمة بدراسة الحالة الطبية والتاريخ المرضي، يليها تقييم طبي ووظيفي شامل يشمل الحركة، التوازن، الإحساس، التناسق العضلي العصبي، ومستوى الاستقلال الوظيفي.',
         'يهدف البرنامج إلى تحسين التحكم الحركي، تقليل التشنجات، زيادة القوة العضلية، واستعادة أكبر قدر ممكن من الوظائف اليومية. يتم تصميم خطة علاج وتأهيل مخصصة لكل حالة، تشمل تقنيات حديثة وتمارين عصبية متدرجة وفقًا لحالة المريض ومرحلة التعافي.',
@@ -46,7 +46,7 @@ export const SERVICES = [
 
 // The six specialties shown on the home page.
 export const SPECIALTIES = [
-  { icon: 'brain', ar: ['العلاج الطبيعى لأمراض المخ و الاعصاب و اصابات الحبل الشوكى', 'برامج إعادة تأهيل عصبي لتحسين التحكم الحركي، التوازن، والاستقلال الوظيفي بعد الإصابات أو الأمراض العصبية. تعتمد على تدريب عصبي موجّه ومتابعة مستمرة للتقدم.'],
+  { icon: 'brain', ar: ['العلاج الطبيعي لأمراض المخ والأعصاب وإصابات الحبل الشوكي', 'برامج إعادة تأهيل عصبي لتحسين التحكم الحركي، التوازن، والاستقلال الوظيفي بعد الإصابات أو الأمراض العصبية. تعتمد على تدريب عصبي موجّه ومتابعة مستمرة للتقدم.'],
     en: ['Neurology & spinal cord injuries', 'Neuro-rehabilitation to improve motor control, balance and independence after neurological injury or illness, with guided training and continuous progress tracking.'] },
   { icon: 'bone', ar: ['العلاج الطبيعي لأمراض العظام', 'علاج متخصص لتقليل الألم واستعادة الحركة بعد الإصابات أو جراحات العظام باستخدام بروتوكولات عالمية. يركز على تحسين الوظيفة ومنع تكرار الإصابة بأمان.'],
     en: ['Orthopedics', 'Specialized treatment to reduce pain and restore movement after injuries or orthopedic surgery, using international protocols, with a focus on function and preventing re-injury.'] },

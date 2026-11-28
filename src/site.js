@@ -96,6 +96,7 @@
 
   // "Who is this for?": booking for a relative relabels the fields (patient's name, your number) and shows the
   // optional "your name and relationship" field on the booking page.
+  const forFamily = f => f.querySelector('input[name="for"]:checked')?.value === 'family';
   const applyFor = f => {
     const fam = f.querySelector('input[name="for"]:checked')?.value === 'family';
     f.querySelectorAll('[data-self]').forEach(el => { el.textContent = fam ? el.dataset.family : el.dataset.self; });
@@ -112,8 +113,8 @@
   const quick = document.getElementById('quick');
   if (quick) {
     const qar = quick.dataset.lang === 'ar';
-    const qmsg = qar ? { name: 'اكتب الاسم.', phone: 'اكتب رقم موبايل مصري صحيح: 11 رقماً يبدأ بـ 01.', governorate: 'اختر المحافظة.' }
-      : { name: 'Enter your name.', phone: 'Enter a valid Egyptian mobile number: 11 digits starting with 01.', governorate: 'Choose your governorate.' };
+    const qmsg = qar ? { name: 'اكتب الاسم.', patient: 'اكتب اسم المريض.', phone: 'اكتب رقم موبايل مصري صحيح: 11 رقماً يبدأ بـ 01.', governorate: 'اختر المحافظة.' }
+      : { name: 'Enter your name.', patient: "Enter the patient's name.", phone: 'Enter a valid Egyptian mobile number: 11 digits starting with 01.', governorate: 'Choose your governorate.' };
     const setErr = (el, text) => {
       const out = document.getElementById(`qe-${el.name}`);
       if (text) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
@@ -127,7 +128,9 @@
       const phone = cleanPhone(quick.phone.value);
       if (phone) quick.phone.value = phone;
       const bad = [[quick.name, quick.name.value.trim().length >= 2], [quick.phone, !!phone], [quick.governorate, !!quick.governorate.value]]
-        .filter(([el, ok]) => { setErr(el, ok ? '' : qmsg[el.name]); return !ok; });
+        .filter(([el, ok]) => { setErr(el, ok ? '' : (el.name === 'name' && forFamily(quick) ? qmsg.patient : qmsg[el.name])); return !ok; });
+      const status = document.getElementById('q-status');
+      if (status) status.textContent = bad.length ? (qar ? `راجع ${bad.length === 1 ? 'خانة واحدة' : bad.length === 2 ? 'خانتين' : `${bad.length} خانات`}: ${document.getElementById(`qe-${bad[0][0].name}`).textContent}` : `${bad.length} field${bad.length > 1 ? 's need' : ' needs'} attention:${document.getElementById(`qe-${bad[0][0].name}`).textContent}`) : '';
       if (bad.length) { bad[0][0].focus(); return; }
       goQuick();
     });
@@ -144,11 +147,11 @@
   const ENDPOINT = 'https://oppjpgaoucigbukvqoqa.supabase.co/functions/v1/submit-booking';
   const ar = form.dataset.lang === 'ar';
   const msg = ar ? {
-    name: 'اكتب الاسم بالكامل.', phone: 'اكتب رقم موبايل مصري صحيح: 11 رقماً يبدأ بـ 01.', governorate: 'اختر المحافظة.', address: 'اكتب العنوان أو المنطقة.',
+    name: 'اكتب الاسم بالكامل.', patient: 'اكتب اسم المريض بالكامل.', phone: 'اكتب رقم موبايل مصري صحيح: 11 رقماً يبدأ بـ 01.', governorate: 'اختر المحافظة.', address: 'اكتب العنوان أو المنطقة.',
     date: 'اختر يوماً من اليوم فصاعداً.', consent: 'يجب الموافقة لنتمكن من التواصل معك.', email: 'البريد الإلكتروني غير صحيح، صححه أو اتركه فارغاً.', map: 'رابط الموقع يجب أن يبدأ بـ https://',
     network: 'تعذّر الإرسال. تأكد من الاتصال بالإنترنت وحاول مرة أخرى، أو راسلنا على واتساب.', busy: 'جاري الإرسال…', locating: 'جاري تحديد موقعك…', located: '✓ تم تحديد موقعك', locFail: 'تعذّر تحديد الموقع. يمكنك لصق رابط خرائط جوجل.', bot: 'انتظر لحظة حتى يكتمل التحقق الأمني، ثم أرسل مرة أخرى.',
   } : {
-    name: 'Enter your full name.', phone: 'Enter a valid Egyptian mobile number: 11 digits starting with 01.', governorate: 'Choose your governorate.', address: 'Enter your address or area.',
+    name: 'Enter your full name.', patient: "Enter the patient's full name.", phone: 'Enter a valid Egyptian mobile number: 11 digits starting with 01.', governorate: 'Choose your governorate.', address: 'Enter your address or area.',
     date: 'Choose today or a later day.', consent: 'Please agree so we can contact you.', email: 'That email does not look right. Fix it or leave it empty.', map: 'The map link must start with https://',
     network: "Couldn't send. Check your connection and try again, or message us on WhatsApp.", busy: 'Sending…', locating: 'Finding your location…', located: '✓ Location added', locFail: "Couldn't get your location. You can paste a Google Maps link instead.", bot: "Please wait a moment for the security check to finish, then send again.",
   };
@@ -188,7 +191,7 @@
     const c = cleanPhone(form.phone.value); if (c) form.phone.value = c; // so the plain number is what gets sent
     const bad = [];
     const mark = (el, ok, m) => { el.setAttribute('aria-invalid', !ok); if (!ok) { bad.push([el, m]); el.setAttribute('aria-describedby', 'booking-err'); } };
-    mark(form.name, form.name.value.trim().length >= 2, msg.name);
+    mark(form.name, form.name.value.trim().length >= 2, forFamily(form) ? msg.patient : msg.name);
     mark(form.phone, phoneOk(form.phone.value), msg.phone);
     mark(form.governorate, !!form.governorate.value, msg.governorate);
     mark(form.address, form.address.value.trim().length >= 3, msg.address);
