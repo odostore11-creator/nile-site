@@ -335,6 +335,10 @@ const PHOTO_ALT = {
   neuro: { ar: 'مراجعة صور أشعة الرنين المغناطيسي للمخ', en: 'Reviewing brain MRI scans' },
   surgery: { ar: 'فريق جراحي أثناء عملية', en: 'A surgical team during an operation' },
   icu: { ar: 'أجهزة متابعة في غرفة عناية مركزة', en: 'Monitoring equipment in an intensive care room' },
+  // Stock photos from Pexels (free licence, people are models, not Nile Therapy patients or staff).
+  'neuro-rehab': { ar: 'تمرين للذراع بحبل مطاطي بمساعدة أخصائي', en: 'An arm exercise with a resistance band, guided by a therapist' },
+  homecare: { ar: 'رجل كبير في السن يؤدي تمارين إطالة في بيته بمساعدة أخصائي', en: 'An older man doing stretching exercises at home with a therapist' },
+  sports: { ar: 'أخصائية تعالج ركبة لاعب مصاب في الملعب', en: "A therapist treating an injured player's knee on the pitch" },
 };
 function finder(p, lang) {
   const { t, ar, book, r } = L(p, lang), first = SERVICES[0];
@@ -583,7 +587,7 @@ const arArticleList = [{ path: '/neckpain', img: 'neck-exam', tag: 'المقال
   ...ARTICLES.map(a => ({ path: a.ar, img: a.img, tag: 'المقالات الطبية', title: a.ar_t, lead: a.ar_lead }))];
 const enArticleList = [{ path: NECK_EN, img: 'neck-exam', tag: 'Medical article', title: NECK.en.title, lead: NECK.en.lead },
   ...ARTICLES.map(a => ({ path: a.en, img: a.img, tag: 'Medical article', title: a.en_t, lead: a.en_lead })),
-  { path: HOMECARE_EN, img: 'icu', tag: 'Home care', title: 'Physiotherapy at Home: What to Expect From Your First Visit', lead: 'How a home physiotherapy visit works, who it helps, and how to get ready for it.' }];
+  { path: HOMECARE_EN, img: 'home-visit', tag: 'Home care', title: 'Physiotherapy at Home: What to Expect From Your First Visit', lead: 'How a home physiotherapy visit works, who it helps, and how to get ready for it.' }];
 
 const statsConfirmed = () => !!STATS && ['partners', 'cities', 'patients', 'rating'].filter(k => STATS[k] != null).length >= 2;
 const homeBody = lang => p => hero(p, lang) + (statsConfirmed() ? stats(lang) : '') + finder(p, lang) + founders(lang, true, { feature: true, p }) + timeline(lang) + priceStrip(p, lang, { home: true }) + visits(lang) + reviews(lang) + faq(lang)

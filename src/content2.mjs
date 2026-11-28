@@ -32,7 +32,7 @@ export const FAQ = {
 
 // One page per specialty (new URLs; the old URLs are untouched).
 export const SPEC_PAGES = [
-  { key: 'neuro', icon: 'brain', img: 'neuro', ar: '/alaj-tabiei-almukh-walaasab', en: '/en/services/neurological-rehabilitation', book: 'neuro',
+  { key: 'neuro', icon: 'brain', img: 'neuro-rehab', ar: '/alaj-tabiei-almukh-walaasab', en: '/en/services/neurological-rehabilitation', book: 'neuro',
     t: { ar: 'العلاج الطبيعي لأمراض المخ والأعصاب وإصابات الحبل الشوكي', en: 'Neurological & Spinal Cord Rehabilitation at Home' },
     lead: { ar: 'تأهيل عصبي في منزلك لتحسين الحركة والتوازن والاستقلالية بعد الجلطات والإصابات والأمراض العصبية.', en: 'Neuro rehabilitation at home to improve movement, balance and independence after stroke, injury or neurological illness.' },
     who: { ar: ['الجلطات الدماغية (السكتة الدماغية)', 'إصابات الحبل الشوكي', 'الشلل الرعاش (باركنسون)', 'التصلب المتعدد', 'إصابات الأعصاب الطرفية', 'ما بعد جراحات المخ والعمود الفقري'],
@@ -53,14 +53,14 @@ export const SPEC_PAGES = [
       en: ['Knee or hip replacement', 'Ligament repair (such as ACL)', 'Spine surgery', 'Fracture fixation', 'Heart and chest surgery', 'Recovery after major surgery and bed rest'] },
     how: { ar: ['تمارين تجهيزية قبل العملية عند الإمكان', 'استعادة الحركة والمشي بأمان بعد العملية', 'تمارين التنفس والدورة الدموية', 'تدرّج مدروس للعودة للحياة اليومية'],
       en: ['Pre-surgery conditioning where possible', 'Safely restoring movement and walking after surgery', 'Breathing and circulation exercises', 'A planned, gradual return to daily life'] } },
-  { key: 'homecare', icon: 'home', img: 'icu', ar: '/alriaya-almanzilia', en: '/en/services/advanced-home-care', book: 'home-assessment',
+  { key: 'homecare', icon: 'home', img: 'homecare', ar: '/alriaya-almanzilia', en: '/en/services/advanced-home-care', book: 'home-assessment',
     t: { ar: 'الرعاية المنزلية الفائقة', en: 'Advanced Home Care' },
     lead: { ar: 'رعاية طبية وتمريضية متكاملة في المنزل بعد الخروج من المستشفى ولكبار السن، مع متابعة دقيقة.', en: 'Complete medical and nursing care at home after hospital discharge and for older adults, with close follow-up.' },
     who: { ar: ['المرضى بعد الخروج من المستشفى', 'كبار السن', 'المرضى طريحو الفراش', 'من يحتاج متابعة مستمرة بعد العمليات'],
       en: ['Patients after hospital discharge', 'Older adults', 'Bed-bound patients', 'Anyone needing ongoing follow-up after surgery'] },
     how: { ar: ['تقييم شامل للحالة واحتياجات المنزل', 'علاج طبيعي ورعاية تمريضية حسب الحاجة', 'الوقاية من قرح الفراش ومضاعفات الرقود', 'تدريب الأسرة على الرعاية اليومية الآمنة'],
       en: ['A full assessment of the patient and the home', 'Physiotherapy and nursing care as needed', 'Preventing pressure sores and bed-rest complications', 'Training the family in safe daily care'] } },
-  { key: 'sports', icon: 'run', img: 'ortho', ar: '/alaj-tabiei-lilriyadiyin', en: '/en/services/sports-injuries', book: 'orthopedic',
+  { key: 'sports', icon: 'run', img: 'sports', ar: '/alaj-tabiei-lilriyadiyin', en: '/en/services/sports-injuries', book: 'orthopedic',
     t: { ar: 'العلاج الطبيعي للرياضيين والإصابات الرياضية', en: 'Sports Injury Physiotherapy' },
     lead: { ar: 'تأهيل إصابات الملاعب والعودة الآمنة للتدريب والمنافسات وفق بروتوكولات رياضية معتمدة.', en: 'Rehabilitation for sports injuries and a safe return to training and competition, following accredited sports protocols.' },
     who: { ar: ['إصابات الرباط الصليبي والغضاريف', 'التواء الكاحل', 'شد العضلات الخلفية', 'آلام الكتف عند الرياضيين', 'التهاب الأوتار'],
@@ -92,7 +92,7 @@ export const ARTICLES = [
 <h2>How physiotherapy helps</h2><p>Your physiotherapist assesses movement and the source of pain, then builds a plan with manual therapy, strengthening and flexibility exercises, and posture education. The aim is less pain, a return to activity and preventing it coming back.</p>
 <h2>Everyday tips</h2><ul><li>Keep moving as much as you can; long bed rest usually slows recovery.</li><li>Change position every 30–45 minutes when sitting.</li><li>Bend your knees and keep loads close when lifting.</li><li>Walk regularly.</li></ul>
 <p class="tip">📌 This is general information and doesn't replace an assessment. If pain lasts more than two weeks, book an assessment.</p>` },
-  { key: 'knee', img: 'ortho', date: '2026-11-23', ar: '/taahil-baad-taghyir-alrukba', en: '/en/knee-replacement-rehabilitation',
+  { key: 'knee', img: 'knee-rehab', date: '2026-11-23', ar: '/taahil-baad-taghyir-alrukba', en: '/en/knee-replacement-rehabilitation',
     ar_t: 'التأهيل بعد عملية تغيير مفصل الركبة', en_t: 'Rehabilitation After Knee Replacement Surgery',
     ar_lead: 'العلاج الطبيعي جزء أساسي من نجاح عملية تغيير الركبة. ماذا تتوقع في الأسابيع الأولى، وكيف تتعافى بأمان في منزلك.',
     en_lead: 'Physiotherapy is a key part of a successful knee replacement. What to expect in the first weeks, and how to recover safely at home.',
@@ -104,7 +104,7 @@ export const ARTICLES = [
 <h2>The first weeks</h2><ul><li>Gradual bending and straightening exercises, following your surgeon's instructions.</li><li>Thigh strengthening.</li><li>Walking practice with a walker or crutch, weaning off gradually.</li><li>Managing swelling with ice and elevation as advised.</li></ul>
 <h2>At home</h2><p>Home physiotherapy works especially well after surgery: no travelling, and you practise the real tasks, like getting up from a chair, climbing stairs and using the bathroom safely.</p>
 <p class="tip">📌 Always follow your surgeon's instructions, and contact your doctor right away if the leg becomes red, hot or very painful.</p>` },
-  { key: 'stroke', img: 'neuro', date: '2026-11-23', ar: '/taahil-aljalta-fi-almanzil', en: '/en/stroke-rehabilitation-at-home',
+  { key: 'stroke', img: 'stroke-rehab', date: '2026-11-23', ar: '/taahil-aljalta-fi-almanzil', en: '/en/stroke-rehabilitation-at-home',
     ar_t: 'تأهيل مرضى الجلطة الدماغية في المنزل', en_t: 'Stroke Rehabilitation at Home',
     ar_lead: 'التأهيل المبكر والمنتظم بعد الجلطة الدماغية يساعد على استعادة الحركة والاستقلالية. دليل مبسّط للمريض والأسرة.',
     en_lead: 'Early, regular rehabilitation after a stroke helps people regain movement and independence. A simple guide for patients and families.',
