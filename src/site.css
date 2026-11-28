@@ -255,8 +255,11 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--er
 
 /* Booking always within reach: bottom bar on phones, WhatsApp bubble on desktop. */
 .bookbar { display: none; }
-.wa-float { position: fixed; inset-inline-end: 22px; bottom: 22px; z-index: 50; width: 58px; height: 58px; border-radius: 50%; background: #1fa855; color: #fff; display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0, 0, 0, .2); }
-.wa-float .ic { width: 30px; height: 30px; }
+/* WhatsApp bubble: sits in the page margin (52px, 16px from the edge) and steps aside while a section that has its own
+   WhatsApp button (the booking band, the footer) is on screen, so it never covers text or doubles up. */
+.wa-float { position: fixed; inset-inline-end: 16px; bottom: 18px; z-index: 50; width: 52px; height: 52px; border-radius: 50%; background: #1fa855; color: #fff; display: grid; place-items: center; box-shadow: 0 4px 14px rgba(11, 79, 92, .22); transition: opacity .25s ease, transform .25s ease, visibility .25s; }
+.wa-float .ic { width: 28px; height: 28px; }
+.wa-float.away { opacity: 0; transform: translateY(12px); visibility: hidden; pointer-events: none; }
 @media (max-width: 860px) {
   .wa-float { display: none; }
   .bookbar { display: flex; gap: 8px; position: fixed; inset-inline: 0; bottom: 0; z-index: 60; padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); background: rgba(255, 255, 255, .96); backdrop-filter: blur(10px); border-top: 1px solid var(--line); box-shadow: 0 -8px 24px rgba(11, 79, 92, .1); }

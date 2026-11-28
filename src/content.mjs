@@ -61,7 +61,7 @@ export const SPECIALTIES = [
 ];
 
 export const TESTIMONIAL = {
-  ar: { quote: 'تجربتي مع Nile Therapy كانت فارقة جدًا في رحلتي العلاجية. من أول تقييم حسّيت باهتمام حقيقي وفهم دقيق لحالتي، والخطة العلاجية كانت واضحة ومبنية على أسس علمية. الفريق كان محترف ومتعاون، والتحسّن اللي وصلت له خلال فترة قصيرة خلاني أستعيد ثقتي في الحركة وحياتي اليومية.', who: 'أ/ م. ع' },
+  ar: { quote: 'تجربتي مع Nile Therapy كانت فارقة جدًا في رحلتي العلاجية. من أول تقييم حسّيت باهتمام حقيقي وفهم دقيق لحالتي، والخطة العلاجية كانت واضحة ومبنية على أسس علمية. الفريق كان محترف ومتعاون، والتحسّن اللي وصلت له خلال فترة قصيرة خلاني أستعيد ثقتي في الحركة وحياتي اليومية.', who: 'م. ع.، مريض' },
   en: { quote: 'My experience with Nile Therapy made a real difference in my recovery. From the first assessment I felt genuine care and a precise understanding of my condition, and the treatment plan was clear and science-based. The team was professional and supportive, and the progress I made in a short time gave me back my confidence in moving and in daily life.', who: 'M. A., patient' },
 };
 

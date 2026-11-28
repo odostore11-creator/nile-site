@@ -278,7 +278,6 @@ function hero(p, lang) {
   const { t, ar, book, r } = L(p, lang);
   return `<section class="hero"><div class="wrap hero-in">
   <div class="hero-text">
-    <p class="eyebrow">${ar ? 'شركة النيل للعلاج الطبيعي والرعاية المنزلية' : 'Physiotherapy & home care across Egypt'}</p>
     <h1>${ar ? `علاجك يوصلك <span class="mark">لحد بيتك</span>` : `Physiotherapy that comes <span class="mark">to your home</span>`}</h1>
     <p class="lead">${ar ? `نبدأ بكشف كامل في البيت لمدة ${SERVICES[0].minutes} دقيقة، ثم خطة علاج طبيعي يشرف عليها أخصائي من مؤسسي Nile&nbsp;Therapy، لك أو لحد من عيلتك.` : `We start with a full ${SERVICES[0].minutes}-minute assessment at home, then a physiotherapy plan overseen by one of Nile Therapy's specialist founders, for you or someone in your family.`}</p>
     <form class="quick card" id="quick" data-book="${r(book)}" data-lang="${lang}" novalidate>
@@ -304,8 +303,8 @@ function stats(lang) {
   const labels = { partners: ar ? 'شريك من مستشفيات وعيادات وأندية' : 'partner hospitals, clinics and clubs', cities: ar ? 'مدينة نخدمها' : 'cities served',
     patients: ar ? 'مريض تابعناه في بيته' : 'patients treated at home', rating: ar ? `تقييم مرضانا${STATS?.ratingCount ? ` (${STATS.ratingCount})` : ''}` : `patient rating${STATS?.ratingCount ? ` (${STATS.ratingCount})` : ''}` };
   const confirmed = STATS ? Object.entries(labels).filter(([k]) => STATS[k] != null).map(([k, l]) => [k === 'rating' ? `★ ${STATS[k]}` : `${STATS[k]}${k === 'patients' || k === 'partners' ? '+' : ''}`, l]) : [];
-  const facts = ar ? [['6', 'تخصصات علاج طبيعي'], [String(SERVICES[0].minutes), 'دقيقة للكشف الأول في بيتك'], [String(SERVICES[1].price), 'ج.م للجلسة، والدفع بعدها'], ['3', 'أطباء علاج طبيعي أسّسوا الشركة']]
-    : [['6', 'physiotherapy specialties'], [String(SERVICES[0].minutes), 'minute first assessment at home'], [String(SERVICES[1].price), 'EGP a session, paid after'], ['3', 'physiotherapists founded the company']];
+  const facts = ar ? [['6', 'تخصصات علاج طبيعي'], [String(SERVICES[0].minutes), 'دقيقة للكشف الأول في بيتك'], [String(SERVICES[1].price), 'ج.م للجلسة، والدفع بعدها'], ['3', 'أخصائيين مؤسسين يشرفون على خطة علاجك']]
+    : [['6', 'physiotherapy specialties'], [String(SERVICES[0].minutes), 'minute first assessment at home'], [String(SERVICES[1].price), 'EGP a session, paid after'], ['3', 'specialist founders oversee your plan']];
   const s = confirmed.length >= 2 ? confirmed.concat(facts).slice(0, 4) : facts;
   return `<section class="stats-band"><div class="wrap stats-in">${s.map(([n, l]) => `<p><b><bdi dir="ltr">${n}</bdi></b><span>${l}</span></p>`).join('')}</div></section>`;
 }
@@ -560,7 +559,7 @@ const enArticleList = [{ path: NECK_EN, img: 'neck-exam', tag: 'Medical article'
   { path: HOMECARE_EN, img: 'icu', tag: 'Home care', title: 'Physiotherapy at Home: What to Expect From Your First Visit', lead: 'How a home physiotherapy visit works, who it helps, and how to get ready for it.' }];
 
 const homeBody = lang => p => hero(p, lang) + stats(lang) + finder(p, lang) + timeline(lang) + founders(lang) + priceStrip(p, lang) + visits(lang) + reviews(lang) + faq(lang)
-  + `<section class="sec"><div class="wrap"><div class="sec-head split-head"><h2>${lang === 'ar' ? 'من مقالاتنا' : 'From our articles'}</h2><a class="more" href="${rel(p, lang === 'ar' ? '/almqalat' : '/en/resources')}">${lang === 'ar' ? 'كل المقالات' : 'All articles'} ${icon('arrow', 'flip')}</a></div>${articleCards(p, lang, (lang === 'ar' ? arArticleList : enArticleList).slice(0, 3)).replace('class="posts"', 'class="posts feature"')}</div></section>`
+  + `<section class="sec"><div class="wrap"><div class="sec-head split-head"><h2>${lang === 'ar' ? 'من مقالاتنا' : 'From our articles'}</h2><a class="more" href="${rel(p, lang === 'ar' ? '/almqalat' : '/en/resources')}">${lang === 'ar' ? 'كل المقالات' : 'All articles'} ${icon('arrow', 'flip')}</a></div>${articleCards(p, lang, (lang === 'ar' ? arArticleList : enArticleList).filter(x => x.img !== SPEC_PAGES.find(s => s.key === FINDER[0].key).img).slice(0, 3)).replace('class="posts"', 'class="posts feature"')}</div></section>`
   + ctaBand(p, lang);
 add({ path: '/', lang: 'ar', pair: '/en', title: 'Nile Therapy | العلاج الطبيعي في المنزل - شركة النيل للعلاج الطبيعي', ld: [faqLd('ar')],
   description: 'Nile Therapy (شركة النيل للعلاج الطبيعي): علاج طبيعي ورعاية منزلية في كل أنحاء مصر، للمخ والأعصاب والعظام وما بعد العمليات. احجز جلستك في منزلك.',

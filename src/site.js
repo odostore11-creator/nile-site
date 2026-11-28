@@ -68,6 +68,14 @@
     if (top > innerHeight * .6) scrollBy({ top: top - innerHeight * .4, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   }));
 
+  // WhatsApp bubble steps aside while the booking band or the footer (both have their own WhatsApp link) is visible.
+  const waFloat = document.querySelector('.wa-float');
+  if (waFloat && 'IntersectionObserver' in window) {
+    const seen = new Set();
+    const io = new IntersectionObserver(es => { es.forEach(e => e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)); waFloat.classList.toggle('away', seen.size > 0); });
+    document.querySelectorAll('.band, .foot').forEach(el => io.observe(el));
+  }
+
   // Analytics: which buttons lead to bookings (no personal data is sent).
   const track = (name, params) => { try { if (window.gtag) gtag('event', name, params); } catch { /* blocked */ } };
   document.addEventListener('click', e => {
