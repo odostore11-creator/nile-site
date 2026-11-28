@@ -57,7 +57,16 @@
   });
 
   // Finder: which problem people pick (no personal data).
-  document.querySelectorAll('.finder-chips input').forEach(i => i.addEventListener('change', () => { try { window.gtag && gtag('event', 'finder_pick', { need: i.value }); } catch { /* blocked */ } }));
+  document.querySelectorAll('.finder-chips input').forEach(i => i.addEventListener('change', () => {
+    try { window.gtag && gtag('event', 'finder_pick', { need: i.value }); } catch { /* blocked */ }
+    // Phones: the answer sits under the choices. If it starts low on the screen, bring it up to mid-screen
+    // so the pick visibly does something, while the lower choices stay in view above it.
+    if (!matchMedia('(max-width: 900px)').matches) return;
+    const panel = document.querySelector(`.finder-panel[data-for="${i.value}"]`);
+    if (!panel) return;
+    const top = panel.getBoundingClientRect().top;
+    if (top > innerHeight * .6) scrollBy({ top: top - innerHeight * .4, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+  }));
 
   // Analytics: which buttons lead to bookings (no personal data is sent).
   const track = (name, params) => { try { if (window.gtag) gtag('event', name, params); } catch { /* blocked */ } };
@@ -67,26 +76,58 @@
     track(kind === 'book' ? 'book_click' : kind === 'whatsapp' ? 'whatsapp_click' : 'call_click', { location: where });
   });
 
+  // Phone numbers: accept Arabic-Indic (٠-٩) and Persian (۰-۹) digits, spaces, dashes and +20 / 0020, and turn them
+  // into the plain 01xxxxxxxxx form the portal expects (the server only reads Western digits).
+  const plainDigits = v => v.replace(/[٠-٩]/g, c => c.charCodeAt(0) - 0x660).replace(/[۰-۹]/g, c => c.charCodeAt(0) - 0x6F0);
+  const cleanPhone = v => {
+    let d = plainDigits(v).replace(/[\s\-().]/g, '').replace(/^\+/, '');
+    if (d.startsWith('0020')) d = d.slice(4); else if (d.startsWith('20')) d = d.slice(2);
+    if (/^1[0125]\d{8}$/.test(d)) d = '0' + d;
+    return /^01[0125]\d{8}$/.test(d) ? d : '';
+  };
+
   // Hero quick booking: carries name/phone/governorate to the booking page in this tab only (sessionStorage, never the URL).
+  // Each field shows its own message under it; nothing moves on until all three are filled in.
   const quick = document.getElementById('quick');
-  if (quick) quick.addEventListener('submit', e => {
-    e.preventDefault();
+  if (quick) {
+    const qar = quick.dataset.lang === 'ar';
+    const qmsg = qar ? { name: 'اكتب الاسم.', phone: 'اكتب رقم موبايل مصري صحيح: 11 رقماً يبدأ بـ 01.', governorate: 'اختر المحافظة.' }
+      : { name: 'Enter your name.', phone: 'Enter a valid Egyptian mobile number: 11 digits starting with 01.', governorate: 'Choose your governorate.' };
+    const setErr = (el, text) => {
+      const out = document.getElementById(`qe-${el.name}`);
+      if (text) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
+      if (out) { out.textContent = text; out.hidden = !text; }
+    };
+    quick.addEventListener('input', e => { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target, ''); });
+    quick.addEventListener('change', e => { if (e.target.getAttribute('aria-invalid') === 'true') setErr(e.target, ''); });
+    quick.phone.addEventListener('blur', () => { const c = cleanPhone(quick.phone.value); if (c) quick.phone.value = c; });
+    quick.addEventListener('submit', e => {
+      e.preventDefault();
+      const phone = cleanPhone(quick.phone.value);
+      if (phone) quick.phone.value = phone;
+      const bad = [[quick.name, quick.name.value.trim().length >= 2], [quick.phone, !!phone], [quick.governorate, !!quick.governorate.value]]
+        .filter(([el, ok]) => { setErr(el, ok ? '' : qmsg[el.name]); return !ok; });
+      if (bad.length) { bad[0][0].focus(); return; }
+      goQuick();
+    });
+  }
+  function goQuick() {
     const d = Object.fromEntries(new FormData(quick).entries());
     try { sessionStorage.setItem('nt_quick', JSON.stringify(d)); } catch { /* private mode: they retype */ }
     track('form_start', { method: 'hero_quick' });
     location.href = quick.dataset.book;
-  });
+  }
 
   const form = document.getElementById('booking');
   if (!form) return;
   const ENDPOINT = 'https://oppjpgaoucigbukvqoqa.supabase.co/functions/v1/submit-booking';
   const ar = form.dataset.lang === 'ar';
   const msg = ar ? {
-    name: 'اكتب الاسم بالكامل.', phone: 'اكتب رقم موبايل مصري صحيح، مثال 01012345678.', governorate: 'اختر المحافظة.', address: 'اكتب العنوان أو المنطقة.',
+    name: 'اكتب الاسم بالكامل.', phone: 'اكتب رقم موبايل مصري صحيح: 11 رقماً يبدأ بـ 01.', governorate: 'اختر المحافظة.', address: 'اكتب العنوان أو المنطقة.',
     date: 'اختر يوماً من اليوم فصاعداً.', consent: 'يجب الموافقة لنتمكن من التواصل معك.', email: 'البريد الإلكتروني غير صحيح، صححه أو اتركه فارغاً.', map: 'رابط الموقع يجب أن يبدأ بـ https://',
     network: 'تعذّر الإرسال. تأكد من الاتصال بالإنترنت وحاول مرة أخرى، أو راسلنا على واتساب.', busy: 'جاري الإرسال…', locating: 'جاري تحديد موقعك…', located: '✓ تم تحديد موقعك', locFail: 'تعذّر تحديد الموقع. يمكنك لصق رابط خرائط جوجل.', bot: 'انتظر لحظة حتى يكتمل التحقق الأمني، ثم أرسل مرة أخرى.',
   } : {
-    name: 'Enter your full name.', phone: 'Enter a valid Egyptian mobile number, e.g. 01012345678.', governorate: 'Choose your governorate.', address: 'Enter your address or area.',
+    name: 'Enter your full name.', phone: 'Enter a valid Egyptian mobile number: 11 digits starting with 01.', governorate: 'Choose your governorate.', address: 'Enter your address or area.',
     date: 'Choose today or a later day.', consent: 'Please agree so we can contact you.', email: 'That email does not look right. Fix it or leave it empty.', map: 'The map link must start with https://',
     network: "Couldn't send. Check your connection and try again, or message us on WhatsApp.", busy: 'Sending…', locating: 'Finding your location…', located: '✓ Location added', locFail: "Couldn't get your location. You can paste a Google Maps link instead.", bot: "Please wait a moment for the security check to finish, then send again.",
   };
@@ -116,8 +157,10 @@
   });
   form.map_link.addEventListener('input', () => { form.lat.value = ''; form.lng.value = ''; });
 
-  const phoneOk = v => /^(\+?20|0)?1[0125]\d{8}$/.test(v.replace(/[\s-]/g, ''));
+  form.phone.addEventListener('blur', () => { const c = cleanPhone(form.phone.value); if (c) form.phone.value = c; });
+  const phoneOk = v => !!cleanPhone(v);
   const check = () => {
+    const c = cleanPhone(form.phone.value); if (c) form.phone.value = c; // so the plain number is what gets sent
     const bad = [];
     const mark = (el, ok, m) => { el.setAttribute('aria-invalid', !ok); if (!ok) { bad.push([el, m]); el.setAttribute('aria-describedby', 'booking-err'); } };
     mark(form.name, form.name.value.trim().length >= 2, msg.name);

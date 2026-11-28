@@ -507,5 +507,52 @@ input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--bo
   .posts.feature .post:first-child .post-body h3 { font-size: 24px; }
 }
 
+/* ---- Phones (2026-11-28 adapt): shorter page, answers in view ---- */
+@media (max-width: 560px) {
+  /* Hero map: a smaller brand moment under the form, not a second screen. */
+  .hero-art { max-width: 240px; margin-top: 16px; }
+
+  /* Finder: two columns of choices (icon above the words), so the answer starts close under them. */
+  .finder-chips { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .finder-chips label { flex-direction: column; align-items: flex-start; justify-content: flex-start; gap: 6px; min-height: 88px; padding: 12px; font-size: 15px; line-height: 1.35; }
+  .fp-img img { aspect-ratio: 2 / 1; }
+  .fp-body { padding: 18px 18px 20px; }
+  .fp-body .cta-row { display: grid; gap: 4px; } .fp-body .cta-row .btn { justify-content: center; }
+
+  /* Prices: name and price share the top row; the details link sits beside the button. */
+  .prices { gap: 16px; }
+  .price { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "name amount" "desc desc" "meta meta" "btn btn" "more more"; column-gap: 14px; row-gap: 6px; padding: 22px 18px 16px; }
+  .price.featured { padding-top: 26px; }
+  .price h3 { grid-area: name; font-size: 17px; align-self: center; }
+  .price .desc { grid-area: desc; }
+  .price .amount { grid-area: amount; margin: 0; align-self: center; text-align: end; white-space: nowrap; } .amount b { font-size: 32px; }
+  .price .meta { grid-area: meta; margin: 2px 0 8px; }
+  .price .btn { grid-area: btn; margin: 0; }
+  .price .more { grid-area: more; min-height: 44px; }
+
+  /* Articles: one full card, then the others as compact rows (thumbnail + title). */
+  .posts { gap: 20px; }
+  .posts.feature .post:not(:first-child) { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 14px; align-items: center; }
+  .posts.feature .post:not(:first-child) .post-img img { aspect-ratio: 1; }
+  .posts.feature .post:not(:first-child) .post-body { padding: 0; }
+  .posts.feature .post:not(:first-child) .post-body > p:not(.tag), .posts.feature .post:not(:first-child) .more { display: none; }
+  .posts.feature .post:not(:first-child) .post-body h3 { font-size: 17px; }
+  .posts.feature .post:not(:first-child) .post-body h3 a { display: flex; align-items: center; min-height: 44px; }
+}
+@media (max-width: 340px) { .finder-chips { grid-template-columns: 1fr; } .finder-chips label { min-height: 0; flex-direction: row; align-items: center; } }
+
+/* ---- Hero quick form (2026-11-28 harden): labels that stay while typing, one message per field ---- */
+.quick-fields { align-items: start; }
+.qf { display: grid; gap: 5px; min-width: 0; }
+.qf-l { font-size: 15px; font-weight: 600; color: var(--deep); }
+.qf-err { color: #8c2a1c; font-size: 14px; line-height: 1.45; }
+.quick-fields .btn { align-self: end; min-height: 50px; }
+.quick-fields:has(.qf-err:not([hidden])) .btn { align-self: start; margin-top: 28px; }
+.quick-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); line-height: 1.5; }
+@media (max-width: 900px) { .quick-fields:has(.qf-err:not([hidden])) .btn { margin-top: 0; } }
+
+/* The closing band: body text at full strength (the old .9 opacity dropped it under 4.5:1 on the teal end). */
+.band p { opacity: 1; color: #f1fbf8; }
+
 /* Cloudflare Turnstile widget on the booking form (only when a site key is set) */
 .cf-turnstile { margin: 6px 0 4px; min-height: 65px; }

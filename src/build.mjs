@@ -273,14 +273,15 @@ function hero(p, lang) {
     <p class="eyebrow">${ar ? 'شركة النيل للعلاج الطبيعي والرعاية المنزلية' : 'Physiotherapy & home care across Egypt'}</p>
     <h1>${ar ? `علاجك يوصلك <span class="mark">لحد بيتك</span>` : `Physiotherapy that comes <span class="mark">to your home</span>`}</h1>
     <p class="lead">${ar ? 'أطباء علاج طبيعي مرخّصون يزورونك في منزلك، بخطة علاج مخصصة لحالتك ومتابعة مستمرة حتى تتعافى.' : 'Licensed physiotherapists visit you at home, with a treatment plan built around you and follow-up until you recover.'}</p>
-    <form class="quick card" id="quick" data-book="${r(book)}" novalidate>
+    <form class="quick card" id="quick" data-book="${r(book)}" data-lang="${lang}" novalidate>
       <p class="quick-title">${ar ? 'احجز في أقل من دقيقة' : 'Book in under a minute'}</p>
       <div class="quick-fields">
-        <label><span class="sr">${ar ? 'الاسم' : 'Name'}</span><input type="text" name="name" autocomplete="name" placeholder="${ar ? 'الاسم' : 'Your name'}" dir="auto" maxlength="120"></label>
-        <label><span class="sr">${ar ? 'رقم الموبايل' : 'Mobile number'}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="${ar ? 'رقم الموبايل' : 'Mobile number'}" dir="ltr" maxlength="20"></label>
-        <label><span class="sr">${ar ? 'المحافظة' : 'Governorate'}</span><select name="governorate"><option value="">${ar ? 'المحافظة' : 'Governorate'}</option>${govOptions(lang)}</select></label>
+        <label class="qf"><span class="qf-l">${ar ? 'الاسم' : 'Name'}</span><input type="text" name="name" autocomplete="name" dir="auto" maxlength="120" required aria-describedby="qe-name"><small class="qf-err" id="qe-name" hidden></small></label>
+        <label class="qf"><span class="qf-l">${ar ? 'رقم الموبايل' : 'Mobile number'}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01x xxxx xxxx" dir="ltr" maxlength="20" required aria-describedby="qe-phone"><small class="qf-err" id="qe-phone" hidden></small></label>
+        <label class="qf"><span class="qf-l">${ar ? 'المحافظة' : 'Governorate'}</span><select name="governorate" required aria-describedby="qe-governorate"><option value="">${ar ? 'اختر المحافظة' : 'Choose…'}</option>${govOptions(lang)}</select><small class="qf-err" id="qe-governorate" hidden></small></label>
         <button class="btn book" type="submit" data-track="book:hero-form">${ar ? 'ابدأ الحجز' : 'Start booking'} ${icon('arrow', 'flip')}</button>
       </div>
+      <p class="quick-note">${ar ? 'الخطوة التالية: العنوان والموعد المناسب، ثم نتصل بك للتأكيد.' : 'Next: your address and a good day, then we call you to confirm.'}</p>
     </form>
     <ul class="ticks"><li>${icon('shield')}${ar ? 'أطباء مرخّصون' : 'Licensed physiotherapists'}</li><li>${icon('home')}${ar ? 'في منزلك' : 'At your home'}</li><li>${icon('cash')}${t.payNote}</li></ul>
   </div>
